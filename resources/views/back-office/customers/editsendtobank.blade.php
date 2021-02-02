@@ -211,6 +211,15 @@
                                 </span>
                                 @enderror
                             </div>
+                            <div class="form-group col-md-6">
+                                <label for="file_number">File Number</label>
+                                <input type="text" class="form-control" id="file_number" name="file_number" required value="{{ old('cust_pincode') ?? $customer->cust_pincode }}">
+                                @error('file_number')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="form-row">

@@ -184,6 +184,28 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="form-group col">
+                                <div class="form-check">
+                                    <input class="form-check-input" {{ $customer->interested == true ? 'checked' : '' }} type="checkbox" id="interested" name="self-funding" value="{{ old('interested') ?? 1 }}">
+                                    <label class="form-check-label" for="interested">
+                                        Self Funding
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col">
+                                <div class="form-check">
+                                    <input class="form-check-input" {{ $customer->interested == true ? 'checked' : '' }} type="checkbox" id="not-interested" name="interested" value="{{ old('interested') ?? 1 }}">
+                                    <label class="form-check-label" for="interested">
+                                       Not Interested 
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div  class="form-row not-interest-sec">
+                            <div class="form-group col-md-6">
+                                <label>Reason for Not Interested</label>
+                                <textarea name="reason_not_interest" id="reason_not_interest" width="100%"> </textarea>
+                            </div>
                         </div>
 
                         <div id="appointment-section">
@@ -258,6 +280,16 @@
                 $("#appointment-section").hide();
             }
         });
+
+        $("#not-interested").click(function(){
+            if($(this).prop('checked') == true){
+                $(".not-interest-sec").show();
+            }else{
+                $(".not-interest-sec").hide();
+            }
+        })
+
+
         // $("#datepicker").datepicker();
     });
 
@@ -331,5 +363,15 @@
     })
 
 </script>
+<style>
+#reason_not_interest{
+    width:100%;
+   
+}
+.not-interest-sec{
+    
+    display:none;
+}
+</style>
 
 @endsection

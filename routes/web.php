@@ -135,6 +135,7 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
 });
 
 Route::post('back-office/change-agent-appointment', 'Admin\CustomerController@changeAgentAppointment');
+
 Route::post('back-office/eligibilities/applicant', 'Admin\EligibilityController@applicant')->name('back-office.eligibilities.applicant');
 Route::get('back-office/eligibilities/details',  'Admin\EligibilityController@details')->name('back-office.eligibilities.details');
 Route::post('back-office/eligibilities/eligibility', 'Admin\EligibilityController@eligibility')->name('back-office.eligibilities.eligibility');

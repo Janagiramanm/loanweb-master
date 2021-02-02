@@ -144,6 +144,7 @@
 							<tr>
 								<th>Agent Name</th>
                                 <th>Customer Name</th>
+                                <th>Address</th>
                                 <th>Appointment Type</th>
                                 <th>Telecaller</th>
                                 <th>Date</th>
@@ -155,6 +156,7 @@
                                 <tr>
                                     <td>{{ $appointment->agent_name }}</td>
                                     <td>{{ $appointment->customer_name }}</td>
+                                    <td>{{ $appointment->cust_address }}</td>
                                     <td>{{ $appointment->appointment_name }}</td>
                                     <td>{{ $appointment->telecallername }}</td>
                                     <td>{{ $appointment->appointment_date }}</td>

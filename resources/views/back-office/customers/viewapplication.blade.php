@@ -83,8 +83,12 @@
             <thead>
                 <tr>
                     <th>Customer name</th>
+                    <th>Demand Amount</th>
+                    <th>Demand Date</th>
+                    <th>Disbursement Type</th>
+                    <th>Disbursement #</th>
+                    <th>Disbursement Date</th>
                     <th>Disbursement Amount</th>
-                    <th>Applied Date</th>
                     <th>Installment No</th>
                 </tr>
             </thead>
@@ -92,8 +96,12 @@
                 @foreach ($disbursements as $disbursement)
                     <tr>
                         <td>{{ $disbursement->cust_name}}</td>
-                        <td>{{ $disbursement->disbursement_amount }}</td>
+                        <td>@if($disbursement->neft_date !=''){{ $disbursement->neft_amount }}@else{{ $disbursement->cheque_amount }} @endif</td>
+                        <td>@if($disbursement->neft_date !=''){{ $disbursement->neft_date }}@else{{ $disbursement->cheque_date }} @endif</td>
+                        <td>@if($disbursement->neft_date !='') NEFT @else Cheque @endif</td>
+                        <td>@if($disbursement->neft_date !=''){{ $disbursement->neft_urt_no }} @else {{ $disbursement->cheque_no }} @endif</td>
                         <td>{{ $disbursement->date_of_disbursement }}</td>
+                        <td>{{ $disbursement->disbursement_amount }}</td>
                         <td>{{ $disbursement->installment_num }}</td>
                     </tr>
                 @endforeach
