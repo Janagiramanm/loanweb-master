@@ -26,14 +26,16 @@
             <tbody>
                 @foreach ($appointments as $appointment)
                     <tr>
-                        <td>{{ $appointment->customer_name}}</td>
+                        <td>{{ $appointment->customer_name }} </td>
                         <td>{{ $appointment->agent_name }}</td>
                         <td>{{ $appointment->appointment_name }}</td>
                         <td>{{ $appointment->appointment_date }}</td>
                         <td>{{ $appointment->time_slot }}</td>
                         <td>
-                            
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#appointmentModal" class="btn btn-primary w-100">Re-Appointment</a>
+                        <button type="button" class="btn btn-primary edit-app-id" data-toggle="modal" id="{{ $appointment->id }}" data-target="#appointmentModal">
+                           Edit Appointment
+                        </button>
+                        <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-primary w-100">Re-Appointment</a> -->
                     </td>
                     </tr>
                 @endforeach
@@ -351,43 +353,76 @@
                         <button type="submit" class="btn btn-primary">Proceed</button>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>
-    <div class="modal" tabindex="-1" id="appointmentModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Change Your Password</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form id="login_form" method="post" action="javascript:void(0)">
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Password</label>
-                                    <input type="password" name="change_password" id="change_password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                                    <input type="password" name="confirm_password" id="confirm_password" class="form-control" id="exampleInputPassword1">
-                                </div>
-                            
-                                <span class="text-danger invalid-confirm"></span><br>
-                                <span class="alert-success confirm-success"></span><br>
-                                <button type="submit" id="change-pwd-btn" class="btn btn-primary">Change Password</button>
-                            </form>
-                        </div>
-
-                    </div>
-
-
-                </div>
-        </div>
+   
     </div>
+</div>
+<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="appointmentModalLabel">Change Appointment Form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+                <div class="form-group col-md-6">
+                            <p>Date Of Appointment </p>
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <span class="input-group-text"><i class="icon-calendar5"></i></span>
+                                </span>
+                                <input type="text" class="form-control pickadate-limits" placeholder="Select Date" name="appointment_date" id="datepicker_popup" >
+                            </div>
+                </div>
+                <div class="form-group col-md-6">
+                                    <label for="type_of_appointment">Appointment Type</label>
+                                    <select name="type_of_appointment" id="type_of_appointment" class="form-control">
+                                        <option value="">Select Appointment Type</option>
+                                        @foreach ($typeofappointments as $type)
+                                            <option value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+               
+                <div class="form-group col-md-6">
+                            <label for="appointment_time">Time</label>
+                            <select name="appointment_time" id="appointment_time_edit" class="form-control">
+                                <option value="">Select Time</option>
+                                @foreach ($timeslots as $time)
+                                    <option value="{{ $time->id }}"> {{ $time->time_slot }} </option>
+                                @endforeach
+                            </select>
+                            @error('appointment_time')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                </div>
+                <div class="form-group col-md-6">
+                            <p>Select Agent</p>
+                            <div class="input-group">
+                                    <select name="bank_appointment_agent" id="appointment_agent_edit" class="form-control">
+                                       <option>Select Agent</option>
+                                    </select>
+                            </div>
+                </div>
+          
+      </div>
+      <div class="success-msg"></div>
+        <div class="error-msg"></div>
+      <div class="modal-footer">
+       
+        <input type="hidden" name="appointment_id" id="appointment_id" />
+        <button type="button" class="btn btn-primary" id="change-appointment">Change Appointment</button>
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+      </div>
     </div>
+  </div>
 </div>
 
 </div>
@@ -447,6 +482,46 @@
         // $("#datepicker").datepicker();
     });
 
+    $(".edit-app-id").click(function(){
+          $("#appointment_id").val($(this).attr('id'));
+    });
+
+    $("#change-appointment").click(function(){
+        var date = $("#datepicker_popup").val();
+        var time = $("#appointment_time_edit").val();
+        var agent = $("#appointment_agent_edit").val();
+        var appointmentId = $("#appointment_id").val();
+        if(date == ""){
+            alert("please select date");
+        }else{
+            $.ajax({
+                url : "/back-office/change-agent-appointment",
+                headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                },
+                data : JSON.stringify({apdate:date, aptime: time, agentid:agent, appointmentId:appointmentId}),
+                type : 'POST',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data) {
+                    if(data.status == 1){
+                        $(".success-msg").text(data.message);
+                    }else{
+                        $(".error-msg").text(data.message);
+                    }
+                    setTimeout(() => {
+                        $(".close").click();
+                        location.reload(true);
+                    }, 1500);
+                  
+                    
+                }
+            })
+        }
+
+      
+    });
+
     $("#appointment_time").change(function(){
         var date = $("#datepicker").val();
         var time = $("#appointment_time").val();
@@ -473,6 +548,38 @@
                             selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
                         });
                         $("#appointment_agent").html(selectOptions);
+                    }
+                }
+            });
+        }
+    });
+
+    $("#appointment_time_edit").change(function(){
+        var date = $("#datepicker_popup").val();
+        var time = $("#appointment_time_edit").val();
+        if(date == ""){
+            alert("please select date");
+        }else{
+            $.ajax({
+                url : "<?php echo url('/back-office/fetchAgents'); ?>",
+                headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                },
+                data : JSON.stringify({apdate:date, aptime: time}),
+                type : 'POST',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data);
+                    if(data.length == 0){
+                        selectOptions += '<option value="">No Agent Available in This Time Slot</option>';
+                        $("#appointment_agent_edit").html(selectOptions);
+                    } else {
+                        var selectOptions = '';
+                        $.each(data, function( key, value ) {
+                            selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
+                        });
+                        $("#appointment_agent_edit").html(selectOptions);
                     }
                 }
             });
@@ -511,5 +618,17 @@
         }
     });
 </script>
+<style>
+.success-msg {
+    padding: 0 30px;
+    color: green;
+    font-size: 16px;
+}
+.error-msg {
+    padding: 0 30px;
+    color: red;
+    font-size: 16px;
+}
+</style>
 
 @endsection

@@ -297,7 +297,7 @@ class CustomerController extends Controller
                         ->join('type_of_appointment', 'type_of_appointment.id', '=', 'appointment.appointmenttype_id')
                         ->join('time_slots', 'time_slots.id', '=', 'appointment.timeslot_id')
                         ->join('users', 'users.id', '=', 'appointment.agent_id')
-                        ->select('users.name as agent_name', 'customers.cust_name as customer_name', 'type_of_appointment.appointment_name', 'appointment.appointment_date', 'time_slots.time_slot')
+                        ->select('users.name as agent_name', 'customers.cust_name as customer_name', 'type_of_appointment.appointment_name','appointment.id', 'appointment.appointment_date', 'time_slots.time_slot')
                         ->where('appointment.customer_id', '=', $id)
                         ->get();
         $banks = Bank::all();
@@ -309,6 +309,44 @@ class CustomerController extends Controller
         $documents = RequiredDoc::where('occupation_id', '=', $customer->occupation_id)->get();
 
         return view('back-office.customers.pipelinecustomeredit', compact('appointments', 'timeslots', 'typeofappointments', 'customer', 'banks', 'occupations', 'documents'));
+    }
+
+    public function changeAgentAppointment(Request $request){
+       
+            $agentId = $request->input('agentid');
+            $time = $request->input('aptime');
+            $id = $request->input('appointmentId');
+            $date = date('Y-m-d',strtotime($request->input('apdate')));
+
+            $appointment = Appointment::where('agent_id','=',$agentId)
+                          ->where('appointment_date','=',$date)
+                          ->where('timeslot_id')->first();
+            if($appointment){
+                $msg = [
+                    'status'=> 0,
+                    'message' => 'Already appointment fixed for this date and time',
+                    
+                ];
+                return response()->json($msg);
+            }
+
+            $appoint = Appointment::find($id);
+            $appoint->appointment_date = $date;
+            $appoint->agent_id = $agentId;
+            $appoint->timeslot_id = $time;
+            $appoint->save();
+
+
+            $msg = [
+                'status'=> 1,
+                'message' => 'Appointment has been changed successfully',
+                
+            ];
+            return response()->json($msg);
+
+            exit;
+            
+
     }
 
     public function updatepipelinecustomer(Request $request, $id)

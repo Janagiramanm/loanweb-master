@@ -41,6 +41,7 @@
                                     <td>{{ $appointment->telecallername }}</td>
                                     <td>{{ $appointment->appointment_date }}</td>
                                     <td>{{ $appointment->time_slot }}</td>
+                                 
                                 </tr>
                             @endforeach
 						</tbody>

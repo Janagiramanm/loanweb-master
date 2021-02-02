@@ -78,6 +78,7 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
     Route::get('/customers/{id}/editnewcustomer', 'CustomerController@editnewcustomer')->name('customers.editnewcustomer');
     Route::PUT('/customers/updatenewcustomer/{id}', 'CustomerController@updatenewcustomer')->name('customers.updatenewcustomer');
 
+   
     Route::get('/customers/{id}/pipelinecustomeredit', 'CustomerController@pipelinecustomeredit')->name('customers.pipelinecustomeredit');
     Route::PUT('/customers/updatepipelinecustomer/{id}', 'CustomerController@updatepipelinecustomer')->name('customers.updatepipelinecustomer');
 
@@ -129,9 +130,11 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
 
 
     Route::get('/appointments', 'AppointmentController@index')->name('appointments');
+    //Route::put('/appointments/edit/{id}', 'AppointmentController@index')->name('appointments.edit');
 
 });
 
+Route::post('back-office/change-agent-appointment', 'Admin\CustomerController@changeAgentAppointment');
 Route::post('back-office/eligibilities/applicant', 'Admin\EligibilityController@applicant')->name('back-office.eligibilities.applicant');
 Route::get('back-office/eligibilities/details',  'Admin\EligibilityController@details')->name('back-office.eligibilities.details');
 Route::post('back-office/eligibilities/eligibility', 'Admin\EligibilityController@eligibility')->name('back-office.eligibilities.eligibility');
