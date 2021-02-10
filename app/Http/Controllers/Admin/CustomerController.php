@@ -19,6 +19,7 @@ use App\Model\Occupation;
 use App\Model\Disbursement;
 use App\Model\RequiredDoc;
 use App\Model\ExtaDocs;
+use App\Model\TwoThreeApplicant;
 
 use App\Imports\CustomerImport;
 use App\Imports\AllCustomerImport;
@@ -170,6 +171,17 @@ class CustomerController extends Controller
                      ->get();
          return view('back-office.customers.partchequefixing', compact('customers'));
     }
+     /******* * The function to get self funding Customers *********** */
+     public function selfFunding()
+     {
+         $customers = DB::table('customers')
+                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
+                     ->where([['customers.application_status', '=', 12], ['customers.application_deleted', '=', 0] ])
+                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                     ->orderByDesc('customers.id')
+                     ->get();
+         return view('back-office.customers.selffundcustomers', compact('customers'));
+     }
 
 
 
@@ -191,6 +203,8 @@ class CustomerController extends Controller
                     ->get();
         return view('back-office.customers.droppedcustomers', compact('customers'));
     }
+
+    
 
     /******* * The func addNewCustomer will help us to open new customer form *********** */
     public function addNewCustomer()
@@ -232,7 +246,17 @@ class CustomerController extends Controller
     {
         $input = $request->all();
 
+       
         try {
+            if(isset($input['interested'])){
+                $application_status = 2;
+            }
+            else if(isset($input['self-funding'])){
+                $application_status = 12;
+            }
+            else{
+                $application_status = 1;
+            }
             $customer = Customer::where('id', '=', $id)->update([
                 'cust_name'             => $input['cust_name'],
                 'cust_email'            => $input['cust_email'],
@@ -249,8 +273,40 @@ class CustomerController extends Controller
                 'mmr_paid'              => $input['mmr_paid'],
                 'telecallername'        => Auth::user()->name,
                 'emp_id'                => isset($input['appointment_agent']) ? $input['appointment_agent'] : null ,
-                'application_status'    => isset($input['interested']) == 1 ? 2 : 1
+                'application_status'    => $application_status,
+                'application_deleted'    => isset($input['not-interested']) ? 1 : 0,
+                'reason'    => isset($input['not-interested']) ? $input['reason_not_interest'] : NULL
             ]);
+
+            if(!empty($input['twoapplicant'])){
+
+                $twoapplicant = new TwoThreeApplicant();
+                $twoapplicant->customer_id = $id; 
+                $twoapplicant->name = $input['twoapplicant']['name']; 
+                $twoapplicant->phone = $input['twoapplicant']['phone']; 
+                $twoapplicant->email = $input['twoapplicant']['email']; 
+                $twoapplicant->occupation_id = $input['twoapplicant']['occupation_id']; 
+                $twoapplicant->zipcode = $input['twoapplicant']['pincode']; 
+                $twoapplicant->address = $input['twoapplicant']['address']; 
+                $twoapplicant->cust_type = 'twoapplicant'; 
+                $twoapplicant->save();
+
+            }
+            if(!empty($input['threeapplicant'])){
+
+                    $threeapplicant = new TwoThreeApplicant();
+                    $threeapplicant->customer_id = $id; 
+                    $threeapplicant->name = $input['threeapplicant']['name']; 
+                    $threeapplicant->phone = $input['threeapplicant']['phone']; 
+                    $threeapplicant->email = $input['threeapplicant']['email']; 
+                    $threeapplicant->occupation_id = $input['threeapplicant']['occupation_id']; 
+                    $threeapplicant->zipcode = $input['threeapplicant']['pincode']; 
+                    $threeapplicant->address = $input['threeapplicant']['address']; 
+                    $threeapplicant->cust_type = 'threeapplicant'; 
+                    $threeapplicant->save();
+
+            }
+
 
             if(isset($input['interested'])  && $input['interested'] == 1){
                 $appointment = Appointment::create([
@@ -284,6 +340,7 @@ class CustomerController extends Controller
                 return  Redirect::to('back-office/customers/newleads')->with('customers', $customers )->with('message','Custoemr ('.$input['cust_name'].')  is updated successfully');
 
             }
+         
         } catch (\Exception $e) {
 
             return redirect()->back()->with($e->getMessage());

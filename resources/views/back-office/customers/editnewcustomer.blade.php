@@ -175,40 +175,182 @@
                                 @enderror
                             </div>
                         </div>
+
+                     
+                       
+                        <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                   
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <span>&#43;</span> Two Applicant
+                                        </button>
+                                    </h5>
+                                    </div>
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                       <table class="table table-borderless"> 
+                                             <tr>
+                                                  <td>
+                                                       <label for="cust_name">Customer Name</label>
+                                                       <input type="text" class="form-control @error('cust_name') is-invalid @enderror" id="two_cust_name" name="twoapplicant[name]" required value="">
+                                                  </td>
+                                                  <td>
+                                                       <label for="cust_phone">Phone Number</label>
+                                                       <input type="tel" class="form-control @error('cust_phone') is-invalid @enderror" id="two_cust_phone" name="twoapplicant[phone]" required value="">
+                                                  </td>
+                                                  <td>
+                                                        <label for="cust_email">E-Mail</label>
+                                                        <input type="tel" class="form-control @error('cust_email') is-invalid @enderror" id="two_cust_email" name="twoapplicant[email]" required value="">
+                                                  </td>
+                                             </tr> 
+                                             <tr>
+                                                   <td>
+                                                        <label for="occupation_id">Customer Occupation</label>
+                                                        <select name="twoapplicant[occupation_id]" id="two_occupation_id" class="form-control" required>
+                                                            <option value="">Select Occupation</option>
+                                                            @foreach ($occupations as $occupation)
+                                                                @if( $customer->occupation_id  == $occupation->id )
+                                                                    <option value="{{ $occupation->id }}" selected> {{ $occupation->occupation_name }} </option>
+                                                                @else
+                                                                    <option value="{{ $occupation->id }}"> {{ $occupation->occupation_name }} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                   </td>
+                                                   <td>
+                                                         <label for="cust_city">City</label>
+                                                         <input type="text" class="form-control" id="two_cust_city" name="twoapplicant[city]" required value="">
+                                                   </td>
+                                                   <td>
+                                                         <label for="cust_pincode">Pincode</label>
+                                                         <input type="text" class="form-control" id="two_cust_pincode" name="twoapplicant[pincode]" required value="">
+                                                   </td>
+                                             </tr>
+                                             <tr>
+                                                <td colspan="3">
+                                                        <label for="cust_address" id="lbl-cust-address">Customer Address
+                                                            <span class="same-address">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="two-applicant-same-add">
+                                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                                        Same as above address
+                                                                    </label>
+                                                            </span>
+                                                        </label> 
+                                                        
+                                                        <textarea class="form-control" id="two_cust_address" placeholder="1234 Main St" name="twoapplicant[address]" required cols="30" rows="3"></textarea>
+                                                </td>
+                                             </tr>
+                                       </table>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingTwo">
+                                    <h5 class="mb-0">
+                                      
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <span>&#43;</span> Three Applicant
+                                        </button>
+                                       
+                                    </h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                    <table class="table table-borderless"> 
+                                             <tr>
+                                                  <td>
+                                                       <label for="cust_name">Customer Name</label>
+                                                       <input type="text" class="form-control @error('cust_name') is-invalid @enderror" id="three_cust_name" name="threeapplicant[name]" required value="">
+                                                  </td>
+                                                  <td>
+                                                       <label for="cust_phone">Phone Number</label>
+                                                       <input type="tel" class="form-control @error('cust_phone') is-invalid @enderror" id="three_cust_phone" name="threeapplicant[phone]" required value="">
+                                                  </td>
+                                                  <td>
+                                                        <label for="cust_email">E-Mail</label>
+                                                        <input type="tel" class="form-control @error('cust_email') is-invalid @enderror" id="three_cust_email" name="threeapplicant[email]" required value="">
+                                                  </td>
+                                             </tr>
+                                             <tr>
+                                                   <td>
+                                                        <label for="occupation_id">Customer Occupation</label>
+                                                        <select name="threeapplicant[occupation_id]" id="three_occupation_id" class="form-control" required>
+                                                            <option value="">Select Occupation</option>
+                                                            @foreach ($occupations as $occupation)
+                                                                @if( $customer->occupation_id  == $occupation->id )
+                                                                    <option value="{{ $occupation->id }}" selected> {{ $occupation->occupation_name }} </option>
+                                                                @else
+                                                                    <option value="{{ $occupation->id }}"> {{ $occupation->occupation_name }} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                   </td>
+                                                   <td>
+                                                         <label for="cust_city">City</label>
+                                                         <input type="text" class="form-control" id="three_cust_city" name="threeapplicant[city]" required value="">
+                                                   </td>
+                                                   <td>
+                                                         <label for="cust_pincode">Pincode</label>
+                                                         <input type="text" class="form-control" id="three_cust_pincode" name="threeapplicant[pincode]" required value="">
+                                                   </td>
+                                             </tr>
+                                             <tr>
+                                                <td colspan="3">
+                                                        <label for="cust_address" id="lbl-cust-address">Customer Address
+                                                            <span class="same-address">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="three-applicant-same-add">
+                                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                                        Same as above address
+                                                                    </label>
+                                                            </span>
+                                                        </label> 
+                                                        
+                                                        <textarea class="form-control" id="three_cust_address" placeholder="1234 Main St" name="threeapplicant[address]" required cols="30" rows="3"></textarea>
+                                                </td>
+                                             </tr>
+                                       </table>
+                                    </div>
+                                    </div>
+                                </div>
+                        </div>
+                        
+
                         <div class="form-row">
                             <div class="form-group col">
                                 <div class="form-check">
-                                    <input class="form-check-input" {{ $customer->interested == true ? 'checked' : '' }} type="checkbox" id="interested" name="interested" value="{{ old('interested') ?? 1 }}">
-                                    <label class="form-check-label" for="interested">
+                                    <input class="form-check-input interested-check" {{ $customer->interested == true ? 'checked' : '' }} type="checkbox" id="interested" name="interested" value="{{ old('interested') ?? 1 }}">
+                                    <label class="form-check-label " for="interested">
                                         Interested in loan
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group col">
                                 <div class="form-check">
-                                    <input class="form-check-input" {{ $customer->interested == true ? 'checked' : '' }} type="checkbox" id="interested" name="self-funding" value="{{ old('interested') ?? 1 }}">
-                                    <label class="form-check-label" for="interested">
+                                    <input class="form-check-input interested-check" {{ $customer->interested == true ? 'checked' : '' }} type="checkbox" id="self-funding" name="self-funding" value="{{ old('self-funding') ?? 1 }}">
+                                    <label class="form-check-label" for="self-funding">
                                         Self Funding
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group col">
                                 <div class="form-check">
-                                    <input class="form-check-input" {{ $customer->interested == true ? 'checked' : '' }} type="checkbox" id="not-interested" name="interested" value="{{ old('interested') ?? 1 }}">
+                                    <input class="form-check-input interested-check" {{ $customer->interested == true ? 'checked' : '' }} type="checkbox" id="not-interested" name="not-interested" value="{{ old('not-interested') ?? 1 }}">
                                     <label class="form-check-label" for="interested">
                                        Not Interested 
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div  class="form-row not-interest-sec">
+                        <div  class="form-row not-interested">
                             <div class="form-group col-md-6">
                                 <label>Reason for Not Interested</label>
                                 <textarea name="reason_not_interest" id="reason_not_interest" width="100%"> </textarea>
                             </div>
                         </div>
 
-                        <div id="appointment-section">
+                        <div id="appointment-section" class="interested">
                             <h4>Schedule an appointment</h4>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -268,6 +410,27 @@
 <script>
 
     $(document).ready(function(){
+
+        $("#two-applicant-same-add").click(function(){
+            if ($(this).is(":checked")) {
+               /// var cust_addres = $("#cust_address").val();
+                $("#two_cust_address").val($("#cust_address").val());
+            }else{
+                $("#two_cust_address").val('');
+            }
+
+        });
+        $("#three-applicant-same-add").click(function(){
+            if ($(this).is(":checked")) {
+               /// var cust_addres = $("#cust_address").val();
+                $("#three_cust_address").val($("#cust_address").val());
+            }else{
+                $("#three_cust_address").val('');
+            }
+
+        });
+
+
         if ($('#interested').is(":checked")) {
             $("#appointment-section").show();
         } else {
@@ -283,14 +446,12 @@
 
         $("#not-interested").click(function(){
             if($(this).prop('checked') == true){
-                $(".not-interest-sec").show();
+                $(".not-interested").show();
             }else{
-                $(".not-interest-sec").hide();
+                $(".not-interested").hide();
             }
         })
 
-
-        // $("#datepicker").datepicker();
     });
 
 
@@ -362,15 +523,58 @@
 
     })
 
+    $('input[type="checkbox"]').on('change', function() {
+       
+        var current_id = $(this).attr('id');
+        $('input[type="checkbox"]').each(function(){
+           
+           if(current_id != $(this).attr('id')){
+               $("."+$(this).attr('id')).hide();
+           }
+        })
+       
+        $('input[type="checkbox"]').not(this).prop('checked', false);
+    });
+
+    $('#appointment_time').focus(function() {
+       
+        var selectedDate = $("#datepicker").val();
+        var myDate = new Date(selectedDate);
+        var today = new Date();
+        
+              
+        if(today == myDate){
+            alert('yes');
+
+        }
+        // var current_date = date('d M, Y')
+        // alert(current_date);
+    });
+
+    // $("#appointment_time").click(function(){
+    //       var selectedDate = $("#datepicker").val();
+    //       alert(selectedDate);
+    // });
+
 </script>
+
 <style>
 #reason_not_interest{
     width:100%;
    
 }
-.not-interest-sec{
+.not-interested{
     
     display:none;
+}
+.interested{
+    display:none;
+}
+span.same-address {
+    margin-left: 10%;
+}
+label#lbl-cust-address {
+    width: 100%;
 }
 </style>
 
