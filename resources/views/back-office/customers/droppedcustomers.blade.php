@@ -46,11 +46,29 @@
                                         <i class="icon-menu9"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a href=""  class="dropdown-item"><i class="icon-pencil"></i> Edit </a>
 
+                                        <div>
+                                            <input class="form-check-input drop-up-checkbox" type="checkbox" id="interested" name="interested" value="{{ old('interested') ?? 1 }}">
+                                            <label class="form-check-label drop-up-label" for="interested">
+                                                Interested Customer
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <input class="form-check-input drop-up-checkbox" type="checkbox" id="interested" name="interested" value="{{ old('interested') ?? 1 }}">
+                                            <label class="form-check-label drop-up-label" for="interested">
+                                                Self Funding
+                                            </label>
+                                        </div>
+                                        <button type="button" class="btn btn-primary drop-up-btn"> Update </button>
                                         <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $customer->cust_id }}').submit();">
                                             <i class="icon-bin"></i><span>Remove</span>
                                         </a>
+                                        
+                                        <!-- <a href=""  class="dropdown-item"><i class="icon-pencil"></i> Edit </a>
+
+                                        <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $customer->cust_id }}').submit();">
+                                            <i class="icon-bin"></i><span>Remove</span>
+                                        </a> -->
                                         <form id="delete-form-{{ $customer->cust_id }}" action="" method="POST" style="display: none;">
                                             @csrf @method('delete')
                                         </form>
@@ -75,4 +93,56 @@
 
 @section('custom-script')
     <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
+    <script type="text/javascript">
+	$(document).on('click', '#province-delete', function(e) {
+	  e.preventDefault();
+
+	    swal({
+	        title         : "Are You Sure",
+	        icon          : "warning",
+	        buttons       : true,
+	        dangerMode    : true,
+	    })
+	    .then((willDelete) => {
+	        if (willDelete) {
+	          $.ajax({
+	              url         : $(this).attr("href"),
+	              method      : 'POST',
+	              dataType    : "json",
+	              success     : function(response) {
+	                  if (response.success == 200) {
+
+	                    swal(response.message, {
+	                      icon: "success",
+	                      buttons: {
+	                        confirm: {
+	                          text: "OK",
+	                          value: true,
+	                          visible: true,
+	                          className: "btn-orange",
+	                          closeModal: true
+	                        }
+	                      }
+	                    });
+
+	                   window.location.href = "{{url('admin/provinces')}}"
+
+	                  } // end success if
+	              } // end success function.
+	          }); // end ajax .
+	        } else {
+	          // Write something here.
+	        }
+	    }); // End then.
+	}); // end Document.
+</script>
+    <style>
+    input.drop-up-checkbox {
+         margin-left: 0.595rem;
+    }
+    .drop-up-label{
+         margin-left: 30px;
+    }
+    
+    </style>
 @endsection

@@ -220,6 +220,246 @@
                             </div>
                         </div>
 
+                        <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                   
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <span>&#43;</span> Two Applicant
+                                        </button>
+                                    </h5>
+                                    </div>
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                       <table class="table table-borderless"> 
+                                             @foreach($applicants as $applicant)
+                                                 @if($applicant->cust_type == 'twoapplicant')
+                                             <tr>
+                                                  <td>
+                                                       <label for="cust_name">Customer Name</label>
+                                                       <input type="text" class="form-control @error('cust_name') is-invalid @enderror" id="two_cust_name" name="twoapplicant[name]" required value="{{ $applicant->name }}">
+                                                  </td>
+                                                  <td>
+                                                       <label for="cust_phone">Phone Number</label>
+                                                       <input type="tel" class="form-control @error('cust_phone') is-invalid @enderror" id="two_cust_phone" name="twoapplicant[phone]" required value="{{ $applicant->phone }}">
+                                                  </td>
+                                                  <td>
+                                                        <label for="cust_email">E-Mail</label>
+                                                        <input type="tel" class="form-control @error('cust_email') is-invalid @enderror" id="two_cust_email" name="twoapplicant[email]" required value="{{ $applicant->email }}">
+                                                  </td>
+                                             </tr> 
+                                             <tr>
+                                                   <td>
+                                                        <label for="occupation_id">Customer Occupation</label>
+                                                        <select name="twoapplicant[occupation_id]" id="two_occupation_id" class="form-control" required>
+                                                            <option value="">Select Occupation</option>
+                                                            @foreach ($occupations as $occupation)
+                                                                @if( $customer->occupation_id  == $applicant->occupation_id )
+                                                                    <option value="{{ $occupation->id }}" selected> {{ $occupation->occupation_name }} </option>
+                                                                @else
+                                                                    <option value="{{ $occupation->id }}"> {{ $occupation->occupation_name }} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                   </td>
+                                                   <td>
+                                                         <label for="cust_city">City</label>
+                                                         <input type="text" class="form-control" id="two_cust_city" name="twoapplicant[city]" required value="{{ $applicant->city }}">
+                                                   </td>
+                                                   <td>
+                                                         <label for="cust_pincode">Pincode</label>
+                                                         <input type="text" class="form-control" id="two_cust_pincode" name="twoapplicant[pincode]" required value="{{ $applicant->zipcode }}">
+                                                   </td>
+                                             </tr>
+                                             <tr>
+                                                <td colspan="3">
+                                                        <label for="cust_address" id="lbl-cust-address">Customer Address
+                                                            <span class="same-address">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="two-applicant-same-add">
+                                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                                        Same as above address
+                                                                    </label>
+                                                            </span>
+                                                        </label> 
+                                                        
+                                                        <textarea class="form-control" id="two_cust_address" placeholder="1234 Main St" name="twoapplicant[address]" required cols="30" rows="3">{{ $applicant->address }}</textarea>
+                                                </td>
+                                             </tr>
+                                               @endif
+                                             @endforeach
+                                       </table>
+                                       <div id="two-appointment-section" class="twoapplicant">
+                                        <h4>Schedule an appointment</h4>
+                                        @foreach($appointments as $appointment)
+                                             @if($appointment->applicant_type == 'twoapplicant')
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <p>Date Of Appointment</p>
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-calendar5"></i></span>
+                                                    </span>
+                                                    <input type="text" class="form-control pickadate-limits" placeholder="Select Date" name="primary[appointment_date]" id="two-datepicker" value="{{ $applicant->appointment_date }}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="appointment_time">Time</label>
+                                                <select name="primary[appointment_time]" id="two_appointment_time" class="form-control">
+                                                    <option value="">Select Time</option>
+                                                    @foreach ($timeslots as $time)
+                                                        <option value="{{ $time->id }}" @if($appointment->timeslot_id == $time->id) selected @endif> {{ $time->time_slot }} </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('appointment_time')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div  class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="two_type_of_appointment">Appointment Type</label>
+                                                <select name="primary[type_of_appointment]" id="two_type_of_appointment" class="form-control">
+                                                    <option value="">Select Appointment Type</option>
+                                                    @foreach ($typeofappointments as $type)
+                                                        <option value="{{ $type->id }}" @if($appointment->appointmenttype_id == $type->id ) selected @endif > {{ $type->appointment_name }} </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="two_appointment_agent">Agent Name</label>
+                                                <select name="primary[appointment_agent]" id="two_appointment_agent" class="form-control">
+                                           
+                                                    <option value="{{ $appointment->user_id }}">{{ $appointment->agent_name }}</option>
+                                           
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                           @endif
+                                        @endforeach
+                                    </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingTwo">
+                                    <h5 class="mb-0">
+                                      
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <span>&#43;</span> Three Applicant
+                                        </button>
+                                       
+                                    </h5>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                    <table class="table table-borderless"> 
+                                             <tr>
+                                                  <td>
+                                                       <label for="cust_name">Customer Name</label>
+                                                       <input type="text" class="form-control @error('cust_name') is-invalid @enderror" id="three_cust_name" name="threeapplicant[name]" required value="">
+                                                  </td>
+                                                  <td>
+                                                       <label for="cust_phone">Phone Number</label>
+                                                       <input type="tel" class="form-control @error('cust_phone') is-invalid @enderror" id="three_cust_phone" name="threeapplicant[phone]" required value="">
+                                                  </td>
+                                                  <td>
+                                                        <label for="cust_email">E-Mail</label>
+                                                        <input type="tel" class="form-control @error('cust_email') is-invalid @enderror" id="three_cust_email" name="threeapplicant[email]" required value="">
+                                                  </td>
+                                             </tr>
+                                             <tr>
+                                                   <td>
+                                                        <label for="occupation_id">Customer Occupation</label>
+                                                        <select name="threeapplicant[occupation_id]" id="three_occupation_id" class="form-control" required>
+                                                            <option value="">Select Occupation</option>
+                                                            @foreach ($occupations as $occupation)
+                                                                @if( $customer->occupation_id  == $occupation->id )
+                                                                    <option value="{{ $occupation->id }}" selected> {{ $occupation->occupation_name }} </option>
+                                                                @else
+                                                                    <option value="{{ $occupation->id }}"> {{ $occupation->occupation_name }} </option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                   </td>
+                                                   <td>
+                                                         <label for="cust_city">City</label>
+                                                         <input type="text" class="form-control" id="three_cust_city" name="threeapplicant[city]" required value="">
+                                                   </td>
+                                                   <td>
+                                                         <label for="cust_pincode">Pincode</label>
+                                                         <input type="text" class="form-control" id="three_cust_pincode" name="threeapplicant[pincode]" required value="">
+                                                   </td>
+                                             </tr>
+                                             <tr>
+                                                <td colspan="3">
+                                                        <label for="cust_address" id="lbl-cust-address">Customer Address
+                                                            <span class="same-address">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="three-applicant-same-add">
+                                                                    <label class="form-check-label" for="flexCheckDefault">
+                                                                        Same as above address
+                                                                    </label>
+                                                            </span>
+                                                        </label> 
+                                                        
+                                                        <textarea class="form-control" id="three_cust_address" placeholder="1234 Main St" name="threeapplicant[address]" required cols="30" rows="3"></textarea>
+                                                </td>
+                                             </tr>
+                                       </table>
+                                       <div id="three-appointment-section" class="threeapplicant">
+                                        <h4>Schedule an appointment</h4>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <p>Date Of Appointment</p>
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-calendar5"></i></span>
+                                                    </span>
+                                                    <input type="text" class="form-control pickadate-limits" placeholder="Select Date" name="secondary[appointment_date]" id="three-datepicker" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="three_appointment_time">Time</label>
+                                                <select name="secondary[appointment_time]" id="three_appointment_time" class="form-control">
+                                                    <option value="">Select Time</option>
+                                                    @foreach ($timeslots as $time)
+                                                        <option value="{{ $time->id }}"> {{ $time->time_slot }} </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('appointment_time')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div  class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="three_type_of_appointment">Appointment Type</label>
+                                                <select name="secondary[type_of_appointment]" id="three_type_of_appointment" class="form-control">
+                                                    <option value="">Select Appointment Type</option>
+                                                    @foreach ($typeofappointments as $type)
+                                                        <option value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="three_appointment_agent">Agent Name</label>
+                                                <select name="secondary[appointment_agent]" id="three_appointment_agent" class="form-control"></select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    </div>
+                                    </div>
+                                </div>
+                        </div>
+
                         <div class="form-row">
                             <div class="form-group col">
                                 <h1>* List of documents shall be displayed here</h1>
@@ -454,6 +694,29 @@
 
 
     $(document).ready(function(){
+        $("#two-applicant-same-add").click(function(){
+            if ($(this).is(":checked")) {
+               /// var cust_addres = $("#cust_address").val();
+                $("#two_cust_address").val($("#cust_address").val());
+                $("#two-appointment-section").hide();
+            }else{
+                $("#two_cust_address").val('');
+                $("#two-appointment-section").show();
+            }
+
+        });
+
+        $("#three-applicant-same-add").click(function(){
+            if ($(this).is(":checked")) {
+               /// var cust_addres = $("#cust_address").val();
+                $("#three_cust_address").val($("#cust_address").val());
+                $("#three-appointment-section").hide();
+            }else{
+                $("#three_cust_address").val('');
+                $("#three-appointment-section").show();
+            }
+
+        });
         if ($('#interested').is(":checked")) {
             $("#appointment-section").show();
         } else {
@@ -617,6 +880,7 @@
             });
         }
     });
+    $("#two-datepicker").datepicker("setDate",new Date(2021,02,12) );
 </script>
 <style>
 .success-msg {
@@ -628,6 +892,24 @@
     padding: 0 30px;
     color: red;
     font-size: 16px;
+}
+span.same-address {
+    margin-left: 10%;
+}
+label#lbl-cust-address {
+    width: 100%;
+}
+#two-appointment-section div#two-datepicker_root {
+    margin-top: -410px;
+}
+div#two-appointment-section {
+    padding: 23px;
+}
+#three-appointment-section div#three-datepicker_root {
+    margin-top: -410px;
+}
+div#three-appointment-section {
+    padding: 23px;
 }
 </style>
 

@@ -245,7 +245,7 @@ class CustomerController extends Controller
     public function updatenewcustomer(Request $request, $id)
     {
         $input = $request->all();
-
+        
        
         try {
             if(isset($input['interested'])){
@@ -278,7 +278,11 @@ class CustomerController extends Controller
                 'reason'    => isset($input['not-interested']) ? $input['reason_not_interest'] : NULL
             ]);
 
-            if(!empty($input['twoapplicant'])){
+            if(!empty($input['twoapplicant']) && $input['twoapplicant']['name']!=''){
+
+                //echo '<pre>';
+                // print_r($input['twoapplicant']);
+                // exit;
 
                 $twoapplicant = new TwoThreeApplicant();
                 $twoapplicant->customer_id = $id; 
@@ -291,8 +295,22 @@ class CustomerController extends Controller
                 $twoapplicant->cust_type = 'twoapplicant'; 
                 $twoapplicant->save();
 
+                if($input['primary']['appointment_agent'] !=''){
+                        $appointment = new Appointment();
+                        $appointment->agent_id  = $input['primary']['appointment_agent'];
+                        $appointment->customer_id  = $id;
+                        $appointment->appointment_date  = date('Y-m-d', strtotime($input['primary']['appointment_date']));
+                        $appointment->timeslot_id  = $input['primary']['appointment_time'];
+                        $appointment->created_excutive  = Auth::user()->id;
+                        $appointment->status = 1;
+                        $appointment->appointmenttype_id = $input['primary']['type_of_appointment'];
+                        $appointment->applicant_type = 'twoapplicant';
+                        $appointment->save();
+                }
+                
+                
             }
-            if(!empty($input['threeapplicant'])){
+            if(!empty($input['threeapplicant']) && $input['threeapplicant']['name']!=''){
 
                     $threeapplicant = new TwoThreeApplicant();
                     $threeapplicant->customer_id = $id; 
@@ -305,10 +323,24 @@ class CustomerController extends Controller
                     $threeapplicant->cust_type = 'threeapplicant'; 
                     $threeapplicant->save();
 
+                    if($input['secondary']['appointment_agent']!=''){
+                            $appointment = new Appointment();
+                            $appointment->agent_id  = $input['secondary']['appointment_agent'];
+                            $appointment->customer_id  = $id;
+                            $appointment->appointment_date  = date('Y-m-d', strtotime($input['secondary']['appointment_date']));
+                            $appointment->timeslot_id  = $input['secondary']['appointment_time'];
+                            $appointment->created_excutive  = Auth::user()->id;
+                            $appointment->status = 1;
+                            $appointment->appointmenttype_id = $input['secondary']['type_of_appointment'];
+                            $appointment->applicant_type = 'threeapplicant';
+                            $appointment->save();
+                    }
+
             }
 
-
+           
             if(isset($input['interested'])  && $input['interested'] == 1){
+
                 $appointment = Appointment::create([
                     'agent_id'          => $input['appointment_agent'],
                     'customer_id'       => $id,
@@ -316,7 +348,8 @@ class CustomerController extends Controller
                     'timeslot_id'       => $input['appointment_time'],
                     'created_excutive'  => Auth::user()->id,
                     'status'            => 1,
-                    'appointmenttype_id'=> $input['type_of_appointment']
+                    'appointmenttype_id'=> $input['type_of_appointment'],
+                    'applicant_type'=> 'normal'
                 ]);
 
                 $customers = DB::table('customers')
@@ -329,6 +362,7 @@ class CustomerController extends Controller
                 return  Redirect::to('back-office/customers/customers')->with('customers', $customers )->with('message','Agent assignd to ('.$input['cust_name'].')  successfully');
 
             }else{
+              
                 $customers = DB::table('customers')
                             ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                             ->where([['customers.application_status', '=', 1], ['customers.application_deleted', '=', 0] ])
@@ -342,7 +376,7 @@ class CustomerController extends Controller
             }
          
         } catch (\Exception $e) {
-
+           
             return redirect()->back()->with($e->getMessage());
         }
     }
@@ -354,7 +388,7 @@ class CustomerController extends Controller
                         ->join('type_of_appointment', 'type_of_appointment.id', '=', 'appointment.appointmenttype_id')
                         ->join('time_slots', 'time_slots.id', '=', 'appointment.timeslot_id')
                         ->join('users', 'users.id', '=', 'appointment.agent_id')
-                        ->select('users.name as agent_name', 'customers.cust_name as customer_name', 'type_of_appointment.appointment_name','appointment.id', 'appointment.appointment_date', 'time_slots.time_slot')
+                        ->select('users.id as user_id','users.name as agent_name', 'customers.cust_name as customer_name', 'type_of_appointment.appointment_name','appointment.id', 'appointment.appointment_date', 'appointment.applicant_type','appointment.timeslot_id','appointment.appointmenttype_id', 'time_slots.time_slot')
                         ->where('appointment.customer_id', '=', $id)
                         ->get();
         $banks = Bank::all();
@@ -364,8 +398,10 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         $occupations = Occupation::all();
         $documents = RequiredDoc::where('occupation_id', '=', $customer->occupation_id)->get();
+        $applicants = TwoThreeApplicant::where('customer_id','=',$id)->get();
+       // $agents = $this->fetchAgents($id);
 
-        return view('back-office.customers.pipelinecustomeredit', compact('appointments', 'timeslots', 'typeofappointments', 'customer', 'banks', 'occupations', 'documents'));
+        return view('back-office.customers.pipelinecustomeredit', compact('appointments', 'timeslots', 'typeofappointments', 'customer', 'banks', 'occupations', 'documents','applicants'));
     }
 
     public function changeAgentAppointment(Request $request){

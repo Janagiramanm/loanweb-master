@@ -243,6 +243,50 @@
                                                 </td>
                                              </tr>
                                        </table>
+                                       <div id="two-appointment-section" class="twoapplicant">
+                                        <h4>Schedule an appointment</h4>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <p>Date Of Appointment</p>
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-calendar5"></i></span>
+                                                    </span>
+                                                    <input type="text" class="form-control pickadate-limits" placeholder="Select Date" name="primary[appointment_date]" id="two-datepicker" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="appointment_time">Time</label>
+                                                <select name="primary[appointment_time]" id="two_appointment_time" class="form-control">
+                                                    <option value="">Select Time</option>
+                                                    @foreach ($timeslots as $time)
+                                                        <option value="{{ $time->id }}"> {{ $time->time_slot }} </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('appointment_time')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div  class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="two_type_of_appointment">Appointment Type</label>
+                                                <select name="primary[type_of_appointment]" id="two_type_of_appointment" class="form-control">
+                                                    <option value="">Select Appointment Type</option>
+                                                    @foreach ($typeofappointments as $type)
+                                                        <option value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="two_appointment_agent">Agent Name</label>
+                                                <select name="primary[appointment_agent]" id="two_appointment_agent" class="form-control"></select>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                     </div>
                                     </div>
                                 </div>
@@ -311,6 +355,52 @@
                                                 </td>
                                              </tr>
                                        </table>
+                                       <div id="three-appointment-section" class="threeapplicant">
+                                        <h4>Schedule an appointment</h4>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <p>Date Of Appointment</p>
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-calendar5"></i></span>
+                                                    </span>
+                                                    <input type="text" class="form-control pickadate-limits" placeholder="Select Date" name="secondary[appointment_date]" id="three-datepicker" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="three_appointment_time">Time</label>
+                                                <select name="secondary[appointment_time]" id="three_appointment_time" class="form-control">
+                                                    <option value="">Select Time</option>
+                                                    @foreach ($timeslots as $time)
+                                                        <option value="{{ $time->id }}"> {{ $time->time_slot }} </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('appointment_time')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div  class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="three_type_of_appointment">Appointment Type</label>
+                                                <select name="secondary[type_of_appointment]" id="three_type_of_appointment" class="form-control">
+                                                    <option value="">Select Appointment Type</option>
+                                                    @foreach ($typeofappointments as $type)
+                                                        <option value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="three_appointment_agent">Agent Name</label>
+                                                <select name="secondary[appointment_agent]" id="three_appointment_agent" class="form-control"></select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
                                     </div>
                                     </div>
                                 </div>
@@ -415,8 +505,10 @@
             if ($(this).is(":checked")) {
                /// var cust_addres = $("#cust_address").val();
                 $("#two_cust_address").val($("#cust_address").val());
+                $("#two-appointment-section").hide();
             }else{
                 $("#two_cust_address").val('');
+                $("#two-appointment-section").show();
             }
 
         });
@@ -424,8 +516,10 @@
             if ($(this).is(":checked")) {
                /// var cust_addres = $("#cust_address").val();
                 $("#three_cust_address").val($("#cust_address").val());
+                $("#three-appointment-section").hide();
             }else{
                 $("#three_cust_address").val('');
+                $("#three-appointment-section").show();
             }
 
         });
@@ -482,6 +576,71 @@
                             selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
                         });
                         $("#appointment_agent").html(selectOptions);
+                    }
+
+                }
+            });
+        }
+    });
+    $("#two_appointment_time").change(function(){
+        var date = $("#two-datepicker").val();
+        var time = $("#two_appointment_time").val();
+        if(date == ""){
+            alert("please select date");
+        }else{
+            $.ajax({
+                url : "<?php echo url('/back-office/fetchAgents'); ?>",
+                headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                },
+                data : JSON.stringify({apdate:date, aptime: time}),
+                type : 'POST',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data.length);
+                    if(data.length == 0){
+                        selectOptions += '<option value="">No Agent Available in This Time Slot</option>';
+                        $("#two_appointment_agent").html(selectOptions);
+                    } else {
+                        var selectOptions = '';
+                        $.each(data, function( key, value ) {
+                            selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
+                        });
+                        $("#two_appointment_agent").html(selectOptions);
+                    }
+
+                }
+            });
+        }
+    });
+
+    $("#three_appointment_time").change(function(){
+        var date = $("#three-datepicker").val();
+        var time = $("#three_appointment_time").val();
+        if(date == ""){
+            alert("please select date");
+        }else{
+            $.ajax({
+                url : "<?php echo url('/back-office/fetchAgents'); ?>",
+                headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                },
+                data : JSON.stringify({apdate:date, aptime: time}),
+                type : 'POST',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data.length);
+                    if(data.length == 0){
+                        selectOptions += '<option value="">No Agent Available in This Time Slot</option>';
+                        $("#three_appointment_agent").html(selectOptions);
+                    } else {
+                        var selectOptions = '';
+                        $.each(data, function( key, value ) {
+                            selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
+                        });
+                        $("#three_appointment_agent").html(selectOptions);
                     }
 
                 }
@@ -555,6 +714,7 @@
     //       var selectedDate = $("#datepicker").val();
     //       alert(selectedDate);
     // });
+   
 
 </script>
 
@@ -575,6 +735,18 @@ span.same-address {
 }
 label#lbl-cust-address {
     width: 100%;
+}
+#two-appointment-section div#two-datepicker_root {
+    margin-top: -410px;
+}
+div#two-appointment-section {
+    padding: 23px;
+}
+#three-appointment-section div#three-datepicker_root {
+    margin-top: -410px;
+}
+div#three-appointment-section {
+    padding: 23px;
 }
 </style>
 
