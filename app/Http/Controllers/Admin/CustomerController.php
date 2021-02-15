@@ -1242,4 +1242,20 @@ class CustomerController extends Controller
         $success = "Status Updated Successfully";
         return json_encode($success);
     }
+
+    public function changeCustomerStatus(Request $request){
+
+        $input = $request->all();
+       
+        $customer = Customer::where('id', '=', $input['customer_id'])->update([
+            'application_status'    => ($input['status'] == 'not_interest') ? 1 : $input['status'] ,
+            'application_deleted' => ($input['status'] == 'not_interest') ? 1 :  0
+        ]);
+        $success =[
+            'status' => 1,
+            'message' => "Status Updated Successfully"
+        ]; 
+        return json_encode($success);
+
+    }
 }
