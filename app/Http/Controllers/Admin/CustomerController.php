@@ -20,6 +20,7 @@ use App\Model\Disbursement;
 use App\Model\RequiredDoc;
 use App\Model\ExtaDocs;
 use App\Model\TwoThreeApplicant;
+use App\Model\SecondaryApplicant;
 
 use App\Imports\CustomerImport;
 use App\Imports\AllCustomerImport;
@@ -30,6 +31,9 @@ use App\Exports\PipelineCustomerExport;
 use App\Exports\CustomerLoginProcessExport;
 use App\Exports\SanctionedCustomerExport;
 use App\Exports\DisbursedCustomerExport;
+
+use App\Http\Helpers\AppHelper;
+
 
 
 class CustomerController extends Controller
@@ -236,7 +240,11 @@ class CustomerController extends Controller
             $customer = Customer::find($id);
             $banks = Bank::all();
             $occupations = Occupation::all();
-            return view('back-office.customers.editnewcustomer', compact('customer', 'timeslots', 'typeofappointments', 'banks', 'occupations'));
+            $secondary_applicants = SecondaryApplicant::where('customer_id',$id)->get();
+            // echo '<pre>';
+            // print_r($secondary_applicants);
+            // exit;
+            return view('back-office.customers.editnewcustomer', compact('customer', 'timeslots', 'typeofappointments', 'banks', 'occupations','secondary_applicants'));
         } catch (\Exception $e) {
             return redirect(route('back-office.customers.index'))->with($e->getMessage());
         }
@@ -246,7 +254,9 @@ class CustomerController extends Controller
     {
         $input = $request->all();
         
-       
+    //    echo '<pre>';
+    //    print_r($input);
+    //    exit;
         try {
             if(isset($input['interested'])){
                 $application_status = 2;
@@ -278,69 +288,109 @@ class CustomerController extends Controller
                 'reason'    => isset($input['not-interested']) ? $input['reason_not_interest'] : NULL
             ]);
 
-            if(!empty($input['twoapplicant']) && $input['twoapplicant']['name']!=''){
-
-                //echo '<pre>';
-                // print_r($input['twoapplicant']);
-                // exit;
-
-                $twoapplicant = new TwoThreeApplicant();
-                $twoapplicant->customer_id = $id; 
-                $twoapplicant->name = $input['twoapplicant']['name']; 
-                $twoapplicant->phone = $input['twoapplicant']['phone']; 
-                $twoapplicant->email = $input['twoapplicant']['email']; 
-                $twoapplicant->occupation_id = $input['twoapplicant']['occupation_id']; 
-                $twoapplicant->zipcode = $input['twoapplicant']['pincode']; 
-                $twoapplicant->address = $input['twoapplicant']['address']; 
-                $twoapplicant->cust_type = 'twoapplicant'; 
-                $twoapplicant->save();
-
-                if($input['primary']['appointment_agent'] !=''){
-                        $appointment = new Appointment();
-                        $appointment->agent_id  = $input['primary']['appointment_agent'];
-                        $appointment->customer_id  = $id;
-                        $appointment->appointment_date  = date('Y-m-d', strtotime($input['primary']['appointment_date']));
-                        $appointment->timeslot_id  = $input['primary']['appointment_time'];
-                        $appointment->created_excutive  = Auth::user()->id;
-                        $appointment->status = 1;
-                        $appointment->appointmenttype_id = $input['primary']['type_of_appointment'];
-                        $appointment->applicant_type = 'twoapplicant';
-                        $appointment->save();
-                }
-                
-                
-            }
-            if(!empty($input['threeapplicant']) && $input['threeapplicant']['name']!=''){
-
-                    $threeapplicant = new TwoThreeApplicant();
-                    $threeapplicant->customer_id = $id; 
-                    $threeapplicant->name = $input['threeapplicant']['name']; 
-                    $threeapplicant->phone = $input['threeapplicant']['phone']; 
-                    $threeapplicant->email = $input['threeapplicant']['email']; 
-                    $threeapplicant->occupation_id = $input['threeapplicant']['occupation_id']; 
-                    $threeapplicant->zipcode = $input['threeapplicant']['pincode']; 
-                    $threeapplicant->address = $input['threeapplicant']['address']; 
-                    $threeapplicant->cust_type = 'threeapplicant'; 
-                    $threeapplicant->save();
-
-                    if($input['secondary']['appointment_agent']!=''){
-                            $appointment = new Appointment();
-                            $appointment->agent_id  = $input['secondary']['appointment_agent'];
-                            $appointment->customer_id  = $id;
-                            $appointment->appointment_date  = date('Y-m-d', strtotime($input['secondary']['appointment_date']));
-                            $appointment->timeslot_id  = $input['secondary']['appointment_time'];
-                            $appointment->created_excutive  = Auth::user()->id;
-                            $appointment->status = 1;
-                            $appointment->appointmenttype_id = $input['secondary']['type_of_appointment'];
-                            $appointment->applicant_type = 'threeapplicant';
-                            $appointment->save();
+            $secondary_applicants =  $input['secondary_cust_name'];
+            $secondary_cust_emails =  $input['secondary_cust_email'];
+            $secondary_cust_phone =  $input['secondary_cust_phone'];
+            $secondary_cust_address =  $input['secondary_cust_address'];
+            $secondary_cust_city =  $input['secondary_cust_city'];
+            $secondary_cust_pincode =  $input['secondary_cust_pincode'];
+            $secondary_occupation_id =  $input['secondary_occupation_id'];
+            $secondary_id =  $input['secondary_id'];
+            if($secondary_applicants){
+                foreach($secondary_applicants as $key => $value){
+                    if($key!=0){
+                        $secondaryId = $secondary_id[$key];
+                        $secondaryEdit =  SecondaryApplicant::find($secondaryId);
+                        if($secondaryEdit){
+                            $secondaryEdit->name = $value; 
+                            $secondaryEdit->phone = $secondary_cust_phone[$key]; 
+                            $secondaryEdit->email = $secondary_cust_emails[$key]; 
+                            $secondaryEdit->occupation_id = $secondary_occupation_id[$key]; 
+                            $secondaryEdit->zipcode = $secondary_cust_pincode[$key]; 
+                            $secondaryEdit->city = $secondary_cust_city[$key]; 
+                            $secondaryEdit->address = $secondary_cust_address[$key]; 
+                            $secondaryEdit->customer_id = $id; 
+                            $secondaryEdit->save();
+                        }else{
+                            $secondaryAdd = new SecondaryApplicant();
+                            $secondaryAdd->name = $value; 
+                            $secondaryAdd->phone = $secondary_cust_phone[$key]; 
+                            $secondaryAdd->email = $secondary_cust_emails[$key]; 
+                            $secondaryAdd->occupation_id = $secondary_occupation_id[$key]; 
+                            $secondaryAdd->zipcode = $secondary_cust_pincode[$key]; 
+                            $secondaryAdd->city = $secondary_cust_city[$key]; 
+                            $secondaryAdd->address = $secondary_cust_address[$key]; 
+                            $secondaryAdd->customer_id = $id; 
+                            $secondaryAdd->save();
+                        }
                     }
-
+                }
             }
+          
+            // if(!empty($input['twoapplicant']) && $input['twoapplicant']['name']!=''){
+
+            //     //echo '<pre>';
+            //     // print_r($input['twoapplicant']);
+            //     // exit;
+
+            //     $twoapplicant = new TwoThreeApplicant();
+            //     $twoapplicant->customer_id = $id; 
+            //     $twoapplicant->name = $input['twoapplicant']['name']; 
+            //     $twoapplicant->phone = $input['twoapplicant']['phone']; 
+            //     $twoapplicant->email = $input['twoapplicant']['email']; 
+            //     $twoapplicant->occupation_id = $input['twoapplicant']['occupation_id']; 
+            //     $twoapplicant->zipcode = $input['twoapplicant']['pincode']; 
+            //     $twoapplicant->address = $input['twoapplicant']['address']; 
+            //     $twoapplicant->cust_type = 'twoapplicant'; 
+            //     $twoapplicant->save();
+
+            //     if($input['primary']['appointment_agent'] !=''){
+            //             $appointment = new Appointment();
+            //             $appointment->agent_id  = $input['primary']['appointment_agent'];
+            //             $appointment->customer_id  = $id;
+            //             $appointment->appointment_date  = date('Y-m-d', strtotime($input['primary']['appointment_date']));
+            //             $appointment->timeslot_id  = $input['primary']['appointment_time'];
+            //             $appointment->created_excutive  = Auth::user()->id;
+            //             $appointment->status = 1;
+            //             $appointment->appointmenttype_id = $input['primary']['type_of_appointment'];
+            //             $appointment->applicant_type = 'twoapplicant';
+            //             $appointment->save();
+            //     }
+                
+                
+            // }
+            // if(!empty($input['threeapplicant']) && $input['threeapplicant']['name']!=''){
+
+            //         $threeapplicant = new TwoThreeApplicant();
+            //         $threeapplicant->customer_id = $id; 
+            //         $threeapplicant->name = $input['threeapplicant']['name']; 
+            //         $threeapplicant->phone = $input['threeapplicant']['phone']; 
+            //         $threeapplicant->email = $input['threeapplicant']['email']; 
+            //         $threeapplicant->occupation_id = $input['threeapplicant']['occupation_id']; 
+            //         $threeapplicant->zipcode = $input['threeapplicant']['pincode']; 
+            //         $threeapplicant->address = $input['threeapplicant']['address']; 
+            //         $threeapplicant->cust_type = 'threeapplicant'; 
+            //         $threeapplicant->save();
+
+            //         if($input['secondary']['appointment_agent']!=''){
+            //                 $appointment = new Appointment();
+            //                 $appointment->agent_id  = $input['secondary']['appointment_agent'];
+            //                 $appointment->customer_id  = $id;
+            //                 $appointment->appointment_date  = date('Y-m-d', strtotime($input['secondary']['appointment_date']));
+            //                 $appointment->timeslot_id  = $input['secondary']['appointment_time'];
+            //                 $appointment->created_excutive  = Auth::user()->id;
+            //                 $appointment->status = 1;
+            //                 $appointment->appointmenttype_id = $input['secondary']['type_of_appointment'];
+            //                 $appointment->applicant_type = 'threeapplicant';
+            //                 $appointment->save();
+            //         }
+
+            // }
 
            
             if(isset($input['interested'])  && $input['interested'] == 1){
 
+               // echo $input['cust_phone'];exit;
                 $appointment = Appointment::create([
                     'agent_id'          => $input['appointment_agent'],
                     'customer_id'       => $id,
@@ -358,10 +408,15 @@ class CustomerController extends Controller
                             ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone')
                             ->orderByDesc('cust_id')
                             ->get();
+            
+                //$randomDigit = mt_rand(10000,99999);
+                AppHelper::sendInterestSms($input['cust_phone'],$input['cust_name']);
                 // dd($customers);
                 return  Redirect::to('back-office/customers/customers')->with('customers', $customers )->with('message','Agent assignd to ('.$input['cust_name'].')  successfully');
 
             }else{
+
+               
               
                 $customers = DB::table('customers')
                             ->join('application_status', 'application_status.id', '=', 'customers.application_status')
@@ -376,7 +431,9 @@ class CustomerController extends Controller
             }
          
         } catch (\Exception $e) {
-           
+             echo '<pre>';
+             print_r($e->getMessage());
+             exit; 
             return redirect()->back()->with($e->getMessage());
         }
     }
