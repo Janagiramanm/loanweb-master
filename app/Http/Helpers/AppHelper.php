@@ -5,6 +5,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use http\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\URL;
 
 class AppHelper
 {
