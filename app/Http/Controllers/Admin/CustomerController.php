@@ -296,6 +296,19 @@ class CustomerController extends Controller
             $secondary_cust_pincode =  $input['secondary_cust_pincode'];
             $secondary_occupation_id =  $input['secondary_occupation_id'];
             $secondary_id =  $input['secondary_id'];
+
+            $old_secondary = SecondaryApplicant::where('customer_id','=',$id)->get();
+            if($old_secondary){
+                foreach($old_secondary as $key => $value){
+                      $old_secondary_id[] =  $value->id;
+                }
+               $delete_id =  array_diff($old_secondary_id,$secondary_id);
+            }
+            if($delete_id){
+                foreach($delete_id as $deleteid){
+                    SecondaryApplicant::find($deleteid)->delete();
+                }
+            }
             if($secondary_applicants){
                 foreach($secondary_applicants as $key => $value){
                     if($key!=0){

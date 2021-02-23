@@ -382,7 +382,7 @@
                            
                               </div>
                             </div>
-                            <div class="remove-sec"><a href="javascript:void(0);" class="remove_button">Remove</a></div>
+                            <div class="remove-sec"><a href="javascript:void(0);" class="remove_button_edit">Remove</a></div>
                             
                         </div>
                         @endforeach
@@ -953,6 +953,15 @@
     })
     $(wrapper).on('click', '.remove_button', function(e){
         e.preventDefault();
+       
+        $(this).parent().parent('div').remove();
+        $(this).remove(); //Remove field html
+        x--; //Decrement field counter
+    });
+
+    $('.remove_button_edit').on('click',function(e){
+        e.preventDefault();
+       
         $(this).parent().parent('div').remove();
         $(this).remove(); //Remove field html
         x--; //Decrement field counter
@@ -1006,7 +1015,7 @@ div#three-appointment-section {
 .form-row.add-more-lnk-sec a{
     color: green !important;
 }
-a.remove_button {
+a.remove_button, .remove_button_edit {
     color: red;
     background-color: antiquewhite;
     padding: 2px 5px;
