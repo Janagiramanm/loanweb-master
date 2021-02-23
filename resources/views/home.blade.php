@@ -1,4 +1,4 @@
-@extends('layouts.comingsoon')
+@extends('layouts.clientapp')
 
 @section('home-page')
 <div class="slider" id="slider">
