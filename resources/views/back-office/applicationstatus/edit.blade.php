@@ -1,12 +1,17 @@
 @extends('layouts.back-office')
-
+@section('parent_link')
+    <a href="{{ route('back-office.applicationstatus') }}" class="breadcrumb-item"> Application Status </a>
+@endsection
+@section('breadcrum')
+    Edit Application Status
+@stop
 @section('main-content')
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <h2 class="card-header">
-                    Add New Status
+                    Edit Application Status
                 </h2>
                 <div class="card-body">
                     <form action="{{ route('back-office.applicationstatus.update', $status->id) }}" method="POST" >

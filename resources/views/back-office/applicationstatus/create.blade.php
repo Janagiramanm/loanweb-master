@@ -1,5 +1,10 @@
 @extends('layouts.back-office')
-
+@section('parent_link')
+    <a href="{{ route('back-office.applicationstatus') }}" class="breadcrumb-item"> Application Status </a>
+@endsection
+@section('breadcrum')
+    Add New Status
+@stop
 @section('main-content')
 <div class="container mt-5">
     <div class="row justify-content-center">

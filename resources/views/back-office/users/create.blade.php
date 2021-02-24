@@ -1,5 +1,7 @@
 @extends('layouts.back-office')
-
+@section('parent_link')
+    <a href="{{ route('back-office.users.index') }}" class="breadcrumb-item"> Employees </a>
+@endsection
 @section('breadcrum')
     Create New Employee
 @stop

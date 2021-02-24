@@ -1,5 +1,10 @@
 @extends('layouts.back-office')
-
+@section('parent_link')
+    <a href="{{ route('back-office.roles.index') }}" class="breadcrumb-item"> Roles </a>
+@endsection
+@section('breadcrum')
+    Edit Role
+@stop
 
 @section('main-content')
 <div class="container mt-5">

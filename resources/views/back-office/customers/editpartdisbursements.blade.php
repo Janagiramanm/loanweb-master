@@ -118,7 +118,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="disbursement_amount">Demand Amount </label>
-                                <input type="text" class="form-control @error('disbursement_amount') is-invalid @enderror" id="disbursement_amount" name="disbursement_amount" required value="{{ old('disbursement_amount') }}">
+                                <input type="number" class="form-control @error('disbursement_amount') is-invalid @enderror" id="disbursement_amount" name="disbursement_amount" required value="{{ old('disbursement_amount') }}" autocomplete="no-fill" >
+                                <label for="disbursement_amount_txt" id="disbursement_amount_txt"></label>
                             </div>
                             <div class="form-group col-md-6">
                                 <p>Date Of Demand</p>
@@ -249,5 +250,11 @@
         }
 
     })
+    $("#disbursement_amount").on('keyup',function(){
+         var textVal = convertNumberToWords($(this).val());
+         $("#disbursement_amount_txt").text(textVal);
+        
+     })
+    $('input[type="text"]').prop('autocomplete',"no-fill");
 </script>
 @endsection

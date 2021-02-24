@@ -1,5 +1,7 @@
 @extends('layouts.back-office')
-
+@section('breadcrum')
+     Employees
+@stop
 @section('main-content')
     {{-- {{ dd($warning) }} --}}
 	<!-- Content area -->

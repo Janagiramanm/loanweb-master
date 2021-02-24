@@ -1,5 +1,10 @@
 @extends('layouts.back-office')
-
+@section('parent_link')
+    <a href="{{ route('back-office.banks') }}" class="breadcrumb-item"> Banks </a>
+@endsection
+@section('breadcrum')
+    Edit Bank
+@stop
 @section('main-content')
 <div class="container mt-5">
     <div class="row justify-content-center">

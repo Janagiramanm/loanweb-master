@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    
+    $('input[type="text"]').prop('autocomplete',"no-fill");
 })
 function convertNumberToWords(amount) {
     var words = new Array();
@@ -85,3 +85,4 @@ function convertNumberToWords(amount) {
     }
     return words_string;
 }
+

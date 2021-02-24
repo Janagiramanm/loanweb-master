@@ -1,5 +1,7 @@
 @extends('layouts.back-office')
-
+@section('breadcrum')
+    Application Status
+@stop
 @section('main-content')
     <!-- Content area -->
     <div class="content">
