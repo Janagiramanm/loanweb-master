@@ -1,4 +1,10 @@
 @extends('layouts.back-office')
+@section('parent_link')
+    <a href="{{ route('back-office.cibil.index') }}" class="breadcrumb-item"> Cibil Settings </a>
+@endsection
+@section('breadcrum')
+    Add Cibil Settings
+@stop
 
 @section('main-content')
 <div class="container mt-5">

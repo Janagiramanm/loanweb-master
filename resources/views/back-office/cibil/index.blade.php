@@ -1,5 +1,9 @@
 @extends('layouts.back-office')
 
+@section('breadcrum')
+     Cibil Settings
+@stop
+
 @section('main-content')
     <!-- Content area -->
     <div class="content">
