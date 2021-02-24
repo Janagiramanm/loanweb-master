@@ -134,6 +134,8 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
     Route::get('/appointments', 'AppointmentController@index')->name('appointments');
     //Route::put('/appointments/edit/{id}', 'AppointmentController@index')->name('appointments.edit');
 
+    Route::resource('/cibil','CibilSettingController');
+
 });
 
 Route::post('back-office/change-agent-appointment', 'Admin\CustomerController@changeAgentAppointment');

@@ -22,6 +22,7 @@
 
     <!-- /global stylesheets -->
     <script src="{{ asset('admin/global_assets/js/main/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/global_assets/js/main/currencyToWord.js') }}"></script>
 
 </head>
 
@@ -153,6 +154,10 @@
                         <li class="nav-item">
                             <a href="{{ url('back-office/banks') }}" class="nav-link <?php if(\Request::is('back-office/banks')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Banks</span></a>
                         </li>
+						<li class="nav-item">
+                            <a href="{{ url('back-office/cibil') }}" class="nav-link <?php if(\Request::is('back-office/cibil')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Cibil Settings</span></a>
+                        </li>
+
 
                         <li class="nav-item">
                             <a href="{{ url('back-office/applicationstatus') }}" class="nav-link <?php if(\Request::is('back-office/applicationstatus')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Application Status</span></a>
