@@ -208,6 +208,18 @@ class CustomerController extends Controller
         return view('back-office.customers.droppedcustomers', compact('customers'));
     }
 
+     /******* * This is  for Not Interested Customers *********** */
+     public function notInterested()
+     {
+         $customers = DB::table('customers')
+                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
+                     ->where('customers.application_status', '=', 13)
+                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                     ->orderByDesc('customers.id')
+                     ->get();
+         return view('back-office.customers.notinterested', compact('customers'));
+     }
+
     
 
     /******* * The func addNewCustomer will help us to open new customer form *********** */

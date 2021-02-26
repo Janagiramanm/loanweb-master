@@ -196,6 +196,7 @@
                                 <li class="nav-item"><a href="{{ url('back-office/customers/allcustomers') }}" class="nav-link <?php if(\Request::is('back-office/customers/allcustomers')){ echo 'active'; } ?>">All Customers</a></li>
                                 <li class="nav-item"><a href="{{ url('back-office/customers/droppedcustomers') }}" class="nav-link <?php if(\Request::is('back-office/customers/droppedcustomers')){ echo 'active'; } ?>">Dropped Customers</a></li>
                                 <li class="nav-item"><a href="{{ url('back-office/customers/self-funding') }}" class="nav-link <?php if(\Request::is('back-office/customers/self-funding')){ echo 'active'; } ?>">Self Funding Customers</a></li>
+                                <li class="nav-item"><a href="{{ url('back-office/customers/not-interested') }}" class="nav-link <?php if(\Request::is('back-office/customers/not-interested')){ echo 'active'; } ?>">Not Interested Customers</a></li>
 
                             </ul>
                         </li>

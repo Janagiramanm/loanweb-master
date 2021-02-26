@@ -68,11 +68,13 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
     Route::get('/customers/disbursedapplications', 'CustomerController@disbursedapplications')->name('customers.disbursedapplications');
     Route::get('/customers/partdisbursements', 'CustomerController@partdisbursements')->name('customers.partdisbursements');
     Route::get('/customers/partchequefixing', 'CustomerController@partchequefixing')->name('customers.partchequefixing');
+   
     Route::post('/change-customer-status', 'CustomerController@changeCustomerStatus');
 
     Route::get('/customers/allcustomers', 'CustomerController@allCustomers')->name('customers.allcustomers');
     Route::get('/customers/droppedcustomers', 'CustomerController@droppedCustomers')->name('customers.droppedcustomers');
     Route::get('/customers/self-funding', 'CustomerController@selfFunding')->name('customers.self-funding');
+    Route::get('/customers/not-interested', 'CustomerController@notInterested')->name('customers.not-interested');
 
     Route::get('/customers/addnewlead', 'CustomerController@addNewCustomer')->name('customers.addnewlead');
     Route::post('/customers/storecustomer', 'CustomerController@storeCustomer')->name('customers.storecustomer');
