@@ -16,7 +16,7 @@
                     </div>
                 </div> -->
             </div>
-            <table class="table datatable-basic">
+            <!-- <table class="table datatable-basic">
                 <thead>
                 <tr>
                     
@@ -49,7 +49,7 @@
                    
                 </tbody>
 
-            </table>
+            </table> -->
 
         </div>
         <div class="card">

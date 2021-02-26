@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Bank;
+use App\Model\Occupation;
 
 class BankController extends Controller
 {
@@ -21,8 +22,8 @@ class BankController extends Controller
 
     public function create()
     {
-
-        return view('back-office.bank.create');
+        $occupations = Occupation::all();
+        return view('back-office.bank.create',compact(['occupations']));
     }
 
     public function store(Request $request)
