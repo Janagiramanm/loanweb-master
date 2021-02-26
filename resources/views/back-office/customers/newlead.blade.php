@@ -33,6 +33,7 @@
                     <th>E-Mail</th>
                     <th>Phone</th>
                     <th>Property Cost</th>
+                    <th>Source</th>
                     <th class="text-center">Actions</th>
                 </tr>
                 </thead>
@@ -45,6 +46,7 @@
                         <td>{{ $customer->cust_email }}</td>
                         <td>{{ $customer->cust_phone }}</td>
                         <td>{{ $customer->property_cost }}</td>
+                        <td>Dashboard</td>
                         <td class="text-center">
                             <div class="list-icons">
                                 <div class="dropdown">
