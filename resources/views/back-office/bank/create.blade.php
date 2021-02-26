@@ -69,6 +69,12 @@
                                                 <th>LTV3</th>
                                             </tr>
                                             <tr>
+                                                <td>FOIR</td>
+                                                <td><input type="text" name="ltv1"  /></td>
+                                                <td><input type="text" name="ltv1"  /></td>
+                                                <td><input type="text" name="ltv1"  /></td>
+                                            </tr>
+                                            <tr>
                                                 <td>CIBIL1</td>
                                                 <td><input type="text" name="ltv1"  /></td>
                                                 <td><input type="text" name="ltv1"  /></td>
