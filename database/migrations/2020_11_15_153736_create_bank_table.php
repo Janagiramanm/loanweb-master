@@ -16,10 +16,10 @@ class CreateBankTable extends Migration
         Schema::create('bank', function (Blueprint $table) {
             $table->id();
             $table->string('bank_name');
-            $table->string('bank_branch');
-            $table->float('rate_of_interest');
-            $table->string('bank_address')->nullable();
-            $table->string('bank_logo');
+            $table->string('foir')->nullable();
+            $table->string('ltv1')->nullable();
+            $table->string('ltv2')->nullable();
+            $table->string('ltv3')->nullable();
             $table->timestamps();
         });
     }

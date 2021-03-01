@@ -46,6 +46,7 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
     Route::get('/bank/{bank_id}/edit', 'BankController@edit')->name('bank.edit');
     Route::PUT('/bank/update/{bank_id}', 'BankController@update')->name('bank.update');
     Route::DELETE('/bank/destroy/{bank_id}', 'BankController@destroy')->name('bank.destroy');
+    Route::post('/bank/add-more-cibil', 'BankController@addMoreCibil');
 
     /* ================Application Status Routes============= */
     Route::get('/applicationstatus', 'ApplicationStatusController@index')->name('applicationstatus');
@@ -137,6 +138,8 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
     //Route::put('/appointments/edit/{id}', 'AppointmentController@index')->name('appointments.edit');
 
     Route::resource('/cibil','CibilSettingController');
+
+    Route::resource('/builders','BuilderController');
 
 });
 

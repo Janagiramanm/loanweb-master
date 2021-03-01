@@ -155,8 +155,9 @@
                             <a href="{{ url('back-office/banks') }}" class="nav-link <?php if(\Request::is('back-office/banks')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Banks</span></a>
                         </li>
 						<li class="nav-item">
-                            <a href="{{ url('back-office/cibil') }}" class="nav-link <?php if(\Request::is('back-office/cibil')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Cibil Settings</span></a>
+                            <a href="{{ url('back-office/builders') }}" class="nav-link <?php if(\Request::is('back-office/builders')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Builders</span></a>
                         </li>
+						
 
 
                         <li class="nav-item">

@@ -21,10 +21,15 @@
                             <div class="form-group col-md-6">
                                 <label for="cust_name">Bank Name</label>
                                 <input type="text" class="form-control @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name" required value="{{ old("bank_name") }}">
+                                @error('bank_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                @enderror
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="cust_phone">FOIR</label>
-                                <input type="text" class="form-control @error('foir') is-invalid @enderror" id="foir" name="foir" required value="{{ old("foir") }}">
+                                <input type="text" class="form-control @error('foir') is-invalid @enderror" id="bank_foir" name="bank_foir" required value="{{ old("foir") }}">
                             </div>
                         </div>
 
@@ -49,8 +54,8 @@
                            <div class="field-group">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                            <label for="secondary_occupation_id">Occupation</label>
-                                            <select name="secondary_occupation_id[]" id="occupation_id" class="form-control" required>
+                                            <label for="occupation_id">Occupation</label>
+                                            <select name="occupation_id[]" id="occupation_id" class="form-control" required>
                                                 <option value="">Select Occupation</option>
                                                 @foreach ($occupations as $occupation)
                                                         <option value="{{ $occupation->id }}"> {{ $occupation->occupation_name }} </option>
@@ -70,63 +75,63 @@
                                             </tr>
                                             <tr>
                                                 <td>FOIR</td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
+                                                <td><input type="text" name="foir_0[]"  /></td>
+                                                <td><input type="text" name="foir_0[]"  /></td>
+                                                <td><input type="text" name="foir_0[]"  /></td>
                                             </tr>
                                             <tr>
                                                 <td>CIBIL1</td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
+                                                <td><input type="text" name="cibil1_0[]"  /></td>
+                                                <td><input type="text" name="cibil1_0[]"  /></td>
+                                                <td><input type="text" name="cibil1_0[]"  /></td>
                                             </tr>
                                             <tr>
                                                 <td>min roi (cibil 1)</td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
+                                                <td><input type="text" name="min-roi_0[]"  /></td>
+                                                <td><input type="text" name="min-roi_0[]"  /></td>
+                                                <td><input type="text" name="min-roi_0[]"  /></td>
                                             </tr>
                                             <tr>
                                                 <td>max roi (cibil 1)</td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
+                                                <td><input type="text" name="max-roi_0[]"  /></td>
+                                                <td><input type="text" name="max-roi_0[]"  /></td>
+                                                <td><input type="text" name="max-roi_0[]"  /></td>
                                             </tr>
                                             <tr>
                                                 <td>CIBIL2</td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
+                                                <td><input type="text" name="cibil2_0[]"  /></td>
+                                                <td><input type="text" name="cibil2_0[]"  /></td>
+                                                <td><input type="text" name="cibil2_0[]"  /></td>
                                             </tr>
                                             <tr>
                                                 <td>min roi (cibil 1)</td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
+                                                <td><input type="text" name="min-roi2_0[]"  /></td>
+                                                <td><input type="text" name="min-roi2_0[]"  /></td>
+                                                <td><input type="text" name="min-roi2_0[]"  /></td>
                                             </tr>
                                             <tr>
                                                 <td>max roi (cibil 1)</td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
+                                                <td><input type="text" name="max-roi2_0[]"  /></td>
+                                                <td><input type="text" name="max-roi2_0[]"  /></td>
+                                                <td><input type="text" name="max-roi2_0[]"  /></td>
                                             </tr>
                                             <tr>
                                                 <td>CIBIL3</td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
+                                                <td><input type="text" name="cibil3_0[]"  /></td>
+                                                <td><input type="text" name="cibil3_0[]"  /></td>
+                                                <td><input type="text" name="cibil3_0[]"  /></td>
                                             </tr>
                                             <tr>
                                                 <td>min roi (cibil 1)</td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
+                                                <td><input type="text" name="min-roi3_0[]"  /></td>
+                                                <td><input type="text" name="min-roi3_0[]"  /></td>
+                                                <td><input type="text" name="min-roi3_0[]"  /></td>
                                             </tr>
                                             <tr>
                                                 <td>max roi (cibil 1)</td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
-                                                <td><input type="text" name="ltv1"  /></td>
+                                                <td><input type="text" name="max-roi3_0[]"  /></td>
+                                                <td><input type="text" name="max-roi3_0[]"  /></td>
+                                                <td><input type="text" name="max-roi3_0[] "  /></td>
                                             </tr>
                                         </table>
                                 </div>
@@ -134,6 +139,7 @@
                         </div>
                         <div class="field_wrapper" id="add-group"></div>
                         <div class="form-row add-more-lnk-sec">
+                                <input type="hidden" name="add_more_count" id="add_more_count" value="0" />
                                 <a href="#" class="add-more-link" id="add-more"> <i class="fa fa-plus" aria-hidden="true"></i> Add Other Occupation</a>
                                 <!-- <input type="button" id="add-more" value="Add More Applicant" class="form-control" /> -->
                         </div>
@@ -151,15 +157,25 @@ $(document).ready(function(){
     var wrapper = $('.field_wrapper');
     $("#add-more").click(function(e){
         e.preventDefault();
+        var currentVal = $("#add_more_count").val();
+        
+        var incVal = parseInt(currentVal) + parseInt(1);
+        $("#add_more_count").val(incVal);
         var maxField = 10; //Input fields increment limitation
-        var fieldHTML = $(".cibil-for-occupation .field-group").clone().append('<div class="remove-sec"><a href="javascript:void(0);" class="remove_button">Remove</a></div>');
-        fieldHTML.find('input').val('');
-        fieldHTML.find('textarea').val('');
-        var x = 1; 
-        $(wrapper).append(fieldHTML);
-
-       
-
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({              
+                    url: "/back-office/bank/add-more-cibil",
+                    type: "POST",
+                    data: { incVal: incVal },
+                    success: function( response ) {
+                        $(wrapper).append(response.data)
+                    }
+        });
+        
     })
     $(wrapper).on('click', '.remove_button', function(e){
         e.preventDefault();

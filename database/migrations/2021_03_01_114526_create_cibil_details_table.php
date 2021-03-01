@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCibilSettingsTable extends Migration
+class CreateCibilDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateCibilSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('cibil_settings', function (Blueprint $table) {
+        Schema::create('cibil_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('bank_id')->nullable();
-            $table->unsignedBigInteger('occupation_id')->nullable();
+            $table->unsignedBigInteger('cibil_setting_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('ltv1')->nullable();
+            $table->string('ltv2')->nullable();
+            $table->string('ltv3')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateCibilSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cibil_settings');
+        Schema::dropIfExists('cibil_details');
     }
 }

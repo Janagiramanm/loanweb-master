@@ -67,10 +67,11 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Logo</th>
                     <th>Bank Name</th>
-                    <th>Branch</th>
-                    <th>Address</th>
+                    <th>FOIR</th>
+                    <th>LTV1</th>
+                    <th>LTV2</th>
+                    <th>LTV3</th>
                     <th class="text-center">Actions</th>
                 </tr>
                 </thead>
@@ -79,10 +80,12 @@
                 @foreach ($banks as $bank)
                     <tr>
                         <td>{{ $k }}</td>
-                        <td><img src="{{ asset($bank->bank_logo) }}" style="height:80px; width: 80px; border-radius: 40px;"></td>
+                       
                         <td>{{ $bank->bank_name }}</td>
-                        <td>{{ $bank->bank_branch }}</td>
-                        <td>{{ $bank->bank_address }}</td>
+                        <td>{{ $bank->foir }}</td>
+                        <td>{{ $bank->ltv1 }}</td>
+                        <td>{{ $bank->ltv2 }}</td>
+                        <td>{{ $bank->ltv3 }}</td>
                         <td class="text-center">
                             <div class="list-icons">
                                 <div class="dropdown">
