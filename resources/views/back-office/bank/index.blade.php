@@ -7,51 +7,7 @@
     <div class="content">
 
         <!-- Page length options -->
-        <div class="card">
-          <div class="card-header header-elements-inline">
-                <h5 class="card-title">Cibil Info</h5>
-                <!-- <div class="header-elements">
-                    <div class="list-icons">
-                       <a class="btn btn-primary text-light" href="{{ route('back-office.bank.create') }}">Add New Bank</a>
-                    </div>
-                </div> -->
-            </div>
-            <!-- <table class="table datatable-basic">
-                <thead>
-                <tr>
-                    
-                    <th>Name</th>
-                    <th>LTV1</th>
-                    <th>LTV2</th>
-                    <th>LTV3</th>
-                    <th>LTV4</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                   
-                   <tr>
-                        <td>ICICI</td>
-                        <td><input class="form-control" type="text" name="ltv1"  /></td>
-                        <td><input class="form-control" type="text" name="ltv2"  /></td>
-                        <td><input class="form-control" type="text" name="ltv3"  /></td>
-                        <td><input class="form-control" type="text" name="ltv4"  /></td>
-                        <td><button class="btn btn-primary" id="update" value="Update">Update</button></td>
-                   </tr>
-                   <tr>
-                        <td>HDFC</td>
-                        <td><input class="form-control" type="text" name="ltv1"  /></td>
-                        <td><input class="form-control" type="text" name="ltv2"  /></td>
-                        <td><input class="form-control" type="text" name="ltv3"  /></td>
-                        <td><input class="form-control" type="text" name="ltv4"  /></td>
-                        <td><button class="btn btn-primary" id="update" value="Update">Update</button></td>
-                   </tr>
-                   
-                </tbody>
-
-            </table> -->
-
-        </div>
+       
         <div class="card">
             <div class="card-header header-elements-inline">
                 <h5 class="card-title">Banks Data</h5>

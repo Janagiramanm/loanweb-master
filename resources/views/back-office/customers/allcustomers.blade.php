@@ -20,7 +20,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Avatar</th>
+                        
                         <th>Name</th>
                         <th>E-Mail</th>
                         <th>Phone</th>
@@ -31,7 +31,6 @@
                     @foreach ($customers as $customer)
                         <tr>
                             <td>{{ $customer->id }}</td>
-                            <td><img src="{{ asset('client/images/user-pic-1.jpg') }}" style="height:80px; width: 80px; border-radius: 40px;"></td>
                             <td>{{ $customer->cust_name }}</td>
                             <td>{{ $customer->cust_email }}</td>
                             <td>{{ $customer->cust_phone }}</td>
@@ -42,7 +41,7 @@
                                             <i class="icon-menu9"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a href=""  class="dropdown-item"><i class="icon-pencil"></i> Edit </a>
+                                            <!-- <a href=""  class="dropdown-item"><i class="icon-pencil"></i> Edit </a> -->
 
 
                                             <a class="dropdown-item" onclick="event.preventDefault();  document.getElementById('delete-form-{{ $customer->id }}').submit();">

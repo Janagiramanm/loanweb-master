@@ -1,5 +1,7 @@
 @extends('layouts.back-office')
-
+@section('breadcrum')
+    Builders
+@stop
 @section('main-content')
     <!-- Content area -->
     <div class="content">
@@ -36,11 +38,10 @@
                 @foreach ($builders as $builder)
                     <tr>
                         <td>{{ $k }}</td>
-                        <td><img src="{{ asset($bank->bank_logo) }}" style="height:80px; width: 80px; border-radius: 40px;"></td>
                         <td>{{ $builder->builder_name }}</td>
                         <td>{{ $builder->project_name }}</td>
-                        <td>{{ $builder->project_type }}</td>
-                        <td>{{ $builder->type_name }}</td>
+                        <td>{{ ($builder->project_type == 1 ? 'Apartment' : ($builder->project_type == 2 ? 'Plot' : 'Villa')) }}</td>
+                        <td>{{ $builder->project_type_name }}</td>
                         <td>{{ $builder->range }}</td>
                         <td>{{ $builder->spoc_name }}</td>
                         <td>{{ $builder->spoc_mobile }}</td>
@@ -52,12 +53,10 @@
                                         <i class="icon-menu9"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="{{ route('back-office.bank.edit', $bank->id) }}"  class="dropdown-item"><i class="icon-pencil"></i> Edit </a>
+                                        <a href="{{ route('back-office.builders.edit', $builder->id) }}"  class="dropdown-item"><i class="icon-pencil"></i> Edit </a>
 
-                                        <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $bank->id }}').submit();">
-                                            <i class="icon-bin"></i><span>Remove</span>
-                                        </a>
-                                        <form id="delete-form-{{ $bank->id }}" action="{{ route('back-office.bank.destroy', $bank->id) }}" method="POST" style="display: none;">
+                                        <button type="button" class="dropdown-item remove-btn" data-toggle="modal" id="delete_btn" data-id="{{ $builder->id }}"  data-target="#modal_delete_from"><i class="icon-bin"></i><span>Remove</span></button>
+                                        <form id="delete-form-{{ $builder->id }}" action="{{ route('back-office.builders.destroy', $builder->id) }}" method="POST" style="display: none;">
                                             @csrf @method('delete')
                                         </form>
                                     </div>
@@ -72,7 +71,22 @@
             </table>
         </div>
         <!-- /page length options -->
+        <div id="modal_delete_from" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Do you want to delete this builder ?</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
 
+                   <div class="row">
+                     <button  type="button" id="no-btn" data-dismiss="modal" class="btn btn-danger modal-btn col-3">No</button>
+                     <button  type="button" id="yes-btn" data-id="" class="btn btn-primary modal-btn col-3">Yes</button>
+                   </div>
+
+                </div>
+            </div>
+        </div>
 
     </div>
     <!-- /content area -->
@@ -82,4 +96,36 @@
 
 @section('custom-script')
     <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
+
+    <script>
+    $(document).ready(function() {
+        
+        $(".remove-btn").click(function(){
+            var builder_id = $(this).attr('data-id');
+            $('#yes-btn').attr('data-id',builder_id);
+            // $("#hidden_cust_id").val(builder_id);
+            // $("#submit_delte_form").submit();
+        })
+        $('#yes-btn').click(function(){
+            var builder_id = $(this).attr('data-id');
+            $("#delete-form-"+builder_id).submit();
+        })
+    })
+
+    </script>
+    <style>
+     #no-btn{
+         float:left;
+     }
+     .modal-btn {
+    margin-left: 10%;
+    margin-bottom: 10px;
+}
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5385;
+    margin-left: 7%;
+    padding-bottom: 11px;
+}
+    </style>
 @endsection

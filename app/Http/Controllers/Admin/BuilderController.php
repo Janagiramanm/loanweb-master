@@ -39,7 +39,32 @@ class BuilderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // echo '<pre>';
+        // print_r($request->input());
+        // exit;
+
+        $request->validate([
+                'builder_name'=>'required',
+                'project_name'=>'required',
+                'project_type'=>'required',
+                'type_name'=>'required'
+               
+        ]);
+
+       
+        $builder = new Builder();
+        $builder->builder_name = $request->builder_name;
+        $builder->project_name = $request->project_name;
+        $builder->project_type = $request->project_type;
+        $builder->project_type_name  =  $request->type_name;
+        $builder->range   = $request->range;
+        $builder->spoc_name = $request->spoc_name;
+        $builder->spoc_mobile = $request->spoc_mobile;
+        $builder->spoc_email = $request->spoc_email;
+        $builder->save();
+        return redirect( route('back-office.builders.index'))->withSuccess('Builder added successfully!');
+        
+
     }
 
     /**
@@ -61,7 +86,8 @@ class BuilderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $builder = Builder::find($id);
+        return view('back-office.builders.edit',compact(['builder']));
     }
 
     /**
@@ -73,7 +99,27 @@ class BuilderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // echo '<pre>';
+        // print_r($request->builder_name);
+        // exit;
+        $request->validate([
+            'builder_name'=>'required',
+            'project_name'=>'required',
+            'project_type'=>'required',
+            'type_name'=>'required'
+        ]);
+        $builder = Builder::find($id);
+        $builder->builder_name = $request->builder_name;
+        $builder->project_name = $request->project_name;
+        $builder->project_type = $request->project_type;
+        $builder->project_type_name  =  $request->type_name;
+        $builder->range   = $request->range;
+        $builder->spoc_name = $request->spoc_name;
+        $builder->spoc_mobile = $request->spoc_mobile;
+        $builder->spoc_email = $request->spoc_email;
+        $builder->save();
+        return redirect( route('back-office.builders.index'))->withSuccess('Builder added successfully!');
+        
     }
 
     /**
@@ -84,6 +130,8 @@ class BuilderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $builder = Builder::find($id);
+        $builder->delete();
+        return redirect('back-office/builders');
     }
 }
