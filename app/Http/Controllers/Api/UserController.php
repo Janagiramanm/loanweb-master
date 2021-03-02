@@ -14,7 +14,7 @@ class UserController extends Controller
     public function login(Request $request)
     {
         echo '<pre>';
-        print_r($request); 
+        print_r($request->input()); 
         exit;
         $request->validate([ 
             'email' => 'required|string|email',
