@@ -36,7 +36,11 @@ class UserController extends Controller
             ],401);
         }
 
+        echo '<pre>';
+        print_r($user);
         $token = $user->createToken('access_token')->accessToken;
+        print_r($token);
+        exit;
         // $success['email']       =  $user->email;
         // $success['name']        =  $user->name;
         // $success['user_id']     =  $user->id;
