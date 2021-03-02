@@ -24,8 +24,10 @@ class UserController extends Controller
         }
         $user = $request->user();
         
-        $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->token;
+        //$tokenResult = $user->createToken('Personal Access Token');
+        $token = $user->createToken('access_token')->accessToken;
+
+      //  $token = $tokenResult->token;
         echo '<pre>';
         print_r($token);
         exit;
