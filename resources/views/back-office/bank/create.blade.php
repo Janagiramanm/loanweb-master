@@ -20,7 +20,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="cust_name">Bank Name</label>
-                                <input type="text" class="form-control @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name" required value="{{ old("bank_name") }}">
+                                <input type="text" class="form-control @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name" required value="{{ old('bank_name') }}" autocomplete="no-fill">
                                 @error('bank_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

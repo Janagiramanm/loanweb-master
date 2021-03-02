@@ -24,6 +24,10 @@ class UserController extends Controller
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
+
+        echo '<pre>';
+        print_r($token);
+        exit;
         if ($request->remember_me){
             $token->expires_at = Carbon::now()->addWeeks(1);
         }
