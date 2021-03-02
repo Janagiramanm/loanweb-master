@@ -38,7 +38,7 @@ class UserController extends Controller
 
         echo '<pre>';
         print_r($user);
-        $token = $user->createToken('access_token')->accessToken;
+        $token = $user->createToken('Personal Access Token')->accessToken;
         print_r($token);
         exit;
         // $success['email']       =  $user->email;
