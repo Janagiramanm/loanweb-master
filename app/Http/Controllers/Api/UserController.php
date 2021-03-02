@@ -16,7 +16,7 @@ class UserController extends Controller
         echo '<pre>';
         print_r($request); 
         exit;
-        $request->validate([
+        $request->validate([ 
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
