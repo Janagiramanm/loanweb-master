@@ -24,6 +24,7 @@
                         <th>Name</th>
                         <th>E-Mail</th>
                         <th>Phone</th>
+                        <th>Status</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -34,6 +35,7 @@
                             <td>{{ $customer->cust_name }}</td>
                             <td>{{ $customer->cust_email }}</td>
                             <td>{{ $customer->cust_phone }}</td>
+                            <td>{{ $customer_status[$customer->application_status] }}</td>
                             <td class="text-center">
                                 <div class="list-icons">
                                     <div class="dropdown">
