@@ -20,8 +20,7 @@ class UserController extends Controller
 
         // finding user
         $user = User::where('email', '=', $request->input('email'))
-            ->where('primary_role', '=', 'admin')
-            ->first();
+                ->first();
 
         if (!$user) {
             return response()->json([
@@ -36,13 +35,19 @@ class UserController extends Controller
             ],401);
         }
 
-        $token = $user->createToken('access_token')->accessToken;
+        $tokenResult = $user->createToken('access_token');
+        $success['email']       =  $user->email;
+        $success['name']        =  $user->name;
+        $success['user_id']     =  $user->id;
+        $success['token']       =  $tokenResult->accessToken;
+        $success['expires_at']  =  Carbon::parse( $tokenResult->token->expires_at )->toDateTimeString();
+        return response()->json(['success' => $success], $this->successStatus);
 
-        return response()->json([
-            'message' => 'Authentication successful',
-            'token' => $token,
-            'user' => $user
-        ],200);
+        // return response()->json([
+        //     'message' => 'Authentication successful',
+        //     'token' => $token,
+        //     'user' => $user
+        // ],200);
     }
 
     // public function login(Request $request)
