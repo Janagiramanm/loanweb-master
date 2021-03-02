@@ -23,12 +23,12 @@ class UserController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         $user = $request->user();
-        echo '<pre>';
-        print_r($user);
-        exit;
+        
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
-
+        echo '<pre>';
+        print_r($token);
+        exit;
        
         if ($request->remember_me){
             $token->expires_at = Carbon::now()->addWeeks(1);
