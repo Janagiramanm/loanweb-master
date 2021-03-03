@@ -38,8 +38,8 @@ class UserController extends Controller
 
         // echo '<pre>';
         // print_r($user);
-        $token = 'oo';
-       // $token = $user->createToken('Personal Access Token')->accessToken;
+       // $token = 'oo';
+        $token = $user->createToken('Personal Access Token')->accessToken;
         // print_r($token);
         //exit;
         // $success['email']       =  $user->email;
