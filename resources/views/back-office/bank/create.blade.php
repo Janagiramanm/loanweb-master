@@ -28,22 +28,20 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="cust_phone">FOIR</label>
-                                <input type="text" class="form-control @error('foir') is-invalid @enderror" id="bank_foir" name="bank_foir" required value="{{ old("foir") }}">
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
                                 <label for="ltv1">LTV1</label>
                                 <input type="num" class="form-control" id="ltv1" name="ltv1" required value="{{ old('ltv1') }}">
                             </div>
-                            <div class="form-group col-md-4">
+                           
+                        </div>
+
+                        <div class="form-row">
+                            
+                            <div class="form-group col-md-6">
                                 <label for="ltv2">LTV2</label>
                                 <input type="num" class="form-control" id="ltv2" name="ltv2" required value="{{ old('ltv2') }}">
                                
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="ltv3">LTV3</label>
                                 <input type="num" class="form-control" id="ltv3" name="ltv3" required value="{{ old('ltv3') }}">
                                
@@ -75,63 +73,81 @@
                                             </tr>
                                             <tr>
                                                 <td>FOIR</td>
-                                                <td><input type="text" name="foir_0[]"  /></td>
-                                                <td><input type="text" name="foir_0[]"  /></td>
-                                                <td><input type="text" name="foir_0[]"  /></td>
+                                                <td><input type="text" name="foir_0[]" value="{{ old('foir_0.0') }}"  /></td>
+                                                <td><input type="text" name="foir_0[]" value="{{ old('foir_0.1') }}" /></td>
+                                                <td><input type="text" name="foir_0[]" value="{{ old('foir_0.2') }}" /></td>
                                             </tr>
                                             <tr>
                                                 <td>CIBIL1</td>
-                                                <td><input type="text" name="cibil1_0[]"  /></td>
-                                                <td><input type="text" name="cibil1_0[]"  /></td>
-                                                <td><input type="text" name="cibil1_0[]"  /></td>
+                                                <td><input type="text" name="cibil1_0[]" value="{{ old('cibil1_0.0') }}" /></td>
+                                                <td><input type="text" name="cibil1_0[]" value="{{ old('cibil1_0.1') }}" /></td>
+                                                <td><input type="text" name="cibil1_0[]" value="{{ old('cibil1_0.2') }}" /></td>
                                             </tr>
                                             <tr>
                                                 <td>min roi (cibil 1)</td>
-                                                <td><input type="text" name="min-roi_0[]"  /></td>
-                                                <td><input type="text" name="min-roi_0[]"  /></td>
-                                                <td><input type="text" name="min-roi_0[]"  /></td>
+                                                <td><input type="text" name="min-roi_0[]" value="{{ old('min-roi_0.0') }}" /></td>
+                                                <td><input type="text" name="min-roi_0[]" value="{{ old('min-roi_0.1') }}" /></td>
+                                                <td><input type="text" name="min-roi_0[]" value="{{ old('min-roi_0.2') }}" /></td>
                                             </tr>
                                             <tr>
                                                 <td>max roi (cibil 1)</td>
-                                                <td><input type="text" name="max-roi_0[]"  /></td>
-                                                <td><input type="text" name="max-roi_0[]"  /></td>
-                                                <td><input type="text" name="max-roi_0[]"  /></td>
+                                                <td><input type="text" name="max-roi_0[]" value="{{ old('max-roi_0.0') }}" /></td>
+                                                <td><input type="text" name="max-roi_0[]" value="{{ old('max-roi_0.1') }}" /></td>
+                                                <td><input type="text" name="max-roi_0[]" value="{{ old('max-roi_0.2') }}" /></td>
                                             </tr>
                                             <tr>
                                                 <td>CIBIL2</td>
-                                                <td><input type="text" name="cibil2_0[]"  /></td>
-                                                <td><input type="text" name="cibil2_0[]"  /></td>
-                                                <td><input type="text" name="cibil2_0[]"  /></td>
+                                                <td><input type="text" name="cibil2_0[]" value="{{ old('cibil2_0.0') }}" /></td>
+                                                <td><input type="text" name="cibil2_0[]" value="{{ old('cibil2_0.1') }}" /></td>
+                                                <td><input type="text" name="cibil2_0[]" value="{{ old('cibil2_0.2') }}" /></td>
                                             </tr>
                                             <tr>
-                                                <td>min roi (cibil 1)</td>
-                                                <td><input type="text" name="min-roi2_0[]"  /></td>
-                                                <td><input type="text" name="min-roi2_0[]"  /></td>
-                                                <td><input type="text" name="min-roi2_0[]"  /></td>
+                                                <td>min roi (cibil 2)</td>
+                                                <td><input type="text" name="min-roi2_0[]" value="{{ old('min-roi2_0.0') }}" /></td>
+                                                <td><input type="text" name="min-roi2_0[]" value="{{ old('min-roi2_0.1') }}"  /></td>
+                                                <td><input type="text" name="min-roi2_0[]" value="{{ old('min-roi2_0.2') }}" /></td>
                                             </tr>
                                             <tr>
-                                                <td>max roi (cibil 1)</td>
-                                                <td><input type="text" name="max-roi2_0[]"  /></td>
-                                                <td><input type="text" name="max-roi2_0[]"  /></td>
-                                                <td><input type="text" name="max-roi2_0[]"  /></td>
+                                                <td>max roi (cibil 2)</td>
+                                                <td><input type="text" name="max-roi2_0[]" value="{{ old('max-roi2_0.0') }}" /></td>
+                                                <td><input type="text" name="max-roi2_0[]" value="{{ old('max-roi2_0.1') }}" /></td>
+                                                <td><input type="text" name="max-roi2_0[]" value="{{ old('max-roi2_0.2') }}" /></td>
                                             </tr>
                                             <tr>
                                                 <td>CIBIL3</td>
-                                                <td><input type="text" name="cibil3_0[]"  /></td>
-                                                <td><input type="text" name="cibil3_0[]"  /></td>
-                                                <td><input type="text" name="cibil3_0[]"  /></td>
+                                                <td><input type="text" name="cibil3_0[]" value="{{ old('cibil3_0.0') }}" /></td>
+                                                <td><input type="text" name="cibil3_0[]" value="{{ old('cibil3_0.1') }}" /></td>
+                                                <td><input type="text" name="cibil3_0[]" value="{{ old('cibil3_0.2') }}" /></td>
                                             </tr>
                                             <tr>
-                                                <td>min roi (cibil 1)</td>
-                                                <td><input type="text" name="min-roi3_0[]"  /></td>
-                                                <td><input type="text" name="min-roi3_0[]"  /></td>
-                                                <td><input type="text" name="min-roi3_0[]"  /></td>
+                                                <td>min roi (cibil 3)</td>
+                                                <td><input type="text" name="min-roi3_0[]" value="{{ old('min-roi3_0.0') }}" /></td>
+                                                <td><input type="text" name="min-roi3_0[]" value="{{ old('min-roi3_0.1') }}" /></td>
+                                                <td><input type="text" name="min-roi3_0[]" value="{{ old('min-roi3_0.2') }}"/></td>
                                             </tr>
                                             <tr>
-                                                <td>max roi (cibil 1)</td>
-                                                <td><input type="text" name="max-roi3_0[]"  /></td>
-                                                <td><input type="text" name="max-roi3_0[]"  /></td>
-                                                <td><input type="text" name="max-roi3_0[] "  /></td>
+                                                <td>max roi (cibil 3)</td>
+                                                <td><input type="text" name="max-roi3_0[]" value="{{ old('max-roi3_0.0') }}" /></td>
+                                                <td><input type="text" name="max-roi3_0[]" value="{{ old('max-roi3_0.1') }}" /></td>
+                                                <td><input type="text" name="max-roi3_0[]" value="{{ old('max-roi3_0.2') }}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>CIBIL4</td>
+                                                <td><input type="text" name="cibil4_0[]" value="{{ old('cibil4_0.0') }}" /></td>
+                                                <td><input type="text" name="cibil4_0[]" value="{{ old('cibil4_0.1') }}" /></td>
+                                                <td><input type="text" name="cibil4_0[]" value="{{ old('cibil4_0.2') }}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>min roi (cibil 4)</td>
+                                                <td><input type="text" name="min-roi4_0[]" value="{{ old('min-roi4_0.0') }}" /></td>
+                                                <td><input type="text" name="min-roi4_0[]" value="{{ old('min-roi4_0.1') }}" /></td>
+                                                <td><input type="text" name="min-roi4_0[]" value="{{ old('min-roi4_0.2') }}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>max roi (cibil 4)</td>
+                                                <td><input type="text" name="max-roi4_0[]" value="{{ old('max-roi4_0.0') }}" /></td>
+                                                <td><input type="text" name="max-roi4_0[]" value="{{ old('max-roi4_0.1') }}"  /></td>
+                                                <td><input type="text" name="max-roi4_0[]" value="{{ old('max-roi4_0.2') }}" /></td>
                                             </tr>
                                         </table>
                                 </div>

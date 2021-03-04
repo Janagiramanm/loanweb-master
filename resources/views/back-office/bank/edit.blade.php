@@ -24,22 +24,19 @@
                                 <input type="text" class="form-control @error('bank_name') is-invalid @enderror" id="bank_name" name="bank_name" required value="{{ $bank->bank_name }}">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="cust_phone">FOIR</label>
-                                <input type="tel" class="form-control @error('bank_branch') is-invalid @enderror" id="bank_foir" name="bank_foir" required value="{{ $bank->foir }}">
+                                <label for="ltv1">LTV1</label>
+                                <input type="num" class="form-control" id="ltv1" name="ltv1" required value="{{ $bank->ltv1 }}">
                             </div>
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="ltv1">LTV1</label>
-                                <input type="num" class="form-control" id="ltv1" name="ltv1" required value="{{ $bank->ltv1 }}">
-                            </div>
-                            <div class="form-group col-md-4">
+                           
+                            <div class="form-group col-md-6">
                                 <label for="ltv2">LTV2</label>
                                 <input type="num" class="form-control" id="ltv2" name="ltv2" required value="{{ $bank->ltv2 }}">
                                
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="ltv3">LTV3</label>
                                 <input type="num" class="form-control" id="ltv3" name="ltv3" required value="{{ $bank->ltv3 }}">
                                
@@ -50,7 +47,8 @@
                           
                             @foreach($bank->cibilSettings as $key => $cibil)
                             
-
+                                <input type="hidden" name="old_occupation[]" value="{{ $cibil->occupation_id }}" />
+                                <input type="hidden" name="old_cibil_setting_id[]" value="{{ $cibil->id }}" />
                                 <div class="cibil-for-occupation">
                                      <div class="field-group">
                                             <div class="form-row">
@@ -72,76 +70,27 @@
                                                             <th>LTV2</th>
                                                             <th>LTV3</th>
                                                         </tr>
-                                                       
+                                                        
                                                         @foreach($cibil->cibilDetails as $detail)
+                                                            
                                                             <tr>
-                                                                <td>{{ ucwords($detail->name) }}</td>
-                                                                <td><input type="text" name="{{$detail->name.'_'.$key}}[]" value="{{ $detail->ltv1 }}" /></td>
-                                                                <td><input type="text" name="{{$detail->name.'_'.$key}}[]" value="{{ $detail->ltv2 }}" /></td>
-                                                                <td><input type="text" name="{{$detail->name.'_'.$key}}[]" value="{{ $detail->ltv3 }}"  /></td>
+                                                               
+                                                               <td>{{ ucwords($detail->name) }}
+                                                               <input type="hidden" name="old_{{$detail->name.'_'.$key}}" value="{{ $detail->id }}" />
+                                                               </td>
+                                                                @for($i=1; $i < 4; $i++)
+                                                                    @php
+                                                                    $ltv = 'ltv'.$i;
+                                                                    @endphp
+                                                                <td>
+                                                                     
+                                                                     <input type="text" name="{{$detail->name.'_'.$key}}[]" value="{{ $detail->$ltv }}">
+                                                                </td>
+                                                                @endfor
                                                             </tr>
                                                         @endforeach
                                                       
-                                                        <!-- <tr>
-                                                            <td>FOIR</td>
-                                                            <td><input type="text" name="foir_0[]" value="{{ $cibil->cibilDetails }}" /></td>
-                                                            <td><input type="text" name="foir_0[]"  /></td>
-                                                            <td><input type="text" name="foir_0[]"  /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>CIBIL1</td>
-                                                            <td><input type="text" name="cibil1_0[]"  /></td>
-                                                            <td><input type="text" name="cibil1_0[]"  /></td>
-                                                            <td><input type="text" name="cibil1_0[]"  /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>min roi (cibil 1)</td>
-                                                            <td><input type="text" name="min-roi_0[]"  /></td>
-                                                            <td><input type="text" name="min-roi_0[]"  /></td>
-                                                            <td><input type="text" name="min-roi_0[]"  /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>max roi (cibil 1)</td>
-                                                            <td><input type="text" name="max-roi_0[]"  /></td>
-                                                            <td><input type="text" name="max-roi_0[]"  /></td>
-                                                            <td><input type="text" name="max-roi_0[]"  /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>CIBIL2</td>
-                                                            <td><input type="text" name="cibil2_0[]"  /></td>
-                                                            <td><input type="text" name="cibil2_0[]"  /></td>
-                                                            <td><input type="text" name="cibil2_0[]"  /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>min roi (cibil 1)</td>
-                                                            <td><input type="text" name="min-roi2_0[]"  /></td>
-                                                            <td><input type="text" name="min-roi2_0[]"  /></td>
-                                                            <td><input type="text" name="min-roi2_0[]"  /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>max roi (cibil 1)</td>
-                                                            <td><input type="text" name="max-roi2_0[]"  /></td>
-                                                            <td><input type="text" name="max-roi2_0[]"  /></td>
-                                                            <td><input type="text" name="max-roi2_0[]"  /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>CIBIL3</td>
-                                                            <td><input type="text" name="cibil3_0[]"  /></td>
-                                                            <td><input type="text" name="cibil3_0[]"  /></td>
-                                                            <td><input type="text" name="cibil3_0[]"  /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>min roi (cibil 1)</td>
-                                                            <td><input type="text" name="min-roi3_0[]"  /></td>
-                                                            <td><input type="text" name="min-roi3_0[]"  /></td>
-                                                            <td><input type="text" name="min-roi3_0[]"  /></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>max roi (cibil 1)</td>
-                                                            <td><input type="text" name="max-roi3_0[]"  /></td>
-                                                            <td><input type="text" name="max-roi3_0[]"  /></td>
-                                                            <td><input type="text" name="max-roi3_0[] "  /></td>
-                                                        </tr> -->
+                                                       
                                                     </table>
                                             </div>
                                         </div>
@@ -152,7 +101,7 @@
                         </div>
                         
                         <div class="form-row add-more-lnk-sec">
-                                <input type="hidden" name="add_more_count" id="add_more_count" value="0" />
+                                <input type="text" name="add_more_count" id="add_more_count" value="{{ count($bank->cibilSettings)-1 }}" />
                                 <a href="#" class="add-more-link" id="add-more"> <i class="fa fa-plus" aria-hidden="true"></i> Add Other Occupation</a>
                                 <!-- <input type="button" id="add-more" value="Add More Applicant" class="form-control" /> -->
                         </div>

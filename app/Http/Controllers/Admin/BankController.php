@@ -36,17 +36,22 @@ class BankController extends Controller
                       
         ]);
         $input = $request->all();
+
+
+        // echo '<pre>';
+        // print_r($input);
+        // exit;
         $occupation_id = $input['occupation_id'];
 
         $bank = new Bank();
         $bank->bank_name = $input['bank_name'];
-        $bank->foir = $input['bank_foir'];
+        $bank->foir = null;
         $bank->ltv1 = $input['ltv1'];
         $bank->ltv2 = $input['ltv2'];
         $bank->ltv3 = $input['ltv3'];
         $bank->save();
 
-        $inputArray = ['foir','cibil1','min-roi','max-roi','cibil2','min-roi','max-roi','cibil3','min-roi','max-roi'];
+        $inputArray = ['foir','cibil1','min-roi','max-roi','cibil2','min-roi2','max-roi2','cibil3','min-roi3','max-roi3','cibil4','min-roi4','max-roi4'];
         
         if($occupation_id){
 
@@ -56,6 +61,7 @@ class BankController extends Controller
                     $cibil->occupation_id = $value;
                     $cibil->save();
                     foreach($inputArray as $key=> $inputField){
+                        //    print_r($input[$inputField.'_'.$key1][0]);
                         $cibilDetails = new CibilDetail();
                         
                         $cibilDetails->cibil_setting_id = $cibil->id;
@@ -68,21 +74,6 @@ class BankController extends Controller
                 }
 
         }
-       
-        
-        
-        // $path_url = Config('app.url');
-
-        // if ($input['bank_logo']) {
-        //     $image = $input['bank_logo'];
-        //     $name = $image->getClientOriginalName();
-        //     $destinationPath = public_path('/uploads/bank_logos/');
-        //     $image->move($destinationPath, $name);
-        //     $image = "/uploads/bank_logos/".$name;
-        //     $input['bank_logo'] = $image;
-        // }
-
-        // $bank = Bank::create($input);
         return redirect(route('back-office.banks'))->with('success','Bank Added Successfully');
     }
 
@@ -90,18 +81,6 @@ class BankController extends Controller
     {
         $occupations = Occupation::all();
         $bank = Bank::find($id);
-      
-        // $cibilSettings = CibilSetting::where('bank_id','=',$id)
-        // ->get();
-        // if($cibilSettings){
-        //     foreach($cibilSettings as $cibilSetting){
-        //         echo '<pre>';
-        //         print_r($cibilSetting);
-        //     }
-        //     exit;
-        // }
-        // echo '<pre>';
-        // print_r($cibilSettings);
         return view('back-office.bank.edit', compact(['bank','occupations']));
     }
 
@@ -112,72 +91,69 @@ class BankController extends Controller
                       
         ]);
         $input = $request->all();
+        // echo '<pre>';
+        // print_r($input);
+        // exit;  
+        // echo "==========="; 
 
         $bank = Bank::find($id);
         $bank->bank_name = $input['bank_name'];
-        $bank->foir = $input['bank_foir'];
+        $bank->foir = null;
         $bank->ltv1 = $input['ltv1'];
         $bank->ltv2 = $input['ltv2'];
         $bank->ltv3 = $input['ltv3'];
         $bank->save();
 
         $occupation_id = $input['occupation_id'];
-        $inputArray = ['foir','cibil1','min-roi','max-roi','cibil2','min-roi','max-roi','cibil3','min-roi','max-roi'];
-        
+        $inputArray = ['foir','cibil1','min-roi','max-roi','cibil2','min-roi2','max-roi2','cibil3','min-roi3','max-roi3','cibil4','min-roi4','max-roi4'];
+           
         if($occupation_id){
 
-            // echo '<pre>';
-            // print_r($occupation_id);
-            // exit;
-
                 foreach($occupation_id as $key1 => $value){
-                    $cibil = CibilSetting::where('bank_id','=',$id)->where('occupation_id','=',$value)->first();
-                    $cibil->bank_id = $id;
-                    $cibil->occupation_id = $value;
-                    $cibil->save();
-                    CibilDetail::where('cibil_setting_id','=',$cibil->id)->delete();
-                    foreach($inputArray as $key=> $inputField){
-                        $cibilDetails = new CibilDetail();
-                        
-                        $cibilDetails->cibil_setting_id = $cibil->id;
-                        $cibilDetails->name = $inputField;
-                        $cibilDetails->ltv1 = $input[$inputField.'_'.$key1][0];
-                        $cibilDetails->ltv2 = $input[$inputField.'_'.$key1][1];
-                        $cibilDetails->ltv3 = $input[$inputField.'_'.$key1][2];
-                        $cibilDetails->save();
-                    }
+                            if(isset($input['old_cibil_setting_id'][$key1])){
+                                    $cibil = CibilSetting::find($input['old_cibil_setting_id'][$key1]);
+                            }else{
+                                $cibil = new CibilSetting();
+                            }
+                            $cibil->bank_id = $id;
+                            $cibil->occupation_id = $value;
+                            $cibil->save();
+                            foreach($inputArray as $key=> $inputField){
+                                if(isset($input['old_'.$inputField.'_'.$key1])){
+                                    $cibilDetails = CibilDetail::find($input['old_'.$inputField.'_'.$key1]);
+                                }else{
+                                    $cibilDetails = new CibilDetail();
+                                }
+                                
+                                    $cibilDetails->cibil_setting_id = $cibil->id;
+                                    $cibilDetails->name = $inputField;
+                                    $cibilDetails->ltv1 = $input[$inputField.'_'.$key1][0];
+                                    $cibilDetails->ltv2 = $input[$inputField.'_'.$key1][1];
+                                    $cibilDetails->ltv3 = $input[$inputField.'_'.$key1][2];
+                                    $cibilDetails->save();
+                               
+                            }
+                  
                 }
 
         }
-        // if(isset($input['bank_logo'])){
-        //     $image = $input['bank_logo'];
-        //     $name = $image->getClientOriginalName();
-        //     $destinationPath = public_path('/uploads/bank_logos/');
-        //     $image->move($destinationPath, $name);
-        //     $image = "/uploads/bank_logos/".$name;
-
-
-        //     Bank::where('id', '=', $bank_id->id)->update([
-        //         'bank_name'         => $request->bank_name,
-        //         'bank_branch'       => $request->bank_branch,
-        //         'rate_of_interest'  => $request->rate_of_interest,
-        //         'bank_address'      => $request->bank_address,
-        //         'bank_logo'         => $image
-        //     ]);
-        //     return redirect(route('back-office.banks'))->with('success','Bank updated  successfully');
-
-        // }else{
-        //     Bank::where('id', '=', $bank_id->id)->update([
-        //         'bank_name'         => $request->bank_name,
-        //         'bank_branch'       => $request->bank_branch,
-        //         'rate_of_interest'  => $request->rate_of_interest,
-        //         'bank_address'      => $request->bank_address,
-        //         'bank_logo'         => $request->bank_logo_old,
-        //     ]);
-
-            return redirect(route('back-office.banks'))->with('success','Bank updated successfully');
-
-        // }
+        $delete_occupation=array_diff($input['old_occupation'],$input['occupation_id']);
+        if($delete_occupation){
+            foreach($delete_occupation as $del_occupationid){
+                $del_cibil_setting = CibilSetting::find($del_occupationid);
+                $del_cibil_detail[] =  $del_cibil_setting->id;
+                $del_cibil_setting->delete();
+            }
+            if($del_cibil_detail){
+                foreach($del_cibil_detail as $detail_id){
+                    $cibilDetails = CibilDetail::where('cibil_setting_id','=',$detail_id)->get();
+                    foreach($cibilDetails as $cibilDetail){
+                        CibilDetail::find($cibilDetail->id)->delete();
+                    }
+                }
+            }
+        }
+        return redirect(route('back-office.banks'))->with('success','Bank updated successfully');
 
     }
 
@@ -243,13 +219,13 @@ class BankController extends Controller
                              <td><input type="text" name="cibil2_'.$id.'[]"  /></td>
                          </tr>
                          <tr>
-                             <td>min roi (cibil 1)</td>
+                             <td>min roi (cibil 2)</td>
                              <td><input type="text" name="min-roi2_'.$id.'[]"  /></td>
                              <td><input type="text" name="min-roi2_'.$id.'[]"  /></td>
                              <td><input type="text" name="min-roi2_'.$id.'[]"  /></td>
                          </tr>
                          <tr>
-                             <td>max roi (cibil 1)</td>
+                             <td>max roi (cibil 2)</td>
                              <td><input type="text" name="max-roi2_'.$id.'[]"  /></td>
                              <td><input type="text" name="max-roi2_'.$id.'[]"  /></td>
                              <td><input type="text" name="max-roi2_'.$id.'[]"  /></td>
@@ -261,16 +237,34 @@ class BankController extends Controller
                              <td><input type="text" name="cibil3_'.$id.'[]"  /></td>
                          </tr>
                          <tr>
-                             <td>min roi (cibil 1)</td>
+                             <td>min roi (cibil 3)</td>
                              <td><input type="text" name="min-roi3_'.$id.'[]"  /></td>
                              <td><input type="text" name="min-roi3_'.$id.'[]"  /></td>
                              <td><input type="text" name="min-roi3_'.$id.'[]"  /></td>
                          </tr>
                          <tr>
-                             <td>max roi (cibil 1)</td>
+                             <td>max roi (cibil 3)</td>
                              <td><input type="text" name="max-roi3_'.$id.'[]"  /></td>
                              <td><input type="text" name="max-roi3_'.$id.'[]"  /></td>
-                             <td><input type="text" name="max-roi3_'.$id.'] "  /></td>
+                             <td><input type="text" name="max-roi3_'.$id.'[] "  /></td>
+                         </tr>
+                         <tr>
+                             <td>CIBIL4</td>
+                             <td><input type="text" name="cibil4_'.$id.'[]"  /></td>
+                             <td><input type="text" name="cibil4_'.$id.'[]"  /></td>
+                             <td><input type="text" name="cibil4_'.$id.'[]"  /></td>
+                         </tr>
+                         <tr>
+                             <td>min roi (cibil 4)</td>
+                             <td><input type="text" name="min-roi4_'.$id.'[]"  /></td>
+                             <td><input type="text" name="min-roi4_'.$id.'[]"  /></td>
+                             <td><input type="text" name="min-roi4_'.$id.'[]"  /></td>
+                         </tr>
+                         <tr>
+                             <td>max roi (cibil 4)</td>
+                             <td><input type="text" name="max-roi4_'.$id.'[]"  /></td>
+                             <td><input type="text" name="max-roi4_'.$id.'[]"  /></td>
+                             <td><input type="text" name="max-roi4_'.$id.'[] "  /></td>
                          </tr>
                      </table>
              </div>
