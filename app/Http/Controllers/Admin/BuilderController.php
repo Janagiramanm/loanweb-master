@@ -134,4 +134,15 @@ class BuilderController extends Controller
         $builder->delete();
         return redirect('back-office/builders');
     }
+
+    public function getProject(Request $request){
+
+        $project = Builder::find($request->builder_id)->project_name;
+        $msg = [
+            'status'=>1,
+            'data'=> $project
+        ];
+        return response()->json($msg);
+
+    }
 }

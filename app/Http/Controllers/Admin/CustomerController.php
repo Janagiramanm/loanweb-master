@@ -21,6 +21,7 @@ use App\Model\RequiredDoc;
 use App\Model\ExtaDocs;
 use App\Model\TwoThreeApplicant;
 use App\Model\SecondaryApplicant;
+use App\Model\Builder;
 
 use App\Imports\CustomerImport;
 use App\Imports\AllCustomerImport;
@@ -257,10 +258,11 @@ class CustomerController extends Controller
             $banks = Bank::all();
             $occupations = Occupation::all();
             $secondary_applicants = SecondaryApplicant::where('customer_id',$id)->get();
+            $builders = Builder::All();
             // echo '<pre>';
             // print_r($secondary_applicants);
             // exit;
-            return view('back-office.customers.editnewcustomer', compact('customer', 'timeslots', 'typeofappointments', 'banks', 'occupations','secondary_applicants'));
+            return view('back-office.customers.editnewcustomer', compact('customer', 'timeslots', 'typeofappointments', 'banks', 'occupations','secondary_applicants', 'builders'));
         } catch (\Exception $e) {
             return redirect(route('back-office.customers.index'))->with($e->getMessage());
         }
@@ -304,28 +306,30 @@ class CustomerController extends Controller
                 'reason'    => isset($input['not-interested']) ? $input['reason_not_interest'] : NULL
             ]);
 
-            $secondary_applicants =  $input['secondary_cust_name'];
-            $secondary_cust_emails =  $input['secondary_cust_email'];
-            $secondary_cust_phone =  $input['secondary_cust_phone'];
-            $secondary_cust_address =  $input['secondary_cust_address'];
-            $secondary_cust_city =  $input['secondary_cust_city'];
-            $secondary_cust_pincode =  $input['secondary_cust_pincode'];
-            $secondary_occupation_id =  $input['secondary_occupation_id'];
-            $secondary_id =  $input['secondary_id'];
+            
 
-            $old_secondary = SecondaryApplicant::where('customer_id','=',$id)->get();
-            if($old_secondary){
-                foreach($old_secondary as $key => $value){
-                      $old_secondary_id[] =  $value->id;
+           
+            if(isset($secondary_applicants)){
+                $secondary_applicants =  $input['secondary_cust_name'];
+                $secondary_cust_emails =  $input['secondary_cust_email'];
+                $secondary_cust_phone =  $input['secondary_cust_phone'];
+                $secondary_cust_address =  $input['secondary_cust_address'];
+                $secondary_cust_city =  $input['secondary_cust_city'];
+                $secondary_cust_pincode =  $input['secondary_cust_pincode'];
+                $secondary_occupation_id =  $input['secondary_occupation_id'];
+                $secondary_id =  $input['secondary_id'];
+                $old_secondary = SecondaryApplicant::where('customer_id','=',$id)->get();
+                if($old_secondary){
+                    foreach($old_secondary as $key => $value){
+                          $old_secondary_id[] =  $value->id;
+                    }
+                   $delete_id =  array_diff($old_secondary_id,$secondary_id);
                 }
-               $delete_id =  array_diff($old_secondary_id,$secondary_id);
-            }
-            if($delete_id){
-                foreach($delete_id as $deleteid){
-                    SecondaryApplicant::find($deleteid)->delete();
+                if($delete_id){
+                    foreach($delete_id as $deleteid){
+                        SecondaryApplicant::find($deleteid)->delete();
+                    }
                 }
-            }
-            if($secondary_applicants){
                 foreach($secondary_applicants as $key => $value){
                     if($key!=0){
                         $secondaryId = $secondary_id[$key];

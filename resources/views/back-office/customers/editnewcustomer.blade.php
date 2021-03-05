@@ -32,7 +32,13 @@
                         
                                 <div class="form-group col-md-6">
                                     <label for="cust_email">Builder Name</label>
-                                    <input type="text" class="form-control @error('builder_name') is-invalid @enderror" id="builder_name" name="builder_name" required value="{{  $customer->builder_name }}">
+                                    <select class="form-control" name="builder_name" id="builder_name" required>
+                                        <option value="">Select Builder</option>
+                                        @foreach($builders as $builder)
+                                            <option @if( $customer->builder_name == $builder->id) selected @endif  value="{{ $builder->id }}"> {{ $builder->builder_name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <!-- <input type="text" class="form-control @error('builder_name') is-invalid @enderror" id="builder_name" name="builder_name" required value="{{  $customer->builder_name }}"> -->
                                     @error('builder_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -805,6 +811,28 @@
 <script>
 
     $(document).ready(function(){
+        $("#builder_name").change(function(){
+            
+            var builder_id = $(this).val();
+            $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+            });
+            $.ajax({
+              
+              url: "/back-office/builders/get-project" ,
+              type: "POST",
+              data: { builder_id: builder_id },
+              success: function( response ) {
+                  if(response.status == 1){
+                    $("#project_name").val(response.data);
+                    
+                  }
+              }
+            });
+           
+        });
 
         $("#add-secondary-applicant-btn").click(function(){
              $("#secondary_applicant_add_form").submit();
