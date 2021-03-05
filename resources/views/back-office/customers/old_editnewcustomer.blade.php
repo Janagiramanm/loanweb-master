@@ -1,7 +1,5 @@
 @extends('layouts.back-office')
-<head>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-</head>
+
 @section('parent_link')
     <a href="{{ url('back-office/customers/newleads') }}" class="breadcrumb-item"> New Leads </a>
 @endsection
@@ -19,11 +17,6 @@
                 <h2 class="card-header">
                     Edit customer ( {{ $customer->cust_name }} )
                 </h2>
-                @if ($message = Session::get('success'))
-                <div class="alert alert-success">
-                    <p>{{ $message }}</p>
-                </div>
-            @endif
                 <div class="card-body">
                     <form action="{{ route('back-office.customers.updatenewcustomer', $customer->id) }}" method="post" id="edit_new_cust_form">
                         @csrf
@@ -116,100 +109,255 @@
                                     <input class="form-control" type="text" id="bank_branch" name="bank_branch" />
                                 </div>
                             </div>
-                           <hr>
+                        
 
-                           <label> <h2> Primary Applicant </h2></label>
                           
-                           <div class="form-row">
-                            <div class="form-group col-md-6">
 
-                                <label for="cust_name">Customer Name</label>
-                                <input type="text" class="form-control @error('cust_name') is-invalid @enderror" id="cust_name" name="cust_name" required value="{{ $customer->cust_name }}">
-                                @error('cust_name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="occupation_id">Customer Occupation</label>
-                                <select name="occupation_id" id="occupation_id" class="form-control" required>
-                                    <option value="">Select Occupation</option>
-                                    @foreach ($occupations as $occupation)
-                                        @if( $customer->occupation_id  == $occupation->id )
-                                            <option value="{{ $occupation->id }}" selected> {{ $occupation->occupation_name }} </option>
-                                        @else
-                                            <option value="{{ $occupation->id }}"> {{ $occupation->occupation_name }} </option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                           
-                        </div>
-                        <div class="form-row">
+                        <label> <h2> Primary Applicant </h2></label>
+                        <div class="secondary-applicants">
+                           <div class="field-group">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
 
-                            <div class="form-group col-md-6">
-                                <label for="cust_email">E-Mail</label>
-                                <input type="tel" class="form-control @error('cust_email') is-invalid @enderror" id="cust_email" name="cust_email" required value="{{ $customer->cust_email }}">
-                                @error('cust_email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label for="cust_phone">Phone Number</label>
-                                <input type="tel" class="form-control @error('cust_phone') is-invalid @enderror" id="cust_phone" name="cust_phone" required value="{{ $customer->cust_phone }}">
-                                @error('cust_phone')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                       
-                        <div class="form-row">
-                           
-                            <div class="form-group col-md-6">
-                                <label for="cust_address">Customer Address</label>
-                                <textarea class="form-control" id="cust_address" placeholder="1234 Main St" name="cust_address" required cols="30" rows="5">{{ old('cust_address') ?? $customer->cust_address }}</textarea>
-                                @error('cust_address')
+                                    <label for="cust_name">Customer Name</label>
+                                    <input type="hidden" name="secondary_id[]" value="{{ $customer->id }}" />
+                                    <input type="text" class="form-control @error('cust_name') is-invalid @enderror" id="cust_name" name="secondary_cust_name[]" required value="{{ $customer->cust_name }}" autocomplete="no-fill">
+                                    @error('cust_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="secondary_occupation_id">Customer Occupation</label>
+                                    <select name="secondary_occupation_id[]" id="occupation_id" class="form-control" required>
+                                        <option value="">Select Occupation</option>
+                                        @foreach ($occupations as $occupation)
+                                            @if( $customer->occupation_id  == $occupation->id )
+                                                <option value="{{ $occupation->id }}" selected> {{ $occupation->occupation_name }} </option>
+                                            @else
+                                                <option value="{{ $occupation->id }}"> {{ $occupation->occupation_name }} </option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            
                             </div>
-                            <div class="form-group col-md-6">
-                                <div class="form-row">
-                                        <div class="form-group col-md-12">
-                                        <label for="cust_city">City</label>
-                                        <input type="text" class="form-control" id="cust_city" name="cust_city" required value="{{ old('cust_city') ?? $customer->cust_city }}">
-                                        @error('cust_city')
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="cust_email">E-Mail</label>
+                                    <input type="tel" class="form-control @error('cust_email') is-invalid @enderror" id="cust_email" name="secondary_cust_email[]" required value="{{ $customer->cust_email }}" autocomplete="no-fill">
+                                    @error('cust_email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="cust_phone">Phone Number</label>
+                                    <input type="tel" class="form-control @error('cust_phone') is-invalid @enderror" id="cust_phone" name="secondary_cust_phone[]" required value="{{ $customer->cust_phone }}" autocomplete="no-fill">
+                                    @error('cust_phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                       
+                            <div class="form-row">
+                            
+                                <div class="form-group col-md-6">
+                                    <label for="cust_address">Customer Address</label>
+                                    <textarea class="form-control" id="cust_address" placeholder="1234 Main St" name="secondary_cust_address[]    " required cols="30" rows="5" autocomplete="no-fill">{{ old('cust_address') ?? $customer->cust_address }}</textarea>
+                                    @error('cust_address')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                        @enderror
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                            <label for="cust_city">City</label>
+                                            <input type="text" class="form-control" id="cust_city" name="secondary_cust_city[]" required value="{{ old('cust_city') ?? $customer->cust_city }}" autocomplete="no-fill">
+                                            @error('cust_city')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-row py-3">
+                                    <div class="form-group col-md-12">
+                                    <label for="cust_pincode">Pincode</label>
+                                    <input type="text" class="form-control" id="cust_pincode" name="secondary_cust_pincode[]" required value="{{ old('cust_pincode') ?? $customer->cust_pincode }}" autocomplete="no-fill">
+                                    @error('cust_pincode')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                                     </div>
                                 </div>
-                                <div class="form-row py-3">
-                                <div class="form-group col-md-12">
-                                <label for="cust_pincode">Pincode</label>
-                                <input type="text" class="form-control" id="cust_pincode" name="cust_pincode" required value="{{ old('cust_pincode') ?? $customer->cust_pincode }}">
-                                @error('cust_pincode')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                           
                             </div>
+                            
+
+                            <div id="secondary-appointment-section" class="secondary">
+                            <h4>Schedule an appointment</h4>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+									<p>Date Of Appointment</p>
+									<div class="input-group">
+										<span class="input-group-prepend">
+											<span class="input-group-text"><i class="icon-calendar5"></i></span>
+										</span>
+										<input type="text" class="form-control pickadate-limits" placeholder="Select Date" name="appointment_date" id="datepicker" >
+									</div>
+								</div>
+                                <div class="form-group col-md-6">
+                                    <label for="appointment_time">Time</label>
+                                    <select name="appointment_time" id="appointment_time" class="form-control">
+                                        <option value="">Select Time</option>
+                                        @foreach ($timeslots as $time)
+                                            <option value="{{ $time->id }}"> {{ $time->time_slot }} </option>
+                                        @endforeach
+                                    </select>
+                                    @error('appointment_time')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
+                            <div  class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="type_of_appointment">Appointment Type</label>
+                                    <select name="type_of_appointment" id="type_of_appointment" class="form-control">
+                                        <option value="">Select Appointment Type</option>
+                                        @foreach ($typeofappointments as $type)
+                                            <option value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="appointment_agent">Agent Name</label>
+                                    <select name="appointment_agent" id="appointment_agent" class="form-control"></select>
+                                </div>
+
+                            </div>
+                            
                         </div>
+                              <!-- <a href="javascript:void(0);" class="remove_button"><img src="remove-icon.png"/></a> -->
+                        </div>
+                        @if($secondary_applicants)
+                        @foreach($secondary_applicants as $secondary_applicant)
+                        <div class="secondary-applicants-edit">
+                           <div class="field-group">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+
+                                    <label for="cust_name">Customer Name</label>
+                                    <input type="hidden" name="secondary_id[]" value="{{ $secondary_applicant->id }}" />
+                                    <input type="text" class="form-control @error('cust_name') is-invalid @enderror" id="cust_name" name="secondary_cust_name[]" required value="{{ $secondary_applicant->name }}" autocomplete="no-fill">
+                                    @error('cust_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="secondary_occupation_id">Customer Occupation</label>
+                                    <select name="secondary_occupation_id[]" id="occupation_id" class="form-control" required>
+                                        <option value="">Select Occupation</option>
+                                        @foreach ($occupations as $occupation)
+                                            @if( $secondary_applicant->occupation_id  == $occupation->id )
+                                                <option value="{{ $occupation->id }}" selected> {{ $occupation->occupation_name }} </option>
+                                            @else
+                                                <option value="{{ $occupation->id }}"> {{ $occupation->occupation_name }} </option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                            
+                            </div>
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="cust_email">E-Mail</label>
+                                    <input type="tel" class="form-control @error('cust_email') is-invalid @enderror" id="cust_email" name="secondary_cust_email[]" required value="{{ $secondary_applicant->email }}" autocomplete="no-fill">
+                                    @error('cust_email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="cust_phone">Phone Number</label>
+                                    <input type="tel" class="form-control @error('cust_phone') is-invalid @enderror" id="cust_phone" name="secondary_cust_phone[]" required value="{{ $secondary_applicant->phone }}" autocomplete="no-fill">
+                                    @error('cust_phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                       
+                            <div class="form-row">
+                            
+                                <div class="form-group col-md-6">
+                                    <label for="cust_address">Customer Address</label>
+                                    <textarea class="form-control" id="cust_address" placeholder="1234 Main St" name="secondary_cust_address[]    " required cols="30" rows="5" autocomplete="no-fill">{{ old('cust_address') ?? $secondary_applicant->address }}</textarea>
+                                    @error('cust_address')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                            <label for="cust_city">City</label>
+                                            <input type="text" class="form-control" id="cust_city" name="secondary_cust_city[]" required value="{{ old('cust_city') ?? $secondary_applicant->city }}" autocomplete="no-fill">
+                                            @error('cust_city')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-row py-3">
+                                    <div class="form-group col-md-12">
+                                    <label for="cust_pincode">Pincode</label>
+                                    <input type="text" class="form-control" id="cust_pincode" name="secondary_cust_pincode[]" required value="{{ old('cust_pincode') ?? $secondary_applicant->zipcode }}" autocomplete="no-fill">
+                                    @error('cust_pincode')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                    </div>
+                                </div>
+                           
+                              </div>
+                            </div>
+                            <div class="remove-sec"><a href="javascript:void(0);" class="remove_button_edit">Remove</a></div>
+                            
+                        </div>
+                        @endforeach
+                        @endif
                         
-                       
-                       
-                        
-                       
+                
+
+                          
+                        <div class="field_wrapper" id="add-group"></div>
+                        <div class="form-row add-more-lnk-sec">
+                                <a href="#" class="add-more-link" id="add-more"> <i class="fa fa-plus" aria-hidden="true"></i> Add More Applicants</a>
+                                <!-- <input type="button" id="add-more" value="Add More Applicant" class="form-control" /> -->
+                        </div>
 
                           
 
@@ -526,271 +674,8 @@
 
                             </div>
                         </div>
-                        
-                        @if($secondary_applicants)
-                        @foreach($secondary_applicants as $secondary_applicant)
-                        <div class="secondary-applicants-edit">
-                           <div class="field-group">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-
-                                    <label for="cust_name">Customer Name</label>
-                                    <input type="hidden" name="secondary_id[]" value="{{ $secondary_applicant->id }}" />
-                                    <input type="text" class="form-control @error('cust_name') is-invalid @enderror" id="cust_name" name="secondary_cust_name[]" required value="{{ $secondary_applicant->name }}" autocomplete="no-fill">
-                                    @error('cust_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="secondary_occupation_id">Customer Occupation</label>
-                                    <select name="secondary_occupation_id[]" id="occupation_id" class="form-control" required>
-                                        <option value="">Select Occupation</option>
-                                        @foreach ($occupations as $occupation)
-                                            @if( $secondary_applicant->occupation_id  == $occupation->id )
-                                                <option value="{{ $occupation->id }}" selected> {{ $occupation->occupation_name }} </option>
-                                            @else
-                                                <option value="{{ $occupation->id }}"> {{ $occupation->occupation_name }} </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-                            
-                            </div>
-                            <div class="form-row">
-
-                                <div class="form-group col-md-6">
-                                    <label for="cust_email">E-Mail</label>
-                                    <input type="tel" class="form-control @error('cust_email') is-invalid @enderror" id="cust_email" name="secondary_cust_email[]" required value="{{ $secondary_applicant->email }}" autocomplete="no-fill">
-                                    @error('cust_email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="cust_phone">Phone Number</label>
-                                    <input type="tel" class="form-control @error('cust_phone') is-invalid @enderror" id="cust_phone" name="secondary_cust_phone[]" required value="{{ $secondary_applicant->phone }}" autocomplete="no-fill">
-                                    @error('cust_phone')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                       
-                            <div class="form-row">
-                            
-                                <div class="form-group col-md-6">
-                                    <label for="cust_address">Customer Address</label>
-                                    <textarea class="form-control" id="cust_address" placeholder="1234 Main St" name="secondary_cust_address[]    " required cols="30" rows="5" autocomplete="no-fill">{{ old('cust_address') ?? $secondary_applicant->address }}</textarea>
-                                    @error('cust_address')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                            <label for="cust_city">City</label>
-                                            <input type="text" class="form-control" id="cust_city" name="secondary_cust_city[]" required value="{{ old('cust_city') ?? $secondary_applicant->city }}" autocomplete="no-fill">
-                                            @error('cust_city')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-row py-3">
-                                    <div class="form-group col-md-12">
-                                    <label for="cust_pincode">Pincode</label>
-                                    <input type="text" class="form-control" id="cust_pincode" name="secondary_cust_pincode[]" required value="{{ old('cust_pincode') ?? $secondary_applicant->zipcode }}" autocomplete="no-fill">
-                                    @error('cust_pincode')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                    </div>
-                                </div>
-                           
-                              </div>
-                            </div>
-                            <div class="remove-sec"><a href="javascript:void(0);" class="remove_button_edit">Remove</a></div>
-                            
-                        </div>
-                        @endforeach
-                        @endif
-
-                        <div class="form-row add-more-lnk-sec">
-                              <button type="button" class="dropdown-item remove-btn" data-toggle="modal" id="delete_btn"   data-target="#secondary_applicant__from"><span>Add More Applicants</span></button>
-                                <!-- <a href="#" class="add-more-link" id="add-more"> <i class="fa fa-plus" aria-hidden="true"></i> Add More Applicants</a> -->
-                        </div>
                         <button type="button" class="btn btn-primary" id="update_newcustomer">Update</button>
                     </form>
-
-                    <div id="secondary_applicant__from" class="modal fade" tabindex="-1">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                            <div class="secondary-applicants">
-                            <div class="secondary-heading"> Secondary Applicant
-                            </div>
-                            <form name="secondary_applicant_add_form" id="secondary_applicant_add_form" method="post" action="{{ route('back-office.customers.addsecondaryapplicant') }}">
-                            @csrf
-                           <div class="field-group">
-                            <div class="form-row">
-                           
-                                <div class="form-group col-md-6">
-
-                                    <label for="cust_name">Customer Name</label>
-                                    <input type="hidden" name="secondary_id" value="{{ $customer->id }}" />
-                                    <input type="text" class="form-control @error('cust_name') is-invalid @enderror" id="secondary_cust_name" name="secondary_cust_name" required value="" autocomplete="no-fill">
-                                    @error('cust_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="secondary_occupation_id">Customer Occupation</label>
-                                    <select name="secondary_occupation_id[]" id="occupation_id" class="form-control" required>
-                                        <option value="">Select Occupation</option>
-                                        @foreach ($occupations as $occupation)
-                                            @if( $customer->occupation_id  == $occupation->id )
-                                                <option value="{{ $occupation->id }}" selected> {{ $occupation->occupation_name }} </option>
-                                            @else
-                                                <option value="{{ $occupation->id }}"> {{ $occupation->occupation_name }} </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-                            
-                            </div>
-                            <div class="form-row">
-
-                                <div class="form-group col-md-6">
-                                    <label for="cust_email">E-Mail</label>
-                                    <input type="tel" class="form-control @error('cust_email') is-invalid @enderror" id="secondary_cust_email" name="secondary_cust_email" required value="" autocomplete="no-fill">
-                                    @error('cust_email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="cust_phone">Phone Number</label>
-                                    <input type="tel" class="form-control @error('cust_phone') is-invalid @enderror" id="secondary_cust_phone" name="secondary_cust_phone" required value="" autocomplete="no-fill">
-                                    @error('cust_phone')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                       
-                            <div class="form-row">
-                            
-                                <div class="form-group col-md-6">
-                                    <!-- <label for="cust_address">Customer Address</label> -->
-                                    <label for="cust_address" id="lbl-cust-address">Customer Address
-                                        <span class="same-address">
-                                                <input class="form-check-input" type="checkbox" value="" id="secondary-applicant-same-add">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Same as above address
-                                                </label>
-                                        </span>
-                                    </label> 
-                                    <textarea class="form-control" id="secondary_cust_address" placeholder="1234 Main St" name="secondary_cust_address" required cols="30" rows="5" autocomplete="no-fill"></textarea>
-                                    @error('cust_address')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <div class="form-row">
-                                            <div class="form-group col-md-12">
-                                            <label for="cust_city">City</label>
-                                            <input type="text" class="form-control" id="secondary_cust_city" name="secondary_cust_city" required value="" autocomplete="no-fill">
-                                            @error('cust_city')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-row py-3">
-                                    <div class="form-group col-md-12">
-                                    <label for="cust_pincode">Pincode</label>
-                                    <input type="text" class="form-control" id="secondary_cust_pincode" name="secondary_cust_pincode" required value="" autocomplete="no-fill">
-                                    @error('cust_pincode')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                    </div>
-                                </div>
-                           
-                              </div>
-                            </div>
-
-                            <div id="secondary-appointment-section" class="interested1">
-                            <h4>Schedule an appointment</h4>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-									<p>Date Of Appointment</p>
-									<div class="input-group">
-										<span class="input-group-prepend">
-											<span class="input-group-text"><i class="icon-calendar5"></i></span>
-										</span>
-										<input type="text" class="form-control pickadate-limits" placeholder="Select Date" name="secondary_appointment_date" id="secondary_datepicker" >
-									</div>
-								</div>
-                                <div class="form-group col-md-6">
-                                    <label for="appointment_time">Time</label>
-                                    <select name="secondary_appointment_time" id="secondary_appointment_time" class="form-control">
-                                        <option value="">Select Time</option>
-                                        @foreach ($timeslots as $time)
-                                            <option value="{{ $time->id }}"> {{ $time->time_slot }} </option>
-                                        @endforeach
-                                    </select>
-                                    @error('appointment_time')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div  class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="type_of_appointment">Appointment Type</label>
-                                    <select name="type_of_appointment" id="type_of_appointment" class="form-control">
-                                        <option value="">Select Appointment Type</option>
-                                        @foreach ($typeofappointments as $type)
-                                            <option value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="appointment_agent">Agent Name</label>
-                                    <select name="secondary_appointment_agent" id="secondary_appointment_agent" class="form-control"></select>
-                                </div>
-                            </div>
-                           
-                        </div> <button  class="btn btn-success add-secondary-applicant-btn" >Add Now</button>
-                        </form>
-                              <!-- <a href="javascript:void(0);" class="remove_button"><img src="remove-icon.png"/></a> -->
-                        </div>
-                            </div>
-                        </div>
-                    </div>
-
-
                 </div>
             </div>
         </div>
@@ -806,24 +691,30 @@
 
     $(document).ready(function(){
 
-        $("#add-secondary-applicant-btn").click(function(){
-             $("#secondary_applicant_add_form").submit();
-        });
-
-        $("#secondary-applicant-same-add").click(function(){
+        $("#two-applicant-same-add").click(function(){
             if ($(this).is(":checked")) {
                /// var cust_addres = $("#cust_address").val();
-                $("#secondary_cust_address").val($("#cust_address").val());
-                $("#secondary-appointment-section").hide();
-                
+                $("#two_cust_address").val($("#cust_address").val());
+                $("#two-appointment-section").hide();
             }else{
-                $("#secondary_cust_address").val('');
-                $("#secondary-appointment-section").show();
+                $("#two_cust_address").val('');
+                $("#two-appointment-section").show();
+            }
+
+        });
+        $("#three-applicant-same-add").click(function(){
+            if ($(this).is(":checked")) {
+               /// var cust_addres = $("#cust_address").val();
+                $("#three_cust_address").val($("#cust_address").val());
+                $("#three-appointment-section").hide();
+            }else{
+                $("#three_cust_address").val('');
+                $("#three-appointment-section").show();
             }
 
         });
 
-        
+
         if ($('#interested').is(":checked")) {
             $("#appointment-section").show();
         } else {
@@ -851,38 +742,6 @@
 
     });
 
-   $("#secondary_appointment_time").change(function(){
-        var date = $("#secondary_datepicker").val();
-        var time = $("#appointment_time").val();
-        if(date == ""){
-            alert("please select date");
-        }else{
-            $.ajax({
-                url : "<?php echo url('/back-office/fetchAgents'); ?>",
-                headers: {
-                    'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-                },
-                data : JSON.stringify({apdate:date, aptime: time}),
-                type : 'POST',
-                contentType: "application/json",
-                dataType: 'json',
-                success: function(data) {
-                    console.log(data.length);
-                    if(data.length == 0){
-                        selectOptions += '<option value="">No Agent Available in This Time Slot</option>';
-                        $("#appointment_agent").html(selectOptions);
-                    } else {
-                        var selectOptions = '';
-                        $.each(data, function( key, value ) {
-                            selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
-                        });
-                        $("#secondary_appointment_agent").html(selectOptions);
-                    }
-
-                }
-            });
-        }
-   })
 
 
     $("#appointment_time").change(function(){
@@ -917,9 +776,71 @@
             });
         }
     });
-    
+    $("#two_appointment_time").change(function(){
+        var date = $("#two-datepicker").val();
+        var time = $("#two_appointment_time").val();
+        if(date == ""){
+            alert("please select date");
+        }else{
+            $.ajax({
+                url : "<?php echo url('/back-office/fetchAgents'); ?>",
+                headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                },
+                data : JSON.stringify({apdate:date, aptime: time}),
+                type : 'POST',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data.length);
+                    if(data.length == 0){
+                        selectOptions += '<option value="">No Agent Available in This Time Slot</option>';
+                        $("#two_appointment_agent").html(selectOptions);
+                    } else {
+                        var selectOptions = '';
+                        $.each(data, function( key, value ) {
+                            selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
+                        });
+                        $("#two_appointment_agent").html(selectOptions);
+                    }
 
-   
+                }
+            });
+        }
+    });
+
+    $("#three_appointment_time").change(function(){
+        var date = $("#three-datepicker").val();
+        var time = $("#three_appointment_time").val();
+        if(date == ""){
+            alert("please select date");
+        }else{
+            $.ajax({
+                url : "<?php echo url('/back-office/fetchAgents'); ?>",
+                headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                },
+                data : JSON.stringify({apdate:date, aptime: time}),
+                type : 'POST',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data.length);
+                    if(data.length == 0){
+                        selectOptions += '<option value="">No Agent Available in This Time Slot</option>';
+                        $("#three_appointment_agent").html(selectOptions);
+                    } else {
+                        var selectOptions = '';
+                        $.each(data, function( key, value ) {
+                            selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
+                        });
+                        $("#three_appointment_agent").html(selectOptions);
+                    }
+
+                }
+            });
+        }
+    });
 
     $("#update_newcustomer").click(function(){
 
@@ -973,10 +894,37 @@
         var selectedDate = $("#datepicker").val();
         var myDate = new Date(selectedDate);
         var today = new Date();
-      
+        
+              
+        // if(today == myDate){
+        //     alert('yes');
+
+        // }
+        // var current_date = date('d M, Y')
+        // alert(current_date);
     });
 
-   
+    var wrapper = $('.field_wrapper');
+    $("#add-more").click(function(e){
+        e.preventDefault();
+        var maxField = 10; //Input fields increment limitation
+        var fieldHTML = $(".secondary-applicants .field-group").clone().append('<div class="remove-sec"><a href="javascript:void(0);" class="remove_button">Remove</a></div> <hr>');
+       
+        fieldHTML.find('input').val('');
+        fieldHTML.find('textarea').val('');
+        var x = 1; 
+        $(wrapper).append(fieldHTML);
+
+       
+
+    })
+    $(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+       
+        $(this).parent().parent('div').remove();
+        $(this).remove(); //Remove field html
+        x--; //Decrement field counter
+    });
 
     $('.remove_button_edit').on('click',function(e){
         e.preventDefault();
@@ -1011,14 +959,6 @@
 </script>
 
 <style>
-.secondary-heading {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-.secondary-applicants {
-    padding: 40px;
-    border: 1px solid gray;
-}
 #reason_not_interest{
     width:100%;
    
@@ -1056,7 +996,7 @@ div#three-appointment-section {
     padding: 2px;
     border-radius: 18px;
     padding: 2px 10px;
-    margin-top: -30px;
+    /* margin-top: -30px; */
 }
 .form-row.add-more-lnk-sec a{
     color: green !important;
@@ -1070,7 +1010,7 @@ a.remove_button, .remove_button_edit {
 }
 .remove-sec {
     text-align: center;
-    margin-top: -19px;
+    /* margin-top: -19px; */
 }
 </style>
 

@@ -106,7 +106,10 @@ class BankController extends Controller
 
         $occupation_id = $input['occupation_id'];
         $inputArray = ['foir','cibil1','min-roi','max-roi','cibil2','min-roi2','max-roi2','cibil3','min-roi3','max-roi3','cibil4','min-roi4','max-roi4'];
-           
+        echo '<pre>';
+        print_r($occupation_id);
+        print_r($input);
+        exit;
         if($occupation_id){
 
                 foreach($occupation_id as $key1 => $value){
@@ -138,9 +141,16 @@ class BankController extends Controller
 
         }
         $delete_occupation=array_diff($input['old_occupation'],$input['occupation_id']);
+        // echo '<pre>';
+        // print_r($input['old_occupation']);
+        // print_r($input['occupation_id']);
+        // print_r($delete_occupation);
+        
         if($delete_occupation){
             foreach($delete_occupation as $del_occupationid){
-                $del_cibil_setting = CibilSetting::find($del_occupationid);
+                // echo 'dslds';
+                // print_r($del_occupationid);
+                $del_cibil_setting = CibilSetting::where('occupation_id','=',$del_occupationid)->first();
                 $del_cibil_detail[] =  $del_cibil_setting->id;
                 $del_cibil_setting->delete();
             }

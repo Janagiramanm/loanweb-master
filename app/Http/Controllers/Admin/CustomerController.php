@@ -467,6 +467,35 @@ class CustomerController extends Controller
         }
     }
 
+    public function addSecondaryApplicant(Request $request){
+        
+          $secondaryAdd = new SecondaryApplicant();
+          $secondaryAdd->name = $request->secondary_cust_name; 
+          $secondaryAdd->phone = $request->secondary_cust_phone; 
+          $secondaryAdd->email = $request->secondary_cust_email; 
+          $secondaryAdd->occupation_id = $request->secondary_occupation_id[0];  
+          $secondaryAdd->zipcode = $request->secondary_cust_pincode; 
+          $secondaryAdd->city = $request->secondary_cust_city; 
+          $secondaryAdd->address = $request->secondary_cust_address; 
+          $secondaryAdd->customer_id = $request->secondary_id; 
+          $secondaryAdd->save();
+
+          if($request->secondary_appointment_date !=''){
+
+            $appointment = new Appointment();
+            $appointment->agent_id = $request->secondary_appointment_agent;
+            $appointment->customer_id = $request->secondary_id;
+            $appointment->appointment_date = date('Y-m-d', strtotime($request->secondary_appointment_date));
+            $appointment->timeslot_id =$request->secondary_appointment_time;
+            $appointment->created_excutive =Auth::user()->id;
+            $appointment->status = 1 ;
+            $appointment->appointmenttype_id = $request->type_of_appointment;
+            $appointment->applicant_type = 'normal';
+
+          }
+          return redirect('/back-office/customers/'.$request->secondary_id.'/editnewcustomer')->withSuccess('Secondary Applicant added successfully');
+    }
+
     public function pipelinecustomeredit($id)
     {
         $appointments = DB::table('appointment')

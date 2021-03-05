@@ -82,6 +82,7 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
 
     Route::get('/customers/{id}/editnewcustomer', 'CustomerController@editnewcustomer')->name('customers.editnewcustomer');
     Route::PUT('/customers/updatenewcustomer/{id}', 'CustomerController@updatenewcustomer')->name('customers.updatenewcustomer');
+    Route::post('/customers/add-secondary-applicant', 'CustomerController@addSecondaryApplicant')->name('customers.addsecondaryapplicant');
 
    
     Route::get('/customers/{id}/pipelinecustomeredit', 'CustomerController@pipelinecustomeredit')->name('customers.pipelinecustomeredit');
