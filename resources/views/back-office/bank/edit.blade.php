@@ -106,7 +106,7 @@
                                 <!-- <input type="button" id="add-more" value="Add More Applicant" class="form-control" /> -->
 
                         </div>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
             </div>
