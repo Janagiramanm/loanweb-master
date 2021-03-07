@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Builder;
+use App\Model\BuilderDetail;
 
 class BuilderController extends Controller
 {
@@ -39,10 +40,6 @@ class BuilderController extends Controller
      */
     public function store(Request $request)
     {
-        // echo '<pre>';
-        // print_r($request->input());
-        // exit;
-
         $request->validate([
                 'builder_name'=>'required',
                 'project_name'=>'required',
@@ -51,17 +48,27 @@ class BuilderController extends Controller
                
         ]);
 
-       
         $builder = new Builder();
         $builder->builder_name = $request->builder_name;
         $builder->project_name = $request->project_name;
-        $builder->project_type = $request->project_type;
-        $builder->project_type_name  =  $request->type_name;
-        $builder->range   = $request->range;
-        $builder->spoc_name = $request->spoc_name;
-        $builder->spoc_mobile = $request->spoc_mobile;
-        $builder->spoc_email = $request->spoc_email;
         $builder->save();
+
+        $project_types = $request->project_type;
+        if($project_types){
+            foreach($project_types as $key => $project_type){
+
+                $builder_details  = new BuilderDetail();
+                $builder_details->builder_id = $builder->id;
+                $builder_details->project_type = $project_type;
+                $builder_details->project_type_name  =  $request->type_name[$key];
+                $builder_details->range   = $request->range[$key];
+                $builder_details->spoc_name = $request->spoc_name[$key];
+                $builder_details->spoc_mobile = $request->spoc_mobile[$key];
+                $builder_details->spoc_email = $request->spoc_email[$key];
+                $builder_details->save();
+            }
+        }
+        
         return redirect( route('back-office.builders.index'))->withSuccess('Builder added successfully!');
         
 
@@ -99,26 +106,34 @@ class BuilderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // echo '<pre>';
-        // print_r($request->builder_name);
-        // exit;
+        
         $request->validate([
             'builder_name'=>'required',
             'project_name'=>'required',
             'project_type'=>'required',
             'type_name'=>'required'
         ]);
+     
         $builder = Builder::find($id);
         $builder->builder_name = $request->builder_name;
         $builder->project_name = $request->project_name;
-        $builder->project_type = $request->project_type;
-        $builder->project_type_name  =  $request->type_name;
-        $builder->range   = $request->range;
-        $builder->spoc_name = $request->spoc_name;
-        $builder->spoc_mobile = $request->spoc_mobile;
-        $builder->spoc_email = $request->spoc_email;
         $builder->save();
-        return redirect( route('back-office.builders.index'))->withSuccess('Builder added successfully!');
+        $project_type = $request->project_type;
+        if($project_type){
+            BuilderDetail::where('builder_id','=',$builder->id)->delete();
+            foreach($project_type as $key => $project){
+                 $detail = new BuilderDetail();
+                 $detail->builder_id= $builder->id;
+                 $detail->project_type = $request->project_type[$key];
+                 $detail->project_type_name = $request->type_name[$key];
+                 $detail->range = $request->range[$key];
+                 $detail->spoc_name = $request->spoc_name[$key];
+                 $detail->spoc_mobile = $request->spoc_mobile[$key];
+                 $detail->spoc_email = $request->spoc_email[$key];
+                 $detail->save();
+            }
+        }
+         return redirect( route('back-office.builders.index'))->withSuccess('Builder added successfully!');
         
     }
 
@@ -131,6 +146,7 @@ class BuilderController extends Controller
     public function destroy($id)
     {
         $builder = Builder::find($id);
+        $builder_details = BuilderDetail::where('builder_id','=',$builder->id)->delete();
         $builder->delete();
         return redirect('back-office/builders');
     }

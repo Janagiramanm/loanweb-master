@@ -38,53 +38,62 @@
                             </div>
                         </div>
 
-                        <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="bank_address">Project Type</label>
+                        <div class="add-more-project-type">
+                           <div class="field-group">
+                                <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="bank_address">Project Type</label>
 
-                            <select class="form-control" name="project_type" id="project_type">
-                                      <option value=""> Select Type</option>
-                                      <option value="1">Apartment</option>
-                                      <option value="2">Plot</option>
-                                      <option value="3">Villa</option>
-                            </select>
-                            @error('project_type')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                            @enderror
-                            
-                        </div>
-                        <div class="form-group col-md-6">
-                                <label for="cust_city">Project Type Name</label>
-                                <input type="text" class="form-control" id="type_name" name="type_name" >
-                                @error('type_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                               @enderror
-                            </div>
-                        </div>
+                                    <select class="form-control" name="project_type[]" id="project_type">
+                                            <option value=""> Select Type</option>
+                                            <option value="1">Apartment</option>
+                                            <option value="2">Plot</option>
+                                            <option value="3">Villa</option>
+                                    </select>
+                                    @error('project_type')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                    @enderror
+                                    
+                                </div>
+                                <div class="form-group col-md-6">
+                                        <label for="cust_city">Project Type Name</label>
+                                        <input type="text" class="form-control" id="type_name" name="type_name[]" >
+                                        @error('type_name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                    @enderror
+                                    </div>
+                                </div>
 
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="cust_city">Range</label>
-                                <input type="text" class="form-control" id="range" name="range" >
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="cust_city">Spoc Name</label>
-                                <input type="text" class="form-control" id="spoc_name" name="spoc_name" >
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="cust_city">Range</label>
+                                        <input type="number" class="form-control" id="range" name="range[]" >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="cust_city">Spoc Name</label>
+                                        <input type="text" class="form-control" id="spoc_name" name="spoc_name[]" >
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="cust_city">Spoc Mobile</label>
+                                        <input type="number" class="form-control" id="spoc_mobile" name="spoc_mobile[]" >
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="cust_city">Spoc Email</label>
+                                        <input type="text" class="form-control" id="spoc_email" name="spoc_email[]" >
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="cust_city">Spoc Mobile</label>
-                                <input type="text" class="form-control" id="spoc_mobile" name="spoc_mobile" >
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="cust_city">Spoc Email</label>
-                                <input type="text" class="form-control" id="spoc_email" name="spoc_email" >
-                            </div>
+                        <div class="field_wrapper" id="add-group"></div>
+                        <div class="form-row add-more-lnk-sec">
+                                <a href="#" class="add-more-link" id="add-more"> <i class="fa fa-plus" aria-hidden="true"></i> Add More Project Type</a>
+                                <!-- <input type="button" id="add-more" value="Add More Applicant" class="form-control" /> -->
                         </div>
                         <button type="submit" class="btn btn-primary">Create</button>
                     </form>
@@ -98,5 +107,57 @@
 @endsection
 
 @section('custom-script')
+<script>
+    $(document).ready(function(){
+            var wrapper = $('.field_wrapper');
+            $("#add-more").click(function(e){
+                e.preventDefault();
+                var maxField = 10; //Input fields increment limitation
+                var fieldHTML = $(".add-more-project-type .field-group").clone().prepend('<hr>').append('<div class="remove-sec"><a href="javascript:void(0);" class="remove_button">Remove</a></div>');
+            
+                fieldHTML.find('input').val('');
+                fieldHTML.find('textarea').val('');
+                var x = 1; 
+                $(wrapper).append(fieldHTML);
+
+            
+
+            })
+            $(wrapper).on('click', '.remove_button', function(e){
+                e.preventDefault();
+            
+                $(this).parent().parent('div').remove();
+                $(this).remove(); //Remove field html
+                x--; //Decrement field counter
+            });
+    });
+</script>
+<style>
+
+.form-row.add-more-lnk-sec {
+    float: right;
+    
+    text-decoration: none;
+    background-color: antiquewhite;
+    padding: 2px;
+    border-radius: 18px;
+    padding: 2px 10px;
+    /* margin-top: -30px; */
+}
+.form-row.add-more-lnk-sec a{
+    color: green !important;
+}
+a.remove_button, .remove_button_edit {
+    color: red;
+    background-color: antiquewhite;
+    padding: 2px 5px;
+    border-radius: 14px;
+   
+}
+.remove-sec {
+    text-align: center;
+    /* margin-top: -19px; */
+}
+</style>
 
 @endsection

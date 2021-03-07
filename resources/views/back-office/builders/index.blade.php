@@ -7,6 +7,7 @@
     <div class="content">
 
         <!-- Page length options -->
+        
         <div class="card">
             <div class="card-header header-elements-inline">
                 <h5 class="card-title">Builders Data</h5>
@@ -16,37 +17,43 @@
                     </div>
                 </div>
             </div>
-
-
-            <table class="table datatable-basic">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Builder Name</th>
-                    <th>Project Name</th>
-                    <th>Project Type</th>
-                    <th>Project Type Name</th>
-                    <th>Range</th>
-                    <th>SPOC Name</th>
-                    <th>SPOC Mobile</th>
-                    <th>SPOC Email</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php $k=1; ?>
-                @foreach ($builders as $builder)
-                    <tr>
-                        <td>{{ $k }}</td>
-                        <td>{{ $builder->builder_name }}</td>
-                        <td>{{ $builder->project_name }}</td>
-                        <td>{{ ($builder->project_type == 1 ? 'Apartment' : ($builder->project_type == 2 ? 'Plot' : 'Villa')) }}</td>
-                        <td>{{ $builder->project_type_name }}</td>
-                        <td>{{ $builder->range }}</td>
-                        <td>{{ $builder->spoc_name }}</td>
-                        <td>{{ $builder->spoc_mobile }}</td>
-                        <td>{{ $builder->spoc_email }}</td>
-                        <td class="text-center">
+            <table class="table table-bordered">
+        <th>#</th>
+        <th>Builder Name</th>
+        <th>Project Name</th>
+        <th></th>
+        <th >Action</th>
+        <?php $k=1; ?>
+        @foreach ($builders as $builder)
+        <tr>
+            <td>{{ $k }}</td>
+            <td>{{ $builder->builder_name }}</td>
+            <td>{{ $builder->project_name }}</td>
+            <td>
+                    <table class="table-striped">
+                               <tr>
+                                    <th>Project Type</th>
+                                    <th>Project Type Name</th>
+                                    <th>Range</th>
+                                    <th>SPOC Name</th>
+                                    <th>SPOC Mobile</th>
+                                    <th>SPOC Email</th>
+                                   
+                               </tr>
+                                @foreach($builder->builderDetails as $detail)
+                                    
+                                    <tr> 
+                                        <td>{{ ($detail->project_type == 1 ? 'Apartment' : ($builder->project_type == 2 ? 'Plot' : 'Villa')) }}</td>
+                                        <td>{{ $detail->project_type_name }}</td>
+                                        <td>{{ $detail->range }}</td>
+                                        <td>{{ $detail->spoc_name }}</td>
+                                        <td>{{ $detail->spoc_mobile }}</td>
+                                        <td>{{ $detail->spoc_email }}</td>
+                                    </tr> 
+                                @endforeach  
+                    </table> 
+            </td>
+            <td>
                             <div class="list-icons">
                                 <div class="dropdown">
                                     <a href="#" class="list-icons-item" data-toggle="dropdown">
@@ -63,12 +70,13 @@
                                 </div>
                             </div>
                         </td>
-                    </tr>
-                    <?php $k++; ?>
-                @endforeach
+        </tr>
+        @endforeach
+        
+        </table>
+            
 
-                </tbody>
-            </table>
+            
         </div>
         <!-- /page length options -->
         <div id="modal_delete_from" class="modal fade" tabindex="-1">
@@ -114,18 +122,18 @@
 
     </script>
     <style>
-     #no-btn{
-         float:left;
-     }
-     .modal-btn {
-    margin-left: 10%;
-    margin-bottom: 10px;
-}
-.modal-title {
-    margin-bottom: 0;
-    line-height: 1.5385;
-    margin-left: 7%;
-    padding-bottom: 11px;
-}
+    #no-btn{
+        float:left;
+    }
+    .modal-btn {
+        margin-left: 10%;
+        margin-bottom: 10px;
+    }
+    .modal-title {
+        margin-bottom: 0;
+        line-height: 1.5385;
+        margin-left: 7%;
+        padding-bottom: 11px;
+    }
     </style>
 @endsection

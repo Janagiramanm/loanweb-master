@@ -17,12 +17,7 @@ class CreateBuildersTable extends Migration
             $table->id();
             $table->string('builder_name')->nullable();
             $table->string('project_name')->nullable();
-            $table->string('project_type')->nullable();
-            $table->string('project_type_name')->nullable();
-            $table->string('range')->nullable();
-            $table->string('spoc_name')->nullable();
-            $table->string('spoc_mobile')->nullable();
-            $table->string('spoc_email')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
