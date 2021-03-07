@@ -24,7 +24,6 @@
                 <tr>
                     <th>#</th>
                     <th>Bank Name</th>
-                    <th>FOIR</th>
                     <th>LTV1</th>
                     <th>LTV2</th>
                     <th>LTV3</th>
@@ -38,7 +37,6 @@
                         <td>{{ $k }}</td>
                        
                         <td>{{ $bank->bank_name }}</td>
-                        <td>{{ $bank->foir }}</td>
                         <td>{{ $bank->ltv1 }}</td>
                         <td>{{ $bank->ltv2 }}</td>
                         <td>{{ $bank->ltv3 }}</td>

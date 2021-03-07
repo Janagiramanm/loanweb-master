@@ -91,10 +91,12 @@ class BankController extends Controller
                       
         ]);
         $input = $request->all();
+        
         // echo '<pre>';
-        // print_r($input);
-        // exit;  
-        // echo "==========="; 
+        // print_r($request->input());
+        $removedId = explode(',',$request->removed_id);
+        // print_r($removedId);
+        // exit;
 
         $bank = Bank::find($id);
         $bank->bank_name = $input['bank_name'];
@@ -106,13 +108,11 @@ class BankController extends Controller
 
         $occupation_id = $input['occupation_id'];
         $inputArray = ['foir','cibil1','min-roi','max-roi','cibil2','min-roi2','max-roi2','cibil3','min-roi3','max-roi3','cibil4','min-roi4','max-roi4'];
-        echo '<pre>';
-        print_r($occupation_id);
-        print_r($input);
-        exit;
+      
         if($occupation_id){
-
+               
                 foreach($occupation_id as $key1 => $value){
+                          
                             if(isset($input['old_cibil_setting_id'][$key1])){
                                     $cibil = CibilSetting::find($input['old_cibil_setting_id'][$key1]);
                             }else{
@@ -122,11 +122,14 @@ class BankController extends Controller
                             $cibil->occupation_id = $value;
                             $cibil->save();
                             foreach($inputArray as $key=> $inputField){
-                                if(isset($input['old_'.$inputField.'_'.$key1])){
-                                    $cibilDetails = CibilDetail::find($input['old_'.$inputField.'_'.$key1]);
-                                }else{
-                                    $cibilDetails = new CibilDetail();
-                                }
+ 
+                                if(!in_array($key1, $removedId)){
+                                
+                                    if(isset($input['old_'.$inputField.'_'.$key1])){
+                                        $cibilDetails = CibilDetail::find($input['old_'.$inputField.'_'.$key1]);
+                                    }else{
+                                        $cibilDetails = new CibilDetail();
+                                    }
                                 
                                     $cibilDetails->cibil_setting_id = $cibil->id;
                                     $cibilDetails->name = $inputField;
@@ -134,35 +137,38 @@ class BankController extends Controller
                                     $cibilDetails->ltv2 = $input[$inputField.'_'.$key1][1];
                                     $cibilDetails->ltv3 = $input[$inputField.'_'.$key1][2];
                                     $cibilDetails->save();
+                                } 
                                
                             }
+                          
                   
                 }
 
         }
-        $delete_occupation=array_diff($input['old_occupation'],$input['occupation_id']);
-        // echo '<pre>';
-        // print_r($input['old_occupation']);
-        // print_r($input['occupation_id']);
-        // print_r($delete_occupation);
-        
-        if($delete_occupation){
-            foreach($delete_occupation as $del_occupationid){
-                // echo 'dslds';
-                // print_r($del_occupationid);
-                $del_cibil_setting = CibilSetting::where('occupation_id','=',$del_occupationid)->first();
-                $del_cibil_detail[] =  $del_cibil_setting->id;
-                $del_cibil_setting->delete();
+
+        if(!empty($removedId)){
+            foreach($removedId as $key => $remId){
+                $delete_occ_id = $input['old_occupation'][$remId];
+               if($delete_occ_id !=''){
+                    $del_cibil_setting = CibilSetting::where('occupation_id','=',$delete_occ_id)->first();
+                    if($del_cibil_setting){
+                        $del_cibil_detail[] =  $del_cibil_setting->id;
+                        $del_cibil_setting->delete();
+                    }
+               }
             }
-            if($del_cibil_detail){
+            if(isset($del_cibil_detail)!=''){
                 foreach($del_cibil_detail as $detail_id){
-                    $cibilDetails = CibilDetail::where('cibil_setting_id','=',$detail_id)->get();
-                    foreach($cibilDetails as $cibilDetail){
-                        CibilDetail::find($cibilDetail->id)->delete();
+                    if($detail_id !=''){
+                            $cibilDetails = CibilDetail::where('cibil_setting_id','=',$detail_id)->get();
+                            foreach($cibilDetails as $cibilDetail){
+                                CibilDetail::find($cibilDetail->id)->delete();
+                            }
                     }
                 }
             }
         }
+        // exit;
         return redirect(route('back-office.banks'))->with('success','Bank updated successfully');
 
     }

@@ -94,16 +94,17 @@
                                                     </table>
                                             </div>
                                         </div>
-                                        <div class="remove-sec"><a href="javascript:void(0);" class="remove_button">Remove</a></div>
+                                        <div class="remove-sec"><a href="javascript:void(0);" id="{{$key}}" class="remove_button">Remove</a></div>
                                     </div>
                             @endforeach
                         @endif
                         </div>
-                        
+                        <input type="hidden" name="removed_id" id="removed_id" />
                         <div class="form-row add-more-lnk-sec">
-                                <input type="text" name="add_more_count" id="add_more_count" value="{{ count($bank->cibilSettings)-1 }}" />
+                                <input type="hidden" name="add_more_count" id="add_more_count" value="{{ count($bank->cibilSettings)-1 }}" />
                                 <a href="#" class="add-more-link" id="add-more"> <i class="fa fa-plus" aria-hidden="true"></i> Add Other Occupation</a>
                                 <!-- <input type="button" id="add-more" value="Add More Applicant" class="form-control" /> -->
+
                         </div>
                         <button type="submit" class="btn btn-primary">Create</button>
                     </form>
@@ -141,9 +142,15 @@ $(document).ready(function(){
     $(wrapper).on('click', '.remove_button', function(e){
         e.preventDefault();
        
+        var appendId = $(this).attr('id');
+        if($('#removed_id').val() !=''){
+            var appendId = ','+$(this).attr('id');
+        }
+        $('#removed_id').val($('#removed_id').val()+appendId);
         $(this).parent().parent('div').remove();
         $(this).remove(); //Remove field html
-        x--; //Decrement field counter
+       
+        //x--; //Decrement field counter
     });
 })
 </script>
