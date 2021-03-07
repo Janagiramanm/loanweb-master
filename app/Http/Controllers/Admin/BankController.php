@@ -92,9 +92,13 @@ class BankController extends Controller
         ]);
         $input = $request->all();
         
-        // echo '<pre>';
-        // print_r($request->input());
-        $removedId = explode(',',$request->removed_id);
+        //echo '<pre>';
+       // print_r($request->input());
+        $removedId = array();
+        if($request->removed_id !=''){
+            $removedId = explode(',',$request->removed_id);
+        }
+        
         // print_r($removedId);
         // exit;
 
