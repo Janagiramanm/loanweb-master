@@ -1,6 +1,6 @@
 @extends('layouts.back-office')
 @section('breadcrum')
-     Banks
+     Branches
 @stop
 @section('main-content')
     <!-- Content area -->
