@@ -155,12 +155,12 @@
                             <a href="{{ url('back-office/banks') }}" class="nav-link <?php if(\Request::is('back-office/banks')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Banks</span></a>
                         </li>
 						<li class="nav-item">
+                            <a href="{{ url('back-office/bank/branches') }}" class="nav-link <?php if(\Request::is('back-office/bank/branches')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Branches</span></a>
+                        </li>
+						<li class="nav-item">
                             <a href="{{ url('back-office/builders') }}" class="nav-link <?php if(\Request::is('back-office/builders')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Builders</span></a>
                         </li>
-						
-
-
-                        <li class="nav-item">
+						<li class="nav-item">
                             <a href="{{ url('back-office/applicationstatus') }}" class="nav-link <?php if(\Request::is('back-office/applicationstatus')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Application Status</span></a>
                         </li>
                         <li class="nav-item nav-item-submenu <?php if(strpos($_SERVER['REQUEST_URI'], 'back-office/customers')) { echo 'nav-item-expanded nav-item-open'; }?>">
