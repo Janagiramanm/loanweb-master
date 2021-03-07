@@ -118,8 +118,10 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="bank_id">Branch</label>
-                                    <input class="form-control" type="text" id="bank_branch" name="bank_branch" />
+                                    <label for="branch_name">Branch</label>
+                                    <select name="branch_name" id="branch_name" class="form-control" required>
+                                        <option value="">Select Branch</option>
+                                    </select>
                                 </div>
                             </div>
                            <hr>
@@ -811,6 +813,12 @@
 <script>
 
     $(document).ready(function(){
+
+    setTimeout(() => {
+        var bank_id = $('select#bank_id option:selected').val();
+        getBranches(bank_id);
+    }, 500);
+
         $("#builder_name").change(function(){
             
             var builder_id = $(this).val();
@@ -1033,7 +1041,52 @@
 
      $('input[type="text"]').prop('autocomplete',"no-fill");
 
+  
+    $("#bank_id").change(function(){
+      
+        var bank_id = $(this).val();
+        $.ajax({
+            url : "<?php echo url('/back-office/bank/get-branches'); ?>",
+            headers: {
+                'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+            },
+            data : JSON.stringify({bank_id:bank_id}),
+            type : 'POST',
+            contentType: "application/json",
+            dataType: 'json',
+            success: function(response) {
+                if(response.status==1){
+                    $("#branch_name").html(response.data);
+                }
+
+            }
+    });
+
+ 
     
+        
+});
+function getBranches(bank_id){
+
+    $.ajax({
+            url : "<?php echo url('/back-office/bank/get-branches'); ?>",
+            headers: {
+                'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+            },
+            data : JSON.stringify({bank_id:bank_id}),
+            type : 'POST',
+            contentType: "application/json",
+            dataType: 'json',
+            success: function(response) {
+                if(response.status==1){
+                    $("#branch_name").html(response.data);
+                }
+
+            }
+    });
+}
+     
+       
     
 
 </script>

@@ -142,6 +142,7 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
 
     Route::post('/builders/get-project','BuilderController@getProject');
     Route::resource('/builders','BuilderController');
+    Route::post('/bank/get-branches','BankBranchController@getBranchData');
     Route::resource('/bank/branches','BankBranchController');
 
 });

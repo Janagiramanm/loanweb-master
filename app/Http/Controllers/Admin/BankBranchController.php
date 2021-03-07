@@ -126,4 +126,27 @@ class BankBranchController extends Controller
          return redirect(route('back-office.branches.index'))->with('success','Branch has been deleted Successfully');
 
     }
+
+    public function getBranchData(Request $request){
+         
+        $branches = BankBranch::where('bank_id','=', $request->bank_id)->get();
+        if($branches){
+            $result = '<select name="branch_name" id="branch_name" >
+                          <option value=""> Select Branch</option>';
+                        foreach($branches as $key => $branch){
+                            $result .= '<option value="'.$branch->id.'">'.$branch->branch_name.'</option>';
+                        }
+            $result . '</select>';
+            $msg = [
+                'status' => 1,
+                'data' => $result
+            ];
+            return response()->json($msg);
+        }
+        $msg = [
+            'status' => 0,
+            'data' => 'No data found'
+        ];
+        return response()->json($msg);
+    }
 }
