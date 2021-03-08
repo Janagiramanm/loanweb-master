@@ -41,6 +41,7 @@ class CustomerExport implements FromCollection, WithHeadings
     {
         $exceldata = DB::table('customers')
                         ->leftjoin('bank', 'customers.bank_id', '=', 'bank.id')
+                        ->leftjoin('bank_branches', 'bank.id', '=', 'bank_branches.bank_id')
                         ->leftjoin('application_status', 'customers.application_status', '=', 'application_status.id')
                         ->leftjoin('disbursement_tab', 'customers.id', '=', 'disbursement_tab.customer_id')
                         ->leftjoin('users', 'customers.emp_id', '=', 'users.id')
@@ -53,7 +54,7 @@ class CustomerExport implements FromCollection, WithHeadings
                                  'customers.telecallername',
                                  'users.name',
                                  'bank.bank_name',
-                                 'bank.bank_branch',
+                                 'bank_branches.branch_name',
                                  'customers.file_no',
                                  'customers.cust_phone',
                                  'customers.cust_email',
