@@ -74,9 +74,9 @@ class EligibilityController extends Controller
         $input = $request->all();
         $fmt = new NumberFormatter($locale = 'en_IN', NumberFormatter::CURRENCY);
         $compArr = array("E", "SP", "P", "G", "SG");
-
+        $salaryIncome1 = 0;
         if (isset($input['applicant1'])) {
-
+         
             if (isset($input['grossIncome1'])) {
                 $salaryIncome1 = $input['grossIncome1'];
             }

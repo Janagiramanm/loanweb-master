@@ -926,6 +926,8 @@
                             <div class="text-right">
                                 <button type="submit" class="btn btn-primary">Proceed <i class="icon-paperplane ml-2"></i></button>
                             </div>
+                          
+
                         </div>
                         </div>
                     </div>
@@ -936,6 +938,7 @@
 
 
     </form>
+    <button class="btn btn-secondary" onclick="window.history.back();">Go Back</button>
 </div>
 @endsection
 
