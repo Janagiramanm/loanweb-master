@@ -107,14 +107,23 @@
                             <input type="text" class="form-control" name="cibilScore" placeholder="Enter CIBIL Score">
                         </div>
                         <div class="form-group">
-                            <label>Birth Year:</label>
-                            <input type="text" id="dob" class="form-control" name="dob" placeholder="Enter Year Of Birth">
+                            <label>Date of Birth:</label>
+                            <div class="input-group">
+										<span class="input-group-prepend">
+											<span class="input-group-text"><i class="icon-calendar5"></i></span>
+										</span>
+                            <!-- <input type="text" id="dob" class="form-control" name="dob" placeholder="Enter Year Of Birth"> -->
+                            <input type="text" class="form-control pickadate-limits" placeholder="Select Date" name="dob" id="dob" >
+                            </div>
                         </div>
 
+                 
 						<div class="text-right">
+                           
 							<button type="submit" class="btn btn-primary">Proceed <i class="icon-paperplane ml-2"></i></button>
 						</div>
 					</form>
+                    <button class="btn btn-secondary" onclick="window.history.back();">Go Back</button>
 				</div>
 			</div>
 			<!-- /basic layout -->
