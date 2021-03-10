@@ -69,7 +69,7 @@ class BankController extends Controller
                         $cibilDetails = new CibilDetail();
                         
                         $cibilDetails->cibil_setting_id = $cibil->id;
-                        $cibilUpdate->parent_id = 0;
+                        $cibilDetails->parent_id = 0;
                         $cibilDetails->name = $inputField;
                         $cibilDetails->ltv1 = $input[$inputField.'_'.$key1][0];
                         $cibilDetails->ltv2 = $input[$inputField.'_'.$key1][1];
