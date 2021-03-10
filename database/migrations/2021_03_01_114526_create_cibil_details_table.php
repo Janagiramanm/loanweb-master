@@ -16,6 +16,7 @@ class CreateCibilDetailsTable extends Migration
         Schema::create('cibil_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('cibil_setting_id')->nullable();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('name')->nullable();
             $table->string('ltv1')->nullable();
             $table->string('ltv2')->nullable();

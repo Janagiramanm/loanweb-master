@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Locale;
 use DateTime;
+use App\Model\Bank;
+use App\Model\CibilSetting;
+use App\Model\Builder;
+use App\Model\Occupation;
+use App\Model\CibilDetail;
 
 use NumberFormatter;
 
@@ -22,7 +27,11 @@ class EligibilityController extends Controller
 
     public function index()
     {
-        return view('back-office.eligibilities.index');
+        $banks = Bank::all();
+        $builders = Builder::all();
+        $occupations = Occupation::whereIn('id',[1,2])->get();
+        
+        return view('back-office.eligibilities.index',compact(['banks','builders','occupations']));
     }
 
     public function openForm(Request $request)
@@ -51,21 +60,58 @@ class EligibilityController extends Controller
     {
         // dd($request);
         $input = $request->all();
-
-        //Create a DateTime object using the user's date of birth.
-        $dob = new DateTime($input['dob']);
-
+        
+        // $dob =date('Y',strtotime($input['dob']));
+        $dob = new DateTime(date('Y',strtotime($input['dob'])));
+     
+     
         //We need to compare the user's date of birth with today's date.
         $now = new DateTime();
 
         //Calculate the time difference between the two dates.
         $difference = $now->diff($dob);
-
+       
         //Get the difference in years, as we are looking for the user's age.
         $age = $difference->y;
 
         $input['age'] = $age;
 
+        $cibil = ['cibil1','cibil2', 'cibil3', 'cibil4'];
+        $cibilSettings = CibilSetting::where('bank_id','=',$input['bank'])
+              ->where('occupation_id','=',$input['occupation'])->get();
+        $cibilscore = $input['cibilScore'];
+        if($cibilSettings){
+            foreach($cibilSettings as $cibilSetting){
+                   $cibilDetails = CibilDetail::where('cibil_setting_id','=',$cibilSetting->id)->get();
+                   if($cibilDetails){
+                             foreach($cibilDetails as $key =>  $value){
+                                   if($key > 0){
+                                       if(in_array($value->name,$cibil)){
+                                              $res[$value->id]['ltv1'] = explode('-',$value->ltv1);
+                                              $res[$value->id]['ltv2'] = explode('-',$value->ltv2);
+                                              $res[$value->id]['ltv3'] = explode('-',$value->ltv3);
+                                        }
+                                   }
+                             }
+                   }
+            }
+        }
+       
+        if($res){
+            foreach($res as $key => $value){
+                foreach($value as $name => $val){
+                        if(isset($val[0]) && isset($val[1])){
+                            if($cibilscore >= $val[0] && $cibilscore <= $val[1]){
+                                $input['interest'] = CibilDetail::where('parent_id','=',$key)
+                                            ->where('name','like','max-roi%')->first()->$name;
+                                            
+                            }
+                        }
+                }
+            }
+        }
+       
+        
         return view('back-office.eligibilities.applicant',compact('input'));
     }
 

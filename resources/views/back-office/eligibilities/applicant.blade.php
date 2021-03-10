@@ -885,7 +885,7 @@
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label">Rate Of Intrest</label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="rateOfIntrest" value="7.15"  class="form-control" placeholder="Rate Of Intrest">
+                                            <input type="text" name="rateOfIntrest" value="{{$input['interest']}}"  class="form-control" placeholder="Rate Of Intrest">
                                         </div>
                                     </div>
 

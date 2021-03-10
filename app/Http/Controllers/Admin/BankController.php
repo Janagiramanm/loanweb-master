@@ -51,6 +51,10 @@ class BankController extends Controller
         $bank->ltv3 = $input['ltv3'];
         $bank->save();
 
+        $cibilArr = array('cibil1','cibil2','cibil3','cibil4');
+        // echo '<pre>';
+        // print_r($cibil);
+        // exit;
         $inputArray = ['foir','cibil1','min-roi','max-roi','cibil2','min-roi2','max-roi2','cibil3','min-roi3','max-roi3','cibil4','min-roi4','max-roi4'];
         
         if($occupation_id){
@@ -65,11 +69,22 @@ class BankController extends Controller
                         $cibilDetails = new CibilDetail();
                         
                         $cibilDetails->cibil_setting_id = $cibil->id;
+                        $cibilUpdate->parent_id = 0;
                         $cibilDetails->name = $inputField;
                         $cibilDetails->ltv1 = $input[$inputField.'_'.$key1][0];
                         $cibilDetails->ltv2 = $input[$inputField.'_'.$key1][1];
                         $cibilDetails->ltv3 = $input[$inputField.'_'.$key1][2];
                         $cibilDetails->save();
+                        if($key > 0){
+                            $cibilUpdate = CibilDetail::find($cibilDetails->id);
+                            if(in_array($inputField,$cibilArr)){
+                                $parent_id = $cibilDetails->id;
+                               
+                            }else{
+                                $cibilUpdate->parent_id = $parent_id;
+                                $cibilUpdate->save();
+                            }
+                        }
                     }
                 }
 
