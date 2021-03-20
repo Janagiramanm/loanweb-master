@@ -25,6 +25,8 @@
                             <legend class="font-weight-semibold"><i class="icon-reading mr-2"></i> Income details</legend>
                             <div class="col-md-4">
 
+                               
+
                                 {{-- @if ($input['bank'] == "SBI" || $input['bank'] == "HDFC") --}}
                                     <div class="form-group">
                                         <label class="col-form-label">Gross Salary </label>
@@ -156,6 +158,7 @@
                 <!-- /input formatter -->
             </div>
         @elseif ($input['noOfApplicants'] == 2)
+            
             <input type="hidden" name="applicant2" id="" value="2">
             <div class="content">
                 <!-- Input formatter -->
@@ -242,7 +245,7 @@
                                 <div class="form-group row">
                                     <label class="col-form-label">Age of Applicant </label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="ageOfApplicant1" class="form-control" placeholder="Age of applicant" required>
+                                        <input type="text" name="ageOfApplicant1" class="form-control" placeholder="Age of applicant" value="{{ $input['age'] }}" required>
                                     </div>
                                 </div>
                             </div>

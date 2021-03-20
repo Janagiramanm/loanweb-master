@@ -60,26 +60,18 @@ class EligibilityController extends Controller
     {
         // dd($request);
         $input = $request->all();
-        
-        // $dob =date('Y',strtotime($input['dob']));
-        $dob = new DateTime(date('Y',strtotime($input['dob'])));
-     
-     
-        //We need to compare the user's date of birth with today's date.
-        $now = new DateTime();
-
-        //Calculate the time difference between the two dates.
-        $difference = $now->diff($dob);
        
-        //Get the difference in years, as we are looking for the user's age.
-        $age = $difference->y;
-
+        $dob = new DateTime($input['dob']);
+        $today   = new DateTime('today');
+        $age =  $dob->diff($today)->y;
         $input['age'] = $age;
 
         $cibil = ['cibil1','cibil2', 'cibil3', 'cibil4'];
         $cibilSettings = CibilSetting::where('bank_id','=',$input['bank'])
               ->where('occupation_id','=',$input['occupation'])->get();
         $cibilscore = $input['cibilScore'];
+        $res = [];
+        $input['interest'] = '';
         if($cibilSettings){
             foreach($cibilSettings as $cibilSetting){
                    $cibilDetails = CibilDetail::where('cibil_setting_id','=',$cibilSetting->id)->get();
@@ -110,7 +102,6 @@ class EligibilityController extends Controller
                 }
             }
         }
-       
         
         return view('back-office.eligibilities.applicant',compact('input'));
     }
