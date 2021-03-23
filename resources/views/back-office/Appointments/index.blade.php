@@ -39,7 +39,7 @@
                                 <tr>
                                     <td>{{ $appointment->agent_name }}</td>
                                     <td>{{ $appointment->customer_name }}</td>
-                                    <td>{{ $appointment->applicant_type }}</td>
+                                    <td>{{ $appointment->status }}</td>
                                     <td>{{ $appointment->appointment_name }}</td>
                                     <td>{{ $appointment->telecallername }}</td>
                                     <td>{{ $appointment->appointment_date }}</td>
