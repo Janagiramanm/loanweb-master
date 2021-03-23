@@ -473,6 +473,7 @@ class CustomerController extends Controller
 
     public function addSecondaryApplicant(Request $request){
         
+        // 
           $secondaryAdd = new SecondaryApplicant();
           $secondaryAdd->name = $request->secondary_cust_name; 
           $secondaryAdd->phone = $request->secondary_cust_phone; 
@@ -485,16 +486,18 @@ class CustomerController extends Controller
           $secondaryAdd->save();
 
           if($request->secondary_appointment_date !=''){
-
+          
             $appointment = new Appointment();
             $appointment->agent_id = $request->secondary_appointment_agent;
             $appointment->customer_id = $request->secondary_id;
+            $appointment->second_customer_id = $secondaryAdd->id;
             $appointment->appointment_date = date('Y-m-d', strtotime($request->secondary_appointment_date));
             $appointment->timeslot_id =$request->secondary_appointment_time;
             $appointment->created_excutive =Auth::user()->id;
             $appointment->status = 1 ;
             $appointment->appointmenttype_id = $request->type_of_appointment;
-            $appointment->applicant_type = 'normal';
+            $appointment->applicant_type = 'secondary';
+            $appointment->save();
 
           }
           return redirect('/back-office/customers/'.$request->secondary_id.'/editnewcustomer')->withSuccess('Secondary Applicant added successfully');
@@ -507,7 +510,7 @@ class CustomerController extends Controller
                         ->join('type_of_appointment', 'type_of_appointment.id', '=', 'appointment.appointmenttype_id')
                         ->join('time_slots', 'time_slots.id', '=', 'appointment.timeslot_id')
                         ->join('users', 'users.id', '=', 'appointment.agent_id')
-                        ->select('users.id as user_id','users.name as agent_name', 'customers.cust_name as customer_name', 'type_of_appointment.appointment_name','appointment.id', 'appointment.appointment_date', 'appointment.applicant_type','appointment.timeslot_id','appointment.appointmenttype_id', 'time_slots.time_slot')
+                        ->select('users.id as user_id','users.name as agent_name', 'customers.cust_name as customer_name', 'type_of_appointment.appointment_name','appointment.id', 'appointment.appointment_date', 'appointment.applicant_type','appointment.timeslot_id','appointment.appointmenttype_id', 'time_slots.time_slot', 'appointment.customer_id')
                         ->where('appointment.customer_id', '=', $id)
                         ->get();
         $banks = Bank::all();
@@ -517,10 +520,12 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         $occupations = Occupation::all();
         $documents = RequiredDoc::where('occupation_id', '=', $customer->occupation_id)->get();
-        $applicants = TwoThreeApplicant::where('customer_id','=',$id)->get();
-       // $agents = $this->fetchAgents($id);
-
-        return view('back-office.customers.pipelinecustomeredit', compact('appointments', 'timeslots', 'typeofappointments', 'customer', 'banks', 'occupations', 'documents','applicants'));
+       // $second_applicants = TwoThreeApplicant::where('customer_id','=',$id)->get();
+        $second_applicants = SecondaryApplicant::where('customer_id', '=', $id)->get();
+        $builders = Builder::All();
+    
+   
+        return view('back-office.customers.pipelinecustomeredit', compact('appointments', 'timeslots', 'typeofappointments', 'customer', 'banks', 'occupations', 'documents','second_applicants','builders'));
     }
 
     public function changeAgentAppointment(Request $request){
@@ -561,11 +566,76 @@ class CustomerController extends Controller
 
     }
 
+    public function addFirstAgentAppoint(Request $request){
+        $input = $request->input();
+
+       
+        $isExist = Appointment::where('customer_id','=',$input['customer_id'])
+         ->where('applicant_type','=','normal')->first();
+        if($isExist){
+            $appointment = Appointment::find($isExist->id);
+        }else{
+           
+            $appointment = new Appointment();
+        }
+
+        $appointment->agent_id = $input['agent_id'];
+        $appointment->appointment_date =  date('Y-m-d', strtotime($input['apdate']));
+        $appointment->customer_id = $input['customer_id'];
+        $appointment->second_customer_id = null;
+        $appointment->timeslot_id = $input['aptime'];
+        $appointment->applicant_type = 'normal';
+        $appointment->appointmenttype_id = $input['appointment_type'];
+        $appointment->created_excutive  = Auth::user()->id;
+        $appointment->status            = 1;
+        if($appointment->save()){
+            $msg = [
+                'status' => 1,
+                'message' => 'success'
+            ];
+
+            return response()->json($msg);
+        }
+    }
+
+    public function addSecondaryAgentAppoint(Request $request){
+
+        $input = $request->input();
+        $isExist = Appointment::where('customer_id','=',$input['customer_id'])
+        ->where('second_customer_id','=',$input['second_customer_id'])->first();
+        if($isExist){
+            $appointment = Appointment::find($isExist->id);
+        }else{
+            $appointment = new Appointment();
+        }
+
+        $appointment->agent_id = $input['agent_id'];
+        $appointment->appointment_date =  date('Y-m-d', strtotime($input['apdate']));
+        $appointment->customer_id = $input['customer_id'];
+        $appointment->second_customer_id = $input['second_customer_id'];
+        $appointment->timeslot_id = $input['aptime'];
+        $appointment->applicant_type = 'secondary';
+        $appointment->appointmenttype_id = $input['appointment_type'];
+        $appointment->created_excutive  = Auth::user()->id;
+        $appointment->status            = 1;
+        if($appointment->save()){
+            $msg = [
+                'status' => 1,
+                'message' => 'success'
+            ];
+
+            return response()->json($msg);
+        }
+
+
+    }
+
     public function updatepipelinecustomer(Request $request, $id)
     {
         $input = $request->all();
         $customer = Customer::find($id);
         // dd($customer);
+       
         try {
             $customer = Customer::where('id', '=', $id)->update([
                 'cust_name'             => $input['cust_name'],
@@ -588,15 +658,15 @@ class CustomerController extends Controller
             ]);
 
             if(isset($input['interested'])  && isset($input['appointment_date'])){
-                $appointment = Appointment::create([
-                    'agent_id'          => $input['appointment_agent'],
-                    'customer_id'       => $id,
-                    'appointment_date'  => date('Y-m-d', strtotime($input['appointment_date'])),
-                    'timeslot_id'       => $input['appointment_time'],
-                    'created_excutive'  => Auth::user()->id,
-                    'status'            => 1,
-                    'appointmenttype_id'=> $input['type_of_appointment']
-                ]);
+                // $appointment = Appointment::create([
+                //     'agent_id'          => $input['appointment_agent'],
+                //     'customer_id'       => $id,
+                //     'appointment_date'  => date('Y-m-d', strtotime($input['appointment_date'])),
+                //     'timeslot_id'       => $input['appointment_time'],
+                //     'created_excutive'  => Auth::user()->id,
+                //     'status'            => 1,
+                //     'appointmenttype_id'=> $input['type_of_appointment']
+                // ]);
 
                 $customers = DB::table('customers')
                         ->join('application_status', 'application_status.id', '=', 'customers.application_status')
@@ -800,7 +870,7 @@ class CustomerController extends Controller
                                 'customers.cust_name',
                                 'customers.telecallername',
                                 'bank.bank_name',
-                                'bank.bank_branch',
+                                // 'bank.bank_branch',
                                 'customers.file_no',
                                 'customers.cust_phone',
                                 'customers.cust_email',

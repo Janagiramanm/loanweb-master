@@ -161,4 +161,28 @@ class BuilderController extends Controller
         return response()->json($msg);
 
     }
+
+    public function fetchProjects(Request $request){
+
+        $id = $request->id;
+        $projects = Builder::where('id','=',$id)->get();
+        if($projects){
+            $result = '<select name="project_name" id="project_name">
+                            <option value="">Select Project</option>
+                      ';
+
+            foreach($projects as $project){
+                  $result .='<option value="'.$id.'">'.$project->project_name.'</option>';
+            }
+            $result .= '</select>';
+        }
+       // echo $result;
+        $msg = [
+            'status'=>1,
+            'data'=> $result
+        ];
+        return response()->json($msg);
+
+
+    }
 }
