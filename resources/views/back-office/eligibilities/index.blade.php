@@ -171,7 +171,7 @@
 										
                                                     <label>Date of Birth</label>
                                                     <input class="form-control" type="date" id="dob" name="dob" 
-                                                        value="{{ date('Y-m-d') }}"
+                                                        value="{{ date('2000-m-d') }}"
                                                         min="{{ date('70-m-d') }}" max="{{ date('Y-12-31') }}" />
                                            
 										 </div>

@@ -24,12 +24,14 @@
 					<table class="table datatable-pagination">
 						<thead>
 							<tr>
-								<th>Agent Name ASD FSDS</th>
+								<th>Agent Name</th>
                                 <th>Customer Name</th>
+                                <th>Customer Type</th>
                                 <th>Appointment Type</th>
+                                <th>Telecaller</th>
                                 <th>Date</th>
                                 <th>Time</th>
-                                <th>Telecaller</th>
+                                
 							</tr>
 						</thead>
 						<tbody>
@@ -37,6 +39,7 @@
                                 <tr>
                                     <td>{{ $appointment->agent_name }}</td>
                                     <td>{{ $appointment->customer_name }}</td>
+                                    <td>{{ $appointment->applicant_type }}</td>
                                     <td>{{ $appointment->appointment_name }}</td>
                                     <td>{{ $appointment->telecallername }}</td>
                                     <td>{{ $appointment->appointment_date }}</td>

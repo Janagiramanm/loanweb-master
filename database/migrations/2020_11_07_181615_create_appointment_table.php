@@ -17,6 +17,7 @@ class CreateAppointmentTable extends Migration
             $table->id();
             $table->integer('agent_id')->unsigned();
             $table->integer('customer_id')->unsigned();
+            $table->unsignedBigInteger('second_customer_id')->nullable();
             $table->date('appointment_date');
             $table->integer('timeslot_id');
             $table->integer('created_excutive')->unsigned();

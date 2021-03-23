@@ -536,8 +536,11 @@
                         </div>
                         
                         @if($secondary_applicants)
+                        <hr>
+                          <h2>Secondary Applicants</h2>
                         @foreach($secondary_applicants as $secondary_applicant)
                         <div class="secondary-applicants-edit">
+                         
                            <div class="field-group">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -626,10 +629,8 @@
                                 </div>
                            
                               </div>
-                            </div>
-                            <div class="remove-sec"><a href="javascript:void(0);" class="remove_button_edit">Remove</a></div>
-                            
-                        </div>
+
+                        
                         @endforeach
                         @endif
 
@@ -850,10 +851,14 @@
             if ($(this).is(":checked")) {
                /// var cust_addres = $("#cust_address").val();
                 $("#secondary_cust_address").val($("#cust_address").val());
+                $("#secondary_cust_city").val($("#cust_city").val());
+                $("#secondary_cust_pincode").val($("#cust_pincode").val());
                 $("#secondary-appointment-section").hide();
                 
             }else{
                 $("#secondary_cust_address").val('');
+                $("#secondary_cust_city").val('');
+                $("#secondary_cust_pincode").val('');
                 $("#secondary-appointment-section").show();
             }
 

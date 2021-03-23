@@ -52,9 +52,6 @@ class BankController extends Controller
         $bank->save();
 
         $cibilArr = array('cibil1','cibil2','cibil3','cibil4');
-        // echo '<pre>';
-        // print_r($cibil);
-        // exit;
         $inputArray = ['foir','cibil1','min-roi','max-roi','cibil2','min-roi2','max-roi2','cibil3','min-roi3','max-roi3','cibil4','min-roi4','max-roi4'];
         
         if($occupation_id){
@@ -65,9 +62,7 @@ class BankController extends Controller
                     $cibil->occupation_id = $value;
                     $cibil->save();
                     foreach($inputArray as $key=> $inputField){
-                        //    print_r($input[$inputField.'_'.$key1][0]);
                         $cibilDetails = new CibilDetail();
-                        
                         $cibilDetails->cibil_setting_id = $cibil->id;
                         $cibilDetails->parent_id = 0;
                         $cibilDetails->name = $inputField;

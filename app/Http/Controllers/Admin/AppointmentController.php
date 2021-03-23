@@ -20,7 +20,7 @@ class AppointmentController extends Controller
                         ->join('type_of_appointment', 'type_of_appointment.id', '=', 'appointment.appointmenttype_id')
                         ->join('time_slots', 'time_slots.id', '=', 'appointment.timeslot_id')
                         ->join('users', 'users.id', '=', 'appointment.agent_id')
-                        ->select('users.name as agent_name', 'customers.cust_name as customer_name', 'customers.telecallername', 'type_of_appointment.appointment_name', 'appointment.appointment_date', 'time_slots.time_slot', 'appointment.status', 'appointment.id')
+                        ->select('users.name as agent_name', 'customers.cust_name as customer_name', 'customers.telecallername', 'type_of_appointment.appointment_name', 'appointment.appointment_date', 'time_slots.time_slot', 'appointment.status', 'appointment.id','appointment.applicant_type')
                         ->where('appointment.status' , '=', 1)
                         ->get();
 
