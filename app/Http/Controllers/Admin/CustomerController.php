@@ -225,6 +225,24 @@ class CustomerController extends Controller
          return view('back-office.customers.notinterested', compact('customers'));
      }
 
+     public function modt(){
+
+        $customers = DB::table('customers')
+        ->join('application_status', 'application_status.id', '=', 'customers.application_status')
+        ->where([['customers.application_status', '=', 10], ['customers.application_deleted', '=', 0] ])
+        ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+        ->orderByDesc('customers.id')
+        ->get();
+         return view('back-office.customers.modt', compact('customers'));
+
+     }
+
+     public function editMODT(){
+        $timeslots = Timeslot::all();
+        $typeofappointments = TypeOfAppointment::all();
+         return view('back-office.customers.modtschedule',compact(['timeslots','typeofappointments']));
+
+     }
     
 
     /******* * The func addNewCustomer will help us to open new customer form *********** */

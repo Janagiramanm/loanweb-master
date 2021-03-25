@@ -72,6 +72,9 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
    
     Route::post('/change-customer-status', 'CustomerController@changeCustomerStatus');
 
+    Route::get('/customers/modt','CustomerController@modt')->name('customers.modt');
+    Route::get('/customers/edit-modt','CustomerController@editMODT')->name('customers.edit-modt');
+
     Route::get('/customers/allcustomers', 'CustomerController@allCustomers')->name('customers.allcustomers');
     Route::get('/customers/droppedcustomers', 'CustomerController@droppedCustomers')->name('customers.droppedcustomers');
     Route::get('/customers/self-funding', 'CustomerController@selfFunding')->name('customers.self-funding');
