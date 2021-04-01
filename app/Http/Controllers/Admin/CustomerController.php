@@ -22,6 +22,7 @@ use App\Model\ExtaDocs;
 use App\Model\TwoThreeApplicant;
 use App\Model\SecondaryApplicant;
 use App\Model\Builder;
+use App\Model\BankBranch;
 
 use App\Imports\CustomerImport;
 use App\Imports\AllCustomerImport;
@@ -250,13 +251,17 @@ class CustomerController extends Controller
     {
         $banks = Bank::all();
         $occupations = Occupation::all();
-        return view('back-office.customers.addnewlead', compact('banks'));
+        $builders = Builder::All();
+        return view('back-office.customers.addnewlead', compact('banks','builders'));
     }
 
     /******* * The func storeCustomer will help us to open new customer form *********** */
     public function storeCustomer(Request $request)
     {
         $input = $request->all();
+        // echo '<pre>';
+        // print_r($input);
+        // exit;
         $input['applicationno'] = uniqid();
         $input['application_status'] = 1;
         $input['application_deleted'] = false;
@@ -273,14 +278,18 @@ class CustomerController extends Controller
             $timeslots = Timeslot::all();
             $typeofappointments = TypeOfAppointment::all();
             $customer = Customer::find($id);
+            // echo "<pre>";
+            // print_r($customer);
             $banks = Bank::all();
             $occupations = Occupation::all();
             $secondary_applicants = SecondaryApplicant::where('customer_id',$id)->get();
             $builders = Builder::All();
+            $branches = BankBranch::where('bank_id','=',$customer->bank_id)->get();
+
             // echo '<pre>';
-            // print_r($secondary_applicants);
+            // print_r($branches);
             // exit;
-            return view('back-office.customers.editnewcustomer', compact('customer', 'timeslots', 'typeofappointments', 'banks', 'occupations','secondary_applicants', 'builders'));
+            return view('back-office.customers.editnewcustomer', compact('customer', 'timeslots', 'typeofappointments', 'banks', 'occupations','secondary_applicants', 'builders','branches'));
         } catch (\Exception $e) {
             return redirect(route('back-office.customers.index'))->with($e->getMessage());
         }

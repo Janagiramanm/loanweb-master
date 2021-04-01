@@ -33,6 +33,7 @@ class CreateCustomersTable extends Migration
             $table->string('builder_name')->nullable();
             $table->string('project_company_name')->nullable();
             $table->integer('bank_id')->nullable();
+            $table->integer('bank_branch')->nullable();
             $table->integer('occupation_id')->nullable();
             $table->string('file_no')->nullable();
             $table->string('property_cost')->nullable();

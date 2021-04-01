@@ -164,19 +164,19 @@ class BuilderController extends Controller
 
     public function fetchProjects(Request $request){
 
-        $id = $request->id;
+        $id = $request->builder_id;
         $projects = Builder::where('id','=',$id)->get();
         if($projects){
             $result = '<select name="project_name" id="project_name">
                             <option value="">Select Project</option>
                       ';
-
+          
             foreach($projects as $project){
                   $result .='<option value="'.$id.'">'.$project->project_name.'</option>';
             }
             $result .= '</select>';
         }
-       // echo $result;
+        // echo $result;
         $msg = [
             'status'=>1,
             'data'=> $result

@@ -48,7 +48,13 @@
 
                                 <div class="form-group col-md-6">
                                         <label for="cust_email">Project Name</label>
-                                        <input type="text" class="form-control @error('project_name') is-invalid @enderror" id="project_name" name="project_name" required value="{{  $customer->project_name }}">
+                                        <select class="form-control @error('project_name') is-invalid @enderror" name="project_name" id="project_name" required>
+                                            <option value="">Select Project</option>
+                                            @foreach($builders as $builder)
+                                                <option @if($customer->project_name ==$builder->id ) selected @endif  value="{{ $builder->id }}"> {{ $builder->builder_name}}</option>
+                                            @endforeach
+                                        </select>
+                                        <!-- <input type="text" class="form-control @error('project_name') is-invalid @enderror" id="project_name" name="project_name" required value="{{  $customer->project_name }}"> -->
                                         @error('project_name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -118,9 +124,22 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
+                                <!-- @foreach ($branches as $branch)
+                                        @php
+                                          echo '<pre>';
+                                          print_r($branch);
+                                    @endphp
+                                    @endforeach -->
                                     <label for="branch_name">Branch</label>
                                     <select name="branch_name" id="branch_name" class="form-control" required>
                                         <option value="">Select Branch</option>
+                                        @foreach ($branches as $branch)
+                                        @php
+                                          echo '<pre>';
+                                          print_r($branch);
+                                    @endphp
+                                        <option @if($customer->bank_branch == $branch->id) selected @endif value="{{ $branch->id }}"> {{ $branch->branch_name }} </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -815,10 +834,10 @@
 
     $(document).ready(function(){
 
-    setTimeout(() => {
-        var bank_id = $('select#bank_id option:selected').val();
-        getBranches(bank_id);
-    }, 500);
+    // setTimeout(() => {
+    //     var bank_id = $('select#bank_id option:selected').val();
+    //     getBranches(bank_id);
+    // }, 500);
 
         $("#builder_name").change(function(){
             
@@ -1071,25 +1090,25 @@
     
         
 });
-function getBranches(bank_id){
+// function getBranches(bank_id){
 
-    $.ajax({
-            url : "<?php echo url('/back-office/bank/get-branches'); ?>",
-            headers: {
-                'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
-            },
-            data : JSON.stringify({bank_id:bank_id}),
-            type : 'POST',
-            contentType: "application/json",
-            dataType: 'json',
-            success: function(response) {
-                if(response.status==1){
-                    $("#branch_name").html(response.data);
-                }
+//     $.ajax({
+//             url : "<?php echo url('/back-office/bank/get-branches'); ?>",
+//             headers: {
+//                 'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+//             },
+//             data : JSON.stringify({bank_id:bank_id}),
+//             type : 'POST',
+//             contentType: "application/json",
+//             dataType: 'json',
+//             success: function(response) {
+//                 if(response.status==1){
+//                     $("#branch_name").html(response.data);
+//                 }
 
-            }
-    });
-}
+//             }
+//     });
+// }
      
        
     
