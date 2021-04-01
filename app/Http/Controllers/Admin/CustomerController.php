@@ -238,7 +238,7 @@ class CustomerController extends Controller
 
      }
 
-     public function editMODT(){
+     public function scheduleMODT(){
         $timeslots = Timeslot::all();
         $typeofappointments = TypeOfAppointment::all();
          return view('back-office.customers.modtschedule',compact(['timeslots','typeofappointments']));

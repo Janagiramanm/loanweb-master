@@ -35,7 +35,7 @@
                     <th>FILE NO</th>
                     <th>MODT PAID</th>
                     <th>MODT MODE</th>
-                    <th>Action</th>
+                    
 
                   
                 </tr>
@@ -57,19 +57,7 @@
                    <td>ICIC0001241</td>
                    <td>400000</td>
                    <td>Active</td>
-                   <td class="text-center">
-                            <div class="list-icons">
-                                <div class="dropdown">
-                                    <a href="#" class="list-icons-item" data-toggle="dropdown">
-                                        <i class="icon-menu9"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="{{ route('back-office.customers.edit-modt') }}"  class="dropdown-item"><i class="icon-pencil"></i> Edit </a>
-                                        <button type="button" class="dropdown-item" data-toggle="modal" id="delete_btn"  data-target="#modal_delete_from"><i class="icon-bin"></i><span>Remove</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
+                 
                 </tr>
                 
                 </tbody>

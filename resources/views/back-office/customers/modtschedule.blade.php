@@ -70,6 +70,7 @@
                                 </div>
 
                             </div>
+                            <button type="button" class="btn btn-primary" id="update_newcustomer">Save Appointment</button>
                       </div>
                       <hr>
                      <h3>Schedule an appointment for PICKUP</h3> 

@@ -194,7 +194,14 @@
                                     </ul>
                                 </li>
 
-                                <li class="nav-item"><a href="{{ url('back-office/customers/modt') }}" class="nav-link <?php if(\Request::is('back-office/customers/modt')){ echo 'active'; } ?>">MODT</a></li>
+								<li class="nav-item nav-item-submenu  <?php if(\Request::is('back-office/customers/modt*')) { echo 'nav-item-expanded nav-item-open'; }?>">
+									<a href="#" class="nav-link  <?php if(\Request::is('back-office/customers/partdisbursements') || \Request::is('back-office/customers/partchequefixing') || \Request::is('back-office/customers/disbursedapplications') || \Request::is('back-office/customers/chequefixing')) { echo 'active'; }?>">MODT</a>
+									<ul class="nav nav-group-sub">
+										<li class="nav-item"><a href="{{ url('back-office/customers/modt') }}" class="nav-link <?php if(\Request::is('back-office/customers/modt')){ echo 'active'; } ?>">Details</a></li>
+                                        <li class="nav-item"><a href="{{ url('back-office/customers/modt/schedule') }}" class="nav-link <?php if(\Request::is('back-office/customers/modt/schedule')){ echo 'active'; } ?>">Schedule</a></li>
+                                    </ul>
+                                </li>
+                                
                                 <li class="nav-item"><a href="{{ url('back-office/customers/allcustomers') }}" class="nav-link <?php if(\Request::is('back-office/customers/allcustomers')){ echo 'active'; } ?>">All Customers</a></li>
                                 <li class="nav-item"><a href="{{ url('back-office/customers/droppedcustomers') }}" class="nav-link <?php if(\Request::is('back-office/customers/droppedcustomers')){ echo 'active'; } ?>">Dropped Customers</a></li>
                                 <li class="nav-item"><a href="{{ url('back-office/customers/self-funding') }}" class="nav-link <?php if(\Request::is('back-office/customers/self-funding')){ echo 'active'; } ?>">Self Funding Customers</a></li>
