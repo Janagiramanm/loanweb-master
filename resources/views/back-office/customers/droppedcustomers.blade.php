@@ -14,7 +14,7 @@
                 <h5 class="card-title">Customers Data</h5>
                 <div class="header-elements">
                     <div class="list-icons">
-                       <a class="btn btn-primary text-light" href="">Add New Customer</a>
+                       <!-- <a class="btn btn-primary text-light" href="">Add New Customer</a> -->
                     </div>
                 </div>
             </div>
