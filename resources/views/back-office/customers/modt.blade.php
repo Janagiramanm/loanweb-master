@@ -13,7 +13,7 @@
                 <h5 class="card-title"> MODT Customers Details</h5>
                 <div class="header-elements">
                     <div class="list-icons">
-                        <a type="button" class="btn btn-primary text-light" href="{{ route('back-office.customers.exportsanctioned') }}" >Export CSV</a>
+                        <!-- <a type="button" class="btn btn-primary text-light" href="{{ route('back-office.customers.modt') }}" >Export CSV</a> -->
                     </div>
                 </div>
             </div>
@@ -35,30 +35,42 @@
                     <th>FILE NO</th>
                     <th>MODT PAID</th>
                     <th>MODT MODE</th>
-                    
-
-                  
                 </tr>
-                
                 </thead>
                 <tbody>
-                <tr>
-                   <td>1</td>
-                   <td>Charley Johnston</td>
-                   <td>ICIC Bank</td>
-                   <td>40000</td>
-                   <td>Pending Doc collection for backoffice</td>
-                   <td>Pending Doc collection for backoffice</td>
-                   <td>4:30 PM</td>
-                   <td>Pending Doc collection for Bank</td>
-                   <td>Pending Doc collection for Bank</td>
-                   <td>2:00 PM</td>
-                   <td>9000000</td>
-                   <td>ICIC0001241</td>
-                   <td>400000</td>
-                   <td>Active</td>
-                 
-                </tr>
+                @if($result)
+                    @php 
+                      $i = 1;
+                    @endphp
+                    @foreach($result as $key =>  $res)
+                       <tr>
+                         <td>{{ $i }}</td>
+                        @foreach($res as $type => $value)
+                           @if($type == 'drop')
+                             <td>{{ $value->customer->cust_name }}</td>
+                             <td>{{ $value->customer->bank['bank_name'] }}</td>
+                             <td>{{ $value->modt_amount }}</td>
+                             <td>{{ $value->customer->telecallername }}</td>
+                             <td>{{ $value->user->name }}</td>
+                             <td>{{ $value->timeslot->time_slot }}</td>
+                           @else
+                              <td>{{ $value->customer->telecallername }}</td>
+                              <td>{{ $value->user->name }}</td>
+                              <td>{{ $value->timeslot->time_slot }}</td>
+                              <td>{{ $value->customer->loan_amount }}</td>
+                              <td>{{ $value->customer->file_no }}</td>
+                              <td></td>
+                              <td></td>
+
+                           @endif
+                        @endforeach
+                        </tr>
+                        @php 
+                          $i++;
+                        @endphp
+                    @endforeach
+                @endif
+               
                 
                 </tbody>
             </table>

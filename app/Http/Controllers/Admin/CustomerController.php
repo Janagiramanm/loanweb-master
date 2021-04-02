@@ -23,6 +23,7 @@ use App\Model\TwoThreeApplicant;
 use App\Model\SecondaryApplicant;
 use App\Model\Builder;
 use App\Model\BankBranch;
+use App\Model\ModtAppointment;
 
 use App\Imports\CustomerImport;
 use App\Imports\AllCustomerImport;
@@ -228,20 +229,74 @@ class CustomerController extends Controller
 
      public function modt(){
 
-        $customers = DB::table('customers')
-        ->join('application_status', 'application_status.id', '=', 'customers.application_status')
-        ->where([['customers.application_status', '=', 10], ['customers.application_deleted', '=', 0] ])
-        ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
-        ->orderByDesc('customers.id')
-        ->get();
-         return view('back-office.customers.modt', compact('customers'));
+        // $customers = DB::table('customers')
+        // ->join('application_status', 'application_status.id', '=', 'customers.application_status')
+        // ->where([['customers.application_status', '=', 10], ['customers.application_deleted', '=', 0] ])
+        // ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+        // ->orderByDesc('customers.id')
+        // ->get();
+
+         $modtAppointments = ModtAppointment::get();
+         $result = [];
+         foreach($modtAppointments as $modtAppointment){
+
+                
+                $sanctioned_amount = $modtAppointment->customer->sanctioned_amount;
+                $modt_amount = ($sanctioned_amount * 0.5 / 100 );
+                if($modt_amount > 50000 ){
+                    $modt_amount = 50000;
+                }
+
+                $modtAppointment['modt_amount'] = $modt_amount;
+               // print_r($modtAppointment);
+
+                 //echo $modtAppointment->customer->sanctioned_amount;
+
+            $result[$modtAppointment->customer_id][$modtAppointment->type]=$modtAppointment;
+
+         }
+        
+         return view('back-office.customers.modt', compact('result'));
 
      }
 
      public function scheduleMODT(){
         $timeslots = Timeslot::all();
         $typeofappointments = TypeOfAppointment::all();
-         return view('back-office.customers.modtschedule',compact(['timeslots','typeofappointments']));
+        $customers = Customer::where('application_status','=',9)->get();
+         return view('back-office.customers.modtschedule',compact(['timeslots','typeofappointments','customers']));
+
+     }
+
+     public function saveModtAppointment(Request $request){
+        
+        $input = $request->input();
+        
+        $modtAppoint = new ModtAppointment();
+        $modtAppoint->agent_id =  $input['agent_id'];
+        $modtAppoint->customer_id =  $input['customer_id'];
+        $modtAppoint->appointment_date =  date('Y-m-d',strtotime($input['appointment_date']));
+        $modtAppoint->timeslot_id =  $input['timeslot_id'];
+        $modtAppoint->created_excutive  = Auth::user()->id;
+        $modtAppoint->status  = 1;
+        $modtAppoint->appointmenttype_id  = $input['appiontment_typeid'];
+        $modtAppoint->type = $input['type'];
+        if($modtAppoint->save()){
+            $msg = [
+                'status' => 1,
+                'message' => 'Success'
+            ];
+            return response()->json($msg);
+        }
+        $msg = [
+            'status' => 0,
+            'message' => 'Failed'
+        ];
+        return response()->json($msg);
+
+
+
+        
 
      }
     
@@ -322,6 +377,7 @@ class CustomerController extends Controller
                 'buying_door_no'        => $input['buying_door_no'],
                 'cust_city'             => $input['cust_city'],
                 'bank_id'               => $input['bank_id'],
+                'bank_branch'           => $input['branch_name'],
                 'occupation_id'         => $input['occupation_id'],
                 'property_cost'         => $input['property_cost'],
                 'mmr_payable'           => $input['mmr_payable'],
@@ -1129,6 +1185,7 @@ class CustomerController extends Controller
     {
         $customers = DB::table('customers')
                         ->leftjoin('bank', 'customers.bank_id', '=', 'bank.id')
+                        ->leftjoin('bank_branches', 'customers.bank_branch', '=', 'bank_branches.id')
                         ->where('customers.id', '=', $id)
                         ->select('customers.id as cust_id',
                                 'customers.created_at as sub_date',
@@ -1136,8 +1193,10 @@ class CustomerController extends Controller
                                 'customers.project_name',
                                 'customers.cust_name',
                                 'customers.telecallername',
+                                'customers.bank_id',
+                                'customers.bank_branch',
                                 'bank.bank_name',
-                                'bank.bank_branch',
+                                'bank_branches.branch_name',
                                 'customers.file_no',
                                 'customers.cust_phone',
                                 'customers.cust_email',

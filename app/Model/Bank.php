@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Model\CibilSetting;
-
+use App\Customer;
 
 class Bank extends Model
 {
@@ -14,6 +14,10 @@ class Bank extends Model
     public function cibilSettings()
     {
         return $this->hasMany(CibilSetting::class);
+    }
+
+    public function customer(){
+        return $this->hasMany(Customer::class);
     }
     
 }

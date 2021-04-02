@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Model\Bank;
 
 class Customer extends Model
 {
@@ -16,5 +17,9 @@ class Customer extends Model
 
     public function loanApplications() {
         return $this->hasMany(LoanApplication::class);
+    }
+
+    public function bank(){
+        return $this->belongsTo(Bank::class);
     }
 }
