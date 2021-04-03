@@ -264,6 +264,7 @@ class CustomerController extends Controller
         $timeslots = Timeslot::all();
         $typeofappointments = TypeOfAppointment::all();
         $dropAppoint = ModtAppointment::where('type','=','drop')->get();
+        $dropCustomer = [];
         if($dropAppoint){
             foreach($dropAppoint as $appointment){
                 $dropCustomer[] = $appointment->customer_id;
