@@ -32,10 +32,10 @@
                               <div class="form-row">
                                  <div class="form-group col-md-6">
                                      <label for="drop_customer_id">Select Customer</label>
-                                     @if($customers)
+                                     @if($droppedCustomers)
                                           <select class="form-control"  name="drop_customer_id" id="drop_customer_id">
                                                <option value="">Select Customer</option>
-                                               @foreach($customers as $customer)
+                                               @foreach($droppedCustomers as $customer)
                                                   <option value="{{ $customer->id }}">{{ $customer->cust_name }}</option>
                                                 @endforeach
                                           </select>
@@ -94,10 +94,10 @@
                      <div class="form-row">
                                  <div class="form-group col-md-6">
                                      <label for="pickup_customer_id">Select Customer</label>
-                                     @if($customers)
+                                     @if($pickupCustomers)
                                           <select class="form-control"  name="pickup_customer_id" id="pickup_customer_id">
                                                <option value="">Select Customer</option>
-                                               @foreach($customers as $customer)
+                                               @foreach($pickupCustomers as $customer)
                                                   <option value="{{ $customer->id }}">{{ $customer->cust_name }}</option>
                                                 @endforeach
                                           </select>
@@ -148,6 +148,7 @@
                                 </div>
                              </div>
                             <button type="button" class="btn btn-primary appointment_submit" data-type="pickup" id="pickup_appointment_submit">Save Appointment</button>
+                            <br> <div class="alert-success" id="pickup-success"></div>
                       </div>
 
                            
@@ -182,10 +183,9 @@ $(document).ready(function(){
             var timeslot_id =  $("#"+modt_type+"_appointment_time option:selected" ).val();
             var appiontment_typeid = $("#"+modt_type+"_type_of_appointment option:selected" ).val();
             var agent_id = $("#"+modt_type+"_appointment_agent option:selected" ).val();
-           var isValid = validateForm(modt_type,customer_id,appointment_date,timeslot_id,appiontment_typeid,agent_id);
-           alert(isValid);
+            var isValid = validateForm(modt_type,customer_id,appointment_date,timeslot_id,appiontment_typeid,agent_id);
+        
            if(isValid==true){
-               alert('coming')
             $.ajax({
                 url : "<?php echo url('/back-office/customers/modt/savemodt'); ?>",
                 headers: {
@@ -208,6 +208,7 @@ $(document).ready(function(){
                        $("#"+modt_type+"-success").show();
                        setTimeout(() => {
                         $("#"+modt_type+"-success").hide();
+                        location.reload();
                        }, 3000);
                     }
                 }

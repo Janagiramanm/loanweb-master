@@ -263,8 +263,26 @@ class CustomerController extends Controller
      public function scheduleMODT(){
         $timeslots = Timeslot::all();
         $typeofappointments = TypeOfAppointment::all();
-        $customers = Customer::where('application_status','=',9)->get();
-         return view('back-office.customers.modtschedule',compact(['timeslots','typeofappointments','customers']));
+        $dropAppoint = ModtAppointment::where('type','=','drop')->get();
+        if($dropAppoint){
+            foreach($dropAppoint as $appointment){
+                $dropCustomer[] = $appointment->customer_id;
+            }
+        }
+        $droppedCustomers = Customer::where('application_status','=',9)->whereNotIn('id',$dropCustomer)
+        ->get();
+        $pickupAppoint = ModtAppointment::where('type','=','pickup')->get();
+        if($pickupAppoint){
+            foreach($pickupAppoint as $appointment){
+                  $pickupAppointments[] = $appointment->customer_id;
+            }
+        }
+        $pickupCustomers = Customer::where('application_status','=',9)->whereIn('id',$dropCustomer)
+        ->whereNotIn('id',$pickupAppointments)
+        ->get();
+        // echo '<pre>';
+        // print_r($pickupCustomers);
+         return view('back-office.customers.modtschedule',compact(['timeslots','typeofappointments','droppedCustomers','pickupCustomers']));
 
      }
 
