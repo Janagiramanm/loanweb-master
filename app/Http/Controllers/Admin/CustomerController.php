@@ -273,6 +273,7 @@ class CustomerController extends Controller
         $droppedCustomers = Customer::where('application_status','=',9)->whereNotIn('id',$dropCustomer)
         ->get();
         $pickupAppoint = ModtAppointment::where('type','=','pickup')->get();
+        $pickupAppointments = [];
         if($pickupAppoint){
             foreach($pickupAppoint as $appointment){
                   $pickupAppointments[] = $appointment->customer_id;
