@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Customer;
 use App\Exports\CustomerExport;
 use App\Model\Appointment;
+use App\Model\Occupation;
 
 class ApiController extends Controller
 {
@@ -142,5 +143,39 @@ class ApiController extends Controller
 
         return response()->json(['success' => $output], $this->successStatus);
 
+    }
+
+    public function appointmentDetails(Request $request){
+
+        $user_id = $request->user_id;
+        $appointmenttype_id = $request->appointmenttype_id;
+
+        $appointments = Appointment::where('agent_id','=',$user_id)
+        ->where('appointmenttype_id','=',$appointmenttype_id)->get();
+
+        if($appointments){
+            $result = [];
+            foreach($appointments as $appointment){
+
+                 $customer = Customer::where('id','=',$appointment->agent_id)->first();
+                 $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
+
+                $result['name'] = $customer->cust_name;
+                $result['mobile'] = $customer->cust_phone;
+                $result['occupation'] = $occupation->occupation_name;
+            }
+            $msg =[
+                'status' => 1,
+                'data' => $result
+            ];
+            return response()->json($msg);
+        }
+
+        $msg = [
+            'status' => 0,
+             'message' => 'Data not found'
+        ];
+        return response()->json($msg);
+       
     }
 }

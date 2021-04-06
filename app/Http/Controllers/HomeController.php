@@ -7,6 +7,7 @@ use App\Model\Bank;
 use App\Model\Occupation;
 use App\Customer;
 
+
 class HomeController extends Controller
 {
     public function index()
