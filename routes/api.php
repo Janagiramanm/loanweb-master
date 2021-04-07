@@ -32,9 +32,11 @@ Route::group([ 'middleware' => 'auth:api'], function() {
     
 
     Route::post('submitapplication', 'Api\ApiController@submitApplication');
-    Route::post('custreqdocs', 'Api\ApiController@custreqdocs');
+    Route::post('kyc-details', 'Api\ApiController@kycDetails');
 
     Route::get('closedappointments', 'Api\ApiController@closedAppointments');
+
+    //Route::post('kyc-details','Api\ApiController@kycDetails');
 
 
 
