@@ -174,12 +174,12 @@ class ApiController extends Controller
             foreach($appointments as $appointment){
 
                  $customer = Customer::where('id','=',$appointment->customer_id)->first();
-
                  $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
 
                 $result['name'] = $customer->cust_name;
                 $result['mobile'] = $customer->cust_phone;
-                $result['occupation'] = $occupation->occupation_name;
+                $result['occupation_id'] = $occupation->id;
+                $result['occupation_name'] = $occupation->occupation_name;
                 $result['appointment_date'] = $appointment->appointment_date;
             }
             $msg =[
@@ -200,6 +200,23 @@ class ApiController extends Controller
     // public function kycDetails(Request $request){
     //     $user_id = $request->user_id;
     //     $documents = RequiredDoc::where('occupation_id', '=', $customer->occupation_id)->get();
+    //     $count = count($documents);
+    //     for($i = 0; $i < $count; $i++){
+    //         $documents[$i]['checked'] = false;
+    //     }
+    //     if(!empty($documents)){
+    //         $msg = [
+    //             'status' => 1,
+    //             'data' => $documents
+    //         ];
+    //         return response()->json( $msg, $this->successStatus);
+    //     }
+
+    //     $msg = [
+    //         'status' => 0,
+    //         'message' => 'No Data Found'
+    //     ];
+    //     return response()->json( $msg, $this->successStatus);
 
     // }
 
