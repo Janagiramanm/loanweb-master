@@ -153,7 +153,7 @@ class ApiController extends Controller
         $appointments = Appointment::where('agent_id','=',$user_id)
         ->where('appointmenttype_id','=',$appointmenttype_id)->get();
 
-        if($appointments){
+        if(!$appointments->isEmpty()){
             $result = [];
             foreach($appointments as $appointment){
 
