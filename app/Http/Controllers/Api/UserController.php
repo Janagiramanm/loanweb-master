@@ -44,6 +44,7 @@ class UserController extends Controller
      
         $new_appointment_count = Appointment::where('agent_id','=',$user->id)
         ->where('appointment_date','<=',strtotime($date) )
+        ->where('appointmenttype_id','=','1')
         ->count();
 
         $pending_docs_ldfsl = Appointment::where('agent_id','=',$user->id)

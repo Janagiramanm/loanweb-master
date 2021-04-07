@@ -29,6 +29,7 @@ Route::group([ 'middleware' => 'auth:api'], function() {
     Route::post('appointments', 'Api\ApiController@newAppointments');
     
     Route::post('appointment-details', 'Api\ApiController@appointmentDetails');
+    
 
     Route::post('submitapplication', 'Api\ApiController@submitApplication');
     Route::post('custreqdocs', 'Api\ApiController@custreqdocs');
