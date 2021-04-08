@@ -36,6 +36,8 @@ Route::group([ 'middleware' => 'auth:api'], function() {
 
     Route::get('closedappointments', 'Api\ApiController@closedAppointments');
 
+    Route::post('save-lat-long','Api\ApiController@saveLatLong');
+
     //Route::post('kyc-details','Api\ApiController@kycDetails');
 
 

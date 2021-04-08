@@ -111,9 +111,10 @@ class ApiController extends Controller
     {
         $input = $request->all();
 
-        $doc_ids        = $input['doc_ids'];
-        $cust_id        = $input['cust_id'];
+        $doc_ids        = $input['document_ids'];
+        $cust_id        = $input['customer_id'];
         $appointment_id = $input['appointment_id'];
+        $comment = $input['comment'];
 
         $user = Auth::user();
         $user_id =  $user->id;
@@ -124,8 +125,9 @@ class ApiController extends Controller
             $docs = isset($cust_docs[0]) ? $cust_docs[0]['docs_ids'].",".$doc_ids : $doc_ids  ;
 
             $customers    = Customer::where('id', '=', $cust_id)->update(['docs_ids' => $docs]);
-            $appointments = Appointment::where('id', '=', $appointment_id)->update(['docs_ids' => $doc_ids, 'status' => 0]);
-            return response()->json(['success' => "Documents Submitted Successfully!"], $this->successStatus);
+            $appointments = Appointment::where('id', '=', $appointment_id)->update(['docs_ids' => $doc_ids, 'status' => 0, 'comments' => $comment]);
+
+            return response()->json(['status'=>1,'message' => "Documents Submitted Successfully!"], $this->successStatus);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], $this->successStatus);
         }
@@ -197,29 +199,24 @@ class ApiController extends Controller
        
     }
 
-    // public function kycDetails(Request $request){
-    //     $user_id = $request->user_id;
-    //     $documents = RequiredDoc::where('occupation_id', '=', $customer->occupation_id)->get();
-    //     $count = count($documents);
-    //     for($i = 0; $i < $count; $i++){
-    //         $documents[$i]['checked'] = false;
-    //     }
-    //     if(!empty($documents)){
-    //         $msg = [
-    //             'status' => 1,
-    //             'data' => $documents
-    //         ];
-    //         return response()->json( $msg, $this->successStatus);
-    //     }
+    public function saveLatLong(Request $request){
+        $input = $request->all();
 
-    //     $msg = [
-    //         'status' => 0,
-    //         'message' => 'No Data Found'
-    //     ];
-    //     return response()->json( $msg, $this->successStatus);
+        $appointment_id = $input['appointment_id'];
+        $latitude = $input['latitude'];
+        $longitude = $input['longitude'];
 
-    // }
+        $appointment = Appointment::find($appointment_id);
+        if(!$appointment){
+            return response()->json(['status'=>0,'message' => "Data Not Found"], 404);
+        }
+        $appointment->latitude = $latitude;
+        $appointment->longitude = $longitude;
+        if($appointment->save()){
+           return response()->json(['status'=>1,'message' => "Latitude and Longitude updated Successfully!"], $this->successStatus);
+        }
 
+    }
 
     
 }
