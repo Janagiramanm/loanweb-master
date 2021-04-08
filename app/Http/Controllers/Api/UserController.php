@@ -45,25 +45,38 @@ class UserController extends Controller
         $new_appointment_count = Appointment::where('agent_id','=',$user->id)
         ->where('appointment_date','<=',strtotime($date) )
         ->where('appointmenttype_id','=','1')
+        ->where('status','=',1)
         ->count();
 
         $pending_docs_ldfsl = Appointment::where('agent_id','=',$user->id)
-        ->where('appointmenttype_id','=','2')->count();
+        ->where('appointmenttype_id','=','2')
+        ->where('status','=',1)
+        ->count();
 
         $bank_visit = Appointment::where('agent_id','=',$user->id)
-        ->where('appointmenttype_id','=','3')->count();
+        ->where('appointmenttype_id','=','3')
+        ->where('status','=',1)
+        ->count();
 
         $pending_docs_bank = Appointment::where('agent_id','=',$user->id)
-        ->where('appointmenttype_id','=','4')->count();
+        ->where('appointmenttype_id','=','4')
+        ->where('status','=',1)
+        ->count();
 
         $disbursment_docs_collection = Appointment::where('agent_id','=',$user->id)
-        ->where('appointmenttype_id','=','5')->count();
+        ->where('appointmenttype_id','=','5')
+        ->where('status','=',1)
+        ->count();
 
         $pending_disbursment_docs = Appointment::where('agent_id','=',$user->id)
-        ->where('appointmenttype_id','=','6')->count();
+        ->where('appointmenttype_id','=','6')
+        ->where('status','=',1)
+        ->count();
 
         $submit_demand = Appointment::where('agent_id','=',$user->id)
-        ->where('appointmenttype_id','=','7')->count();
+        ->where('appointmenttype_id','=','7')
+        ->where('status','=',1)
+        ->count();
       
         return response()->json([
             'status'=>1,
