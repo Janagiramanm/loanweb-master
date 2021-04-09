@@ -50,8 +50,8 @@
                                         <label for="cust_email">Project Name</label>
                                         <select class="form-control @error('project_name') is-invalid @enderror" name="project_name" id="project_name" required>
                                             <option value="">Select Project</option>
-                                            @foreach($builders as $builder)
-                                                <option @if($customer->project_name ==$builder->id ) selected @endif  value="{{ $builder->id }}"> {{ $builder->builder_name}}</option>
+                                            @foreach($builderDetails as $builderDetail)
+                                                <option @if($customer->project_name ==$builderDetail->id ) selected @endif  value="{{ $builderDetail->id }}"> {{ $builderDetail->project_type_name}}</option>
                                             @endforeach
                                         </select>
                                         <!-- <input type="text" class="form-control @error('project_name') is-invalid @enderror" id="project_name" name="project_name" required value="{{  $customer->project_name }}"> -->
@@ -849,12 +849,12 @@
             });
             $.ajax({
               
-              url: "/back-office/builders/get-project" ,
+              url: "/back-office/fetchProjects" ,
               type: "POST",
               data: { builder_id: builder_id },
               success: function( response ) {
                   if(response.status == 1){
-                    $("#project_name").val(response.data);
+                    $("#project_name").html(response.data);
                     
                   }
               }

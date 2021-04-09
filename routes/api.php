@@ -38,6 +38,8 @@ Route::group([ 'middleware' => 'auth:api'], function() {
 
     Route::post('save-lat-long','Api\ApiController@saveLatLong');
 
+    Route::post('telecaller-customers','Api\UserController@telecallerCustomers');
+
     //Route::post('kyc-details','Api\ApiController@kycDetails');
 
 

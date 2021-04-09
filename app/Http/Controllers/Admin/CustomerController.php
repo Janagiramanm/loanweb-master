@@ -24,6 +24,7 @@ use App\Model\SecondaryApplicant;
 use App\Model\Builder;
 use App\Model\BankBranch;
 use App\Model\ModtAppointment;
+use App\Model\BuilderDetail;
 
 use App\Imports\CustomerImport;
 use App\Imports\AllCustomerImport;
@@ -360,11 +361,12 @@ class CustomerController extends Controller
             $secondary_applicants = SecondaryApplicant::where('customer_id',$id)->get();
             $builders = Builder::All();
             $branches = BankBranch::where('bank_id','=',$customer->bank_id)->get();
+            $builderDetails = BuilderDetail::where('builder_id','=',$customer->builder_name)->get();
 
             // echo '<pre>';
             // print_r($branches);
             // exit;
-            return view('back-office.customers.editnewcustomer', compact('customer', 'timeslots', 'typeofappointments', 'banks', 'occupations','secondary_applicants', 'builders','branches'));
+            return view('back-office.customers.editnewcustomer', compact('customer', 'timeslots', 'typeofappointments', 'banks', 'occupations','secondary_applicants', 'builders','branches', 'builderDetails'));
         } catch (\Exception $e) {
             return redirect(route('back-office.customers.index'))->with($e->getMessage());
         }
