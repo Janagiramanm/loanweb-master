@@ -431,9 +431,11 @@
                                             }else{
                                                 $presentdocs = array();
                                             }
+                                            
+                                            $secondary_documents = App\Model\RequiredDoc::where('occupation_id', '=', $second_applicant->occupation_id)->get();
                                         ?>
                                         <ul>
-                                            @foreach ($documents as $doc)
+                                            @foreach ($secondary_documents as $doc)
                                                 @if (in_array($doc->id, $presentdocs))
                                                     <li><del>{{ $doc->type_of_doc }} -> {{ $doc->doc_name }}</del></li>
                                                 @else

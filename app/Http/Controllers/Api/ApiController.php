@@ -83,12 +83,14 @@ class ApiController extends Controller
         }else{
             $documents = [];
         }
+       
         $count = count($documents);
         for($i = 0; $i < $count; $i++){
             $documents[$i]['checked'] = false;
         }
 
         if(!empty($documents)){
+            
             $msg = [
                 'status' => 1,
                 'data' => $documents
