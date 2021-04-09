@@ -91,7 +91,8 @@ class ApiController extends Controller
             $i=0;
             foreach($secondary as $second){
                 $sec_cust[$i]['name'] =  $second->name;
-                $existingdocs_sec = explode(",", $second->docs_ids);
+                $sec_appointment = Appointment::where('customer_id','=',$second->id)->first();
+                $existingdocs_sec = explode(",", $sec_appointment->docs_ids);
                 $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->whereNotIn('id', $existingdocs)->get();
                 $i++;
 
