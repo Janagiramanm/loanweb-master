@@ -13,6 +13,7 @@ use App\Customer;
 use App\Exports\CustomerExport;
 use App\Model\Appointment;
 use App\Model\Occupation;
+use App\Model\SecondaryApplicant;
 
 class ApiController extends Controller
 {
@@ -83,6 +84,20 @@ class ApiController extends Controller
         }else{
             $documents = [];
         }
+
+        $secondary = SecondaryApplicant::where('customer_id','=',$cust_docs[0]['id'])->get();
+        $sec_cust = [];
+        if($secondary){
+            $i=0;
+            foreach($secondary as $second){
+                $sec_cust[$i]['name'] =  $second->name;
+                $existingdocs_sec = explode(",", $second->docs_ids);
+                $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->whereNotIn('id', $existingdocs)->get();
+                $i++;
+
+            }
+
+        }
        
         $count = count($documents);
         for($i = 0; $i < $count; $i++){
@@ -93,7 +108,8 @@ class ApiController extends Controller
             
             $msg = [
                 'status' => 1,
-                'data' => $documents
+                'data' => $documents,
+                'secondary_customer' => $sec_cust
             ];
             return response()->json( $msg, $this->successStatus);
         }
