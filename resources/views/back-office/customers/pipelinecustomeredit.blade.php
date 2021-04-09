@@ -951,7 +951,7 @@
                 headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                 },
-                data : JSON.stringify({id:id}),
+                data : JSON.stringify({builder_id:id}),
                 type : 'POST',
                 contentType: "application/json",
                 dataType: 'json',

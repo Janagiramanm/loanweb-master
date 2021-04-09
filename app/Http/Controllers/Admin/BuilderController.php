@@ -172,7 +172,7 @@ class BuilderController extends Controller
                       ';
           
             foreach($projects as $project){
-                  $result .='<option value="'.$id.'">'.$project->project_type_name.'</option>';
+                  $result .='<option value="'.$project->id.'">'.$project->project_type_name.'</option>';
             }
             $result .= '</select>';
         }
