@@ -116,7 +116,7 @@ class UserController extends Controller
 
         $username = $request->username;
         $customers = Customer::where('telecallername','=',$username)
-        ->where('telecallername','=',NULL)
+        ->orWhereNull('telecallername')
         ->get();
         $builder_name = null;
         $bank_name  = null;
@@ -166,12 +166,18 @@ class UserController extends Controller
                 $i++;
             }
         }
-
+        if(!empty($result)){
+            return response()->json([
+                'status'=>1,
+                'data' => $result              
+            ],200);
+        }
 
         return response()->json([
-            'status'=>1,
-            'data' => $result              
+            'status'=>0,
+            'message' => 'No Data Found'              
         ],200);
+      
 
     }
 
