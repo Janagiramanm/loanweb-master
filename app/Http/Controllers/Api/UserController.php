@@ -15,6 +15,8 @@ use App\Model\Bank;
 use App\Model\BankBranch;
 use App\Model\BuilderDetail;
 use App\Model\Occupation;
+use App\Model\SecondaryApplicant;
+
 class UserController extends Controller
 {
     public $successStatus = 200;
@@ -148,8 +150,7 @@ class UserController extends Controller
                     $occupation = Occupation::where('id','=',$customer->occupation_id)->first()->occupation_name;
                 }
 
-                
-
+                $secondary_customers = SecondaryApplicant::where('customer_id','=', $customer->id)->get();
 
                 $result[$i]['customer_name'] = $customer->cust_name;
                 $result[$i]['customer_phone'] = $customer->cust_phone;
@@ -162,6 +163,7 @@ class UserController extends Controller
                 $result[$i]['bank_name'] = $bank_name;
                 $result[$i]['branch_id'] = $customer->bank_branch;
                 $result[$i]['branch_name'] = $branch_name;
+                $result[$i]['secondary_customer'] = $secondary_customers;
                 
                 $i++;
             }
