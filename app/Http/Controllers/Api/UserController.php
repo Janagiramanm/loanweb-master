@@ -115,7 +115,9 @@ class UserController extends Controller
     public function telecallerCustomers(Request $request){
 
         $username = $request->username;
-        $customers = Customer::where('telecallername','=',$username)->get();
+        $customers = Customer::where('telecallername','=',$username)
+        ->where('telecallername','=',NULL)
+        ->get();
         $builder_name = null;
         $bank_name  = null;
         $branch_name  = null;
