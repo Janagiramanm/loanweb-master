@@ -14,7 +14,7 @@ use App\Exports\CustomerExport;
 use App\Model\Appointment;
 use App\Model\Occupation;
 use App\Model\SecondaryApplicant;
-
+use App\User;
 class ApiController extends Controller
 {
     public $successStatus = 200;
@@ -92,10 +92,9 @@ class ApiController extends Controller
         if($secondary){
             $i=0;
             foreach($secondary as $second){
-                $sec_cust[$i]['name'] =  $second->name;
-                echo $second->id;
-                $sec_appointment = Appointment::where('customer_id','=',$second->id)->first();
-               // print_r($sec_appointment);
+               $sec_cust[$i]['name'] =  $second->name;
+               $sec_appointment = Appointment::where('customer_id','=',$second->id)->first();
+               
                if($sec_appointment->docs_ids != ''){
                     $existingdocs_sec = explode(",", $sec_appointment->docs_ids);
                     $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->whereNotIn('id', $existingdocs_sec)->get();
@@ -103,7 +102,6 @@ class ApiController extends Controller
                 $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->get();
                }
                 $i++;
-
             }
 
         }
@@ -118,7 +116,7 @@ class ApiController extends Controller
             $msg = [
                 'status' => 1,
                 'data' => $documents,
-                'secondary_customer' => $sec_cust
+               // 'secondary_customer' => $sec_cust
             ];
             return response()->json( $msg, $this->successStatus);
         }
@@ -201,6 +199,7 @@ class ApiController extends Controller
 
         if(!$appointments->isEmpty()){
             $result = [];
+            
             foreach($appointments as $appointment){
 
                  $customer = Customer::where('id','=',$appointment->customer_id)->first();
@@ -244,6 +243,50 @@ class ApiController extends Controller
            return response()->json(['status'=>1,'message' => "Latitude and Longitude updated Successfully!"], $this->successStatus);
         }
 
+    }
+
+    public function appointmentHistory(Request $request){
+
+        $appointments = Appointment::where('status','=',0)->get();   
+
+        if(!$appointments->isEmpty()){
+            $result = [];
+            $i = 0;
+            foreach($appointments as $appointment){
+
+                 $customer = Customer::where('id','=',$appointment->customer_id)->first();
+                 
+                 $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
+                 $agentName = User::where('id','=',$appointment->agent_id)->first()->name;
+                 $result[$i]['cust_type'] = 'primary';
+                 if($appointment->applicant_type == 'secondary'){
+                     $secondary = SecondaryApplicant::where('customer_id','=',$appointment->customer_id)->first();
+                     $customer = Customer::where('id','=',$secondary->id)->first();
+                     $occupation = Occupation::where('id','=', $secondary->occupation_id)->first();
+                     $result[$i]['cust_type'] = 'secondary';
+                 }
+
+                $result[$i]['name'] = $customer->cust_name;
+                $result[$i]['mobile'] = $customer->cust_phone;
+                $result[$i]['occupation_id'] = $occupation->id;
+                $result[$i]['occupation_name'] = $occupation->occupation_name;
+                $result[$i]['appointment_date'] = $appointment->appointment_date;
+                $result[$i]['agent_name'] = $agentName;
+
+                $i++;
+            }
+            $msg =[
+                'status' => 1,
+                'data' => array($result)
+            ];
+            return response()->json($msg);
+        }
+
+        $msg = [
+            'status' => 0,
+             'message' => 'Data not found'
+        ];
+        return response()->json($msg);
     }
 
     

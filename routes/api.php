@@ -41,6 +41,8 @@ Route::group([ 'middleware' => 'auth:api'], function() {
     Route::post('telecaller-customers','Api\UserController@telecallerCustomers');
 
     //Route::post('kyc-details','Api\ApiController@kycDetails');
+    Route::get('appointment-history', 'Api\ApiController@appointmentHistory');
+
 
 
 
