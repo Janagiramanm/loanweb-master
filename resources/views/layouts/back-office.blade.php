@@ -140,10 +140,11 @@
 							<a href="{{ url("back-office/") }}" class="nav-link <?php if(\Request::is('back-office')){ echo 'active'; } ?>">
 								<i class="icon-home4"></i>
 								<span>
-									Dashboard
+									Dashboard 
 								</span>
 							</a>
                         </li>
+						
                         <li class="nav-item">
                             <a href="{{ url('back-office/roles') }}" class="nav-link <?php if(\Request::is('back-office/roles')){ echo 'active'; } ?>"> <i class="icon-user-lock"></i> <span>Admin Roles</span></a>
                         </li>
@@ -160,6 +161,7 @@
 						<li class="nav-item">
                             <a href="{{ url('back-office/builders') }}" class="nav-link <?php if(\Request::is('back-office/builders')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Builders</span></a>
                         </li>
+						
 						<li class="nav-item">
                             <a href="{{ url('back-office/applicationstatus') }}" class="nav-link <?php if(\Request::is('back-office/applicationstatus')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Application Status</span></a>
                         </li>
