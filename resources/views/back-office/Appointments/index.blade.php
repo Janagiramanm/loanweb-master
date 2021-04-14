@@ -34,6 +34,8 @@
                                 <th>Telecaller</th>
                                 <th>Date</th>
                                 <th>Time</th>
+                                <th>lat</th>
+                                <th>Long</th>
                                 
 							</tr>
 						</thead>
@@ -47,6 +49,8 @@
                                     <td>{{ $appointment->telecallername }}</td>
                                     <td>{{ $appointment->appointment_date }}</td>
                                     <td>{{ $appointment->time_slot }}</td>
+                                    <td>{{ $appointment->latitude }}</td>
+                                    <td>{{ $appointment->longitude }}</td>
                                  
                                 </tr>
                             @endforeach
