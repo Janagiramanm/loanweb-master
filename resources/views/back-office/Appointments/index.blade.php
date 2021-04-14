@@ -68,34 +68,7 @@
 @section('custom-script')
 <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
 <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
-<!-- <script src="http://maps.google.com/maps/api/js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.24/gmaps.js"></script> -->
-<!-- <script type="text/javascript">
 
-
-    var locations = <?php //print_r(json_encode($locations)) ?>;
-   
-    var mymap = new GMaps({
-      el: '#mymap',
-      lat: 12.9251281,
-      lng: 77.6157007,
-      zoom:7
-    });
-
-
-    $.each( locations, function( index, value ){
-	    mymap.addMarker({
-	      lat: value.lat,
-	      lng: value.long,
-	      title: 'Customer Name - ' + value.cust_name ,
-	      click: function(e) {
-	        alert('Customer Name - '+value.cust_name+' ');
-	      }
-	    });
-   });
-
-
-  </script> -->
   <style>
    #mymap{
        width:100%;
