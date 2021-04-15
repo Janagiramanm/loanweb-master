@@ -31,7 +31,7 @@
                 </tr>
                 <tr>
                     <th>Bank Branch:</th>
-                    <td></td>
+                    <td>{{ $customer->branch_name }}</td>
                 </tr>
                 <tr>
                     <th>Door No:</th>

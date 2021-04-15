@@ -911,6 +911,7 @@ class CustomerController extends Controller
     {
         $customers = DB::table('customers')
                         ->leftjoin('bank', 'customers.bank_id', '=', 'bank.id')
+                        ->leftjoin('bank_branches', 'customers.bank_branch', '=', 'bank_branches.id')
                         ->where('customers.id', '=', $id)
                         ->select('customers.id as cust_id',
                                 'customers.created_at as sub_date',
@@ -919,6 +920,7 @@ class CustomerController extends Controller
                                 'customers.cust_name',
                                 'customers.telecallername',
                                 'bank.bank_name',
+                                'bank_branches.branch_name',
                                 'customers.file_no',
                                 'customers.cust_phone',
                                 'customers.cust_email',
