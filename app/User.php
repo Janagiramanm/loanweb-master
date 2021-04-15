@@ -61,10 +61,8 @@ class User extends Authenticatable
         return false;
     }
 
-    public function isAdmin() {
-        if($this->roles->name == 'admin'){
-             return true;
-         }
-         return false;
-     }
+    public function isAdmin() 
+    {
+       return $this->roles()->where('role_id', 1)->first();
+    }
 }
