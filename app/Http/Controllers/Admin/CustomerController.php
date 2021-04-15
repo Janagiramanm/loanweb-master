@@ -919,7 +919,6 @@ class CustomerController extends Controller
                                 'customers.cust_name',
                                 'customers.telecallername',
                                 'bank.bank_name',
-                                'bank.bank_branch',
                                 'customers.file_no',
                                 'customers.cust_phone',
                                 'customers.cust_email',
