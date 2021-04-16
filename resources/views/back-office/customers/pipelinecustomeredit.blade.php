@@ -130,6 +130,11 @@
                                 <label for="cust_email">Project Name</label>
                                 <select class="form-control" name="project_name" id="project_name" required>
                                 <option value="">Select Project</option>
+                                @if($projects)
+                                    @foreach($projects as $project)
+                                       <option @if( $customer->project_name == $project->id) selected @endif value="{{ $project->id }} "> {{ $project->project_type_name }} </option>
+                                    @endforeach
+                                @endif
                                 </select>
                                 <!-- <input type="text" class="form-control @error('project_name') is-invalid @enderror" id="project_name" name="project_name" required value="{{ $customer->project_name }}"> -->
                                 @error('project_name')

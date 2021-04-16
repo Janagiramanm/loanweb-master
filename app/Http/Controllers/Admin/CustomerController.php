@@ -627,10 +627,12 @@ class CustomerController extends Controller
         $documents = RequiredDoc::where('occupation_id', '=', $customer->occupation_id)->get();
        // $second_applicants = TwoThreeApplicant::where('customer_id','=',$id)->get();
         $second_applicants = SecondaryApplicant::where('customer_id', '=', $id)->get();
+        $projects = BuilderDetail::where('builder_id','=',$customer->builder_name)->get();       
+
         $builders = Builder::All();
     
    
-        return view('back-office.customers.pipelinecustomeredit', compact('appointments', 'timeslots', 'typeofappointments', 'customer', 'banks', 'occupations', 'documents','second_applicants','builders'));
+        return view('back-office.customers.pipelinecustomeredit', compact('appointments', 'timeslots', 'typeofappointments', 'customer', 'banks', 'occupations', 'documents','second_applicants','builders','projects'));
     }
 
     public function changeAgentAppointment(Request $request){
@@ -832,9 +834,11 @@ class CustomerController extends Controller
         $timeslots = Timeslot::all();
         $customer = Customer::find($id);
         $occupations = Occupation::all();
+        $builders = Builder::All();
+        $projects = BuilderDetail::where('builder_id','=',$customer->builder_name)->get(); 
 
         $extradocs = ExtaDocs::where('customer_id', '=', $id)->get();
-        return view('back-office.customers.editsendtobank', compact('appointments', 'timeslots', 'customer', 'banks', 'occupations', 'extradocs'));
+        return view('back-office.customers.editsendtobank', compact('appointments', 'timeslots', 'customer', 'banks', 'occupations', 'extradocs','builders','projects'));
     }
 
     public function updatesendtobank(Request $request, $id)
@@ -968,6 +972,7 @@ class CustomerController extends Controller
     {
         $customers = DB::table('customers')
                         ->leftjoin('bank', 'customers.bank_id', '=', 'bank.id')
+                        ->leftjoin('bank_branches', 'customers.bank_branch', '=', 'bank_branches.id')
                         ->where('customers.id', '=', $id)
                         ->select('customers.id as cust_id',
                                 'customers.created_at as sub_date',
@@ -976,7 +981,7 @@ class CustomerController extends Controller
                                 'customers.cust_name',
                                 'customers.telecallername',
                                 'bank.bank_name',
-                                // 'bank.bank_branch',
+                                'bank_branches.branch_name',
                                 'customers.file_no',
                                 'customers.cust_phone',
                                 'customers.cust_email',
@@ -1051,6 +1056,7 @@ class CustomerController extends Controller
     {
         $customers = DB::table('customers')
                         ->leftjoin('bank', 'customers.bank_id', '=', 'bank.id')
+                        ->leftjoin('bank_branches', 'customers.bank_branch', '=', 'bank_branches.id')
                         ->where('customers.id', '=', $id)
                         ->select('customers.id as cust_id',
                                 'customers.created_at as sub_date',
@@ -1059,7 +1065,7 @@ class CustomerController extends Controller
                                 'customers.cust_name',
                                 'customers.telecallername',
                                 'bank.bank_name',
-                                'bank.bank_branch',
+                                'bank_branches.branch_name',
                                 'customers.file_no',
                                 'customers.cust_phone',
                                 'customers.cust_email',
@@ -1127,6 +1133,7 @@ class CustomerController extends Controller
     {
         $customers = DB::table('customers')
                         ->leftjoin('bank', 'customers.bank_id', '=', 'bank.id')
+                        ->leftjoin('bank_branches', 'customers.bank_branch', '=', 'bank_branches.id')
                         ->where('customers.id', '=', $id)
                         ->select('customers.id as cust_id',
                                 'customers.created_at as sub_date',
@@ -1135,7 +1142,7 @@ class CustomerController extends Controller
                                 'customers.cust_name',
                                 'customers.telecallername',
                                 'bank.bank_name',
-                                'bank.bank_branch',
+                                'bank_branches.branch_name',
                                 'customers.file_no',
                                 'customers.cust_phone',
                                 'customers.cust_email',
@@ -1270,6 +1277,7 @@ class CustomerController extends Controller
     {
         $customers = DB::table('customers')
                         ->leftjoin('bank', 'customers.bank_id', '=', 'bank.id')
+                        ->leftjoin('bank_branches', 'customers.bank_branch', '=', 'bank_branches.id')
                         ->where('customers.id', '=', $id)
                         ->select('customers.id as cust_id',
                                 'customers.created_at as sub_date',
@@ -1278,7 +1286,7 @@ class CustomerController extends Controller
                                 'customers.cust_name',
                                 'customers.telecallername',
                                 'bank.bank_name',
-                                'bank.bank_branch',
+                                'bank_branches.branch_name',
                                 'customers.file_no',
                                 'customers.cust_phone',
                                 'customers.cust_email',
@@ -1357,6 +1365,7 @@ class CustomerController extends Controller
     {
         $customers = DB::table('customers')
                         ->leftjoin('bank', 'customers.bank_id', '=', 'bank.id')
+                        ->leftjoin('bank_branches', 'customers.bank_branch', '=', 'bank_branches.id')
                         ->where('customers.id', '=', $id)
                         ->select('customers.id as cust_id',
                                 'customers.created_at as sub_date',
@@ -1365,7 +1374,7 @@ class CustomerController extends Controller
                                 'customers.cust_name',
                                 'customers.telecallername',
                                 'bank.bank_name',
-                                'bank.bank_branch',
+                                'bank_branches.branch_name',
                                 'customers.file_no',
                                 'customers.cust_phone',
                                 'customers.cust_email',

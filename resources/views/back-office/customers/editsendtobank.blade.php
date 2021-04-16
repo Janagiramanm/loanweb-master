@@ -82,20 +82,33 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="cust_email">Project Name</label>
-                                <input type="text" class="form-control @error('project_name') is-invalid @enderror" id="project_name" name="project_name" required value="{{ $customer->project_name }}">
-                                @error('project_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                                <label for="cust_email">Builder Name</label>
+                                <select class="form-control" name="builder_name" id="builder_name" required>
+                                        <option value="">Select Builder</option>
+                                        @foreach($builders as $builder)
+                                            <option @if( $customer->builder_name == $builder->id) selected @endif  value="{{ $builder->id }}"> {{ $builder->builder_name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('builder_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                               </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="cust_email">Builder Name</label>
-                                <input type="text" class="form-control @error('builder_name') is-invalid @enderror" id="builder_name" name="builder_name" required value="{{  $customer->builder_name }}">
-                                @error('builder_name')
+                            <label for="cust_email">Project Name</label>
+                                <select class="form-control" name="project_name" id="project_name" required>
+                                <option value="">Select Project</option>
+                                @if($projects)
+                                    @foreach($projects as $project)
+                                       <option @if( $customer->project_name == $project->id) selected @endif value="{{ $project->id }} "> {{ $project->project_type_name }} </option>
+                                    @endforeach
+                                @endif
+                                </select>
+                                <!-- <input type="text" class="form-control @error('project_name') is-invalid @enderror" id="project_name" name="project_name" required value="{{ $customer->project_name }}"> -->
+                                @error('project_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -431,6 +444,24 @@
             });
         }
     })
+
+    $("#builder_name").change(function(){
+        var id = $(this).val();
+        $.ajax({
+                url : "<?php echo url('/back-office/fetchProjects'); ?>",
+                headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                },
+                data : JSON.stringify({builder_id:id}),
+                type : 'POST',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(response) {
+                    $("#project_name").html(response.data);
+                }
+            });
+      
+    });
 </script>
 
 @endsection
