@@ -127,9 +127,6 @@ class ApiController extends Controller
         ];
         return response()->json( $msg, $this->successStatus);
 
-
-
-        
     }
 
     public function submitApplication(Request $request)
@@ -145,13 +142,37 @@ class ApiController extends Controller
         $user_id =  $user->id;
 
         try{
-            $cust_docs    = Customer::where('id', '=', $cust_id)->get();
+           
+            $send_docs = explode(',',$doc_ids);
+            $customer = Customer::find($cust_id);
+            $req_documents = RequiredDoc::where('occupation_id', '=', $customer->occupation_id)->get();
+            if($req_documents){
+                foreach($req_documents as $req_doc){
+                    $required_doc[] = $req_doc->id;
+                }
+                
+            }
+            $appointments = Appointment::find($appointment_id);
+            $collected_docs =  explode(',',$appointments->docs_ids);
+            $docs_to_update = array_diff($send_docs, $collected_docs);
+          
+           if(!empty($docs_to_update)){
+                $docs_to_update_val = implode(',',$docs_to_update);
+                $appointments->docs_ids .= $appointments->docs_ids ? ','.$docs_to_update_val: $docs_to_update_val ;
+                $appointments->comments = $comment;
+                $appointments->save();
+            
+                $customer->docs_ids .=  $customer->docs_ids ? ','.$docs_to_update_val : $docs_to_update_val;
+                $customer->save();
 
-            $docs = isset($cust_docs[0]) ? $cust_docs[0]['docs_ids'].",".$doc_ids : $doc_ids  ;
-
-            $customers    = Customer::where('id', '=', $cust_id)->update(['docs_ids' => $docs]);
-            $appointments = Appointment::where('id', '=', $appointment_id)->update(['docs_ids' => $doc_ids, 'status' => 0, 'comments' => $comment]);
-
+           }
+           $final_docs = explode(',',$appointments->docs_ids);
+           $missing_docs = array_diff($required_doc, $final_docs);
+           if(empty($missing_docs)){
+                $appointments->status = 0;
+                $appointments->save();
+            }
+      
             return response()->json(['status'=>1,'message' => "Documents Submitted Successfully!"], $this->successStatus);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], $this->successStatus);

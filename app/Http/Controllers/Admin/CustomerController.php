@@ -54,7 +54,7 @@ class CustomerController extends Controller
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 1], ['customers.application_deleted', '=', 0] ])
                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
-                    ->orderBy('customers.id', 'DESC')
+                    ->orderBy('cust_id', 'DESC')
                     ->get();
 
         return view('back-office.customers.newlead', compact('customers') );
