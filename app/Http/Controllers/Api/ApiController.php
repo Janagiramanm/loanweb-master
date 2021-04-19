@@ -222,19 +222,23 @@ class ApiController extends Controller
 
         if(!$appointments->isEmpty()){
             $result = [];
-            
+            $i=0;
             foreach($appointments as $appointment){
 
                  $customer = Customer::where('id','=',$appointment->customer_id)->first();
                  $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
 
-                $result['customer_id'] = $customer->id;
-                $result['name'] = $customer->cust_name;
-                $result['mobile'] = $customer->cust_phone;
-                $result['occupation_id'] = $occupation->id;
-                $result['occupation_name'] = $occupation->occupation_name;
-                $result['appointment_date'] = $appointment->appointment_date;
-                $result['appointment_id'] = $appointment->id;
+                 $secondary = SecondaryApplicant::where('customer_id','=',$customer->id)->get();
+
+                $result[$i]['customer_id'] = $customer->id;
+                $result[$i]['name'] = $customer->cust_name;
+                $result[$i]['mobile'] = $customer->cust_phone;
+                $result[$i]['occupation_id'] = $occupation->id;
+                $result[$i]['occupation_name'] = $occupation->occupation_name;
+                $result[$i]['appointment_date'] = $appointment->appointment_date;
+                $result[$i]['applicant_type'] = $appointment->applicant_type;
+
+                $i++;
             }
             $msg =[
                 'status' => 1,

@@ -726,7 +726,7 @@
                                     <!-- <label for="cust_address">Customer Address</label> -->
                                     <label for="cust_address" id="lbl-cust-address">Customer Address
                                         <span class="same-address">
-                                                <input class="form-check-input" type="checkbox" value="" id="secondary-applicant-same-add">
+                                                <input class="form-check-input" type="checkbox" name="is_same_address" id="secondary-applicant-same-add">
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Same as above address
                                                 </label>

@@ -579,7 +579,15 @@ class CustomerController extends Controller
     public function addSecondaryApplicant(Request $request){
         
         // 
+        //   echo '<pre>';
+        //   print_r($request->input());
+         
+        
           $secondaryAdd = new SecondaryApplicant();
+          $secondaryAdd->is_same_address = 0;
+          if(isset($request->is_same_address)){
+              $secondaryAdd->is_same_address =1;
+          }
           $secondaryAdd->name = $request->secondary_cust_name; 
           $secondaryAdd->phone = $request->secondary_cust_phone; 
           $secondaryAdd->email = $request->secondary_cust_email; 
