@@ -227,6 +227,7 @@ class ApiController extends Controller
                  $customer = Customer::where('id','=',$appointment->customer_id)->first();
                  $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
 
+                $result['id'] = $customer->id;
                 $result['name'] = $customer->cust_name;
                 $result['mobile'] = $customer->cust_phone;
                 $result['occupation_id'] = $occupation->id;
