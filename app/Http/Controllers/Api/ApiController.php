@@ -113,8 +113,11 @@ class ApiController extends Controller
             }
             $msg = [
                 'status' => 1,
-                'data' => $documents,
-               // 'secondary_customer' => $sec_cust 
+                'customer' =>[
+                    'primary' => $documents,
+                    'secondary_customer' => $sec_cust 
+                ]
+                
             ];
             return response()->json( $msg, $this->successStatus);
         }
