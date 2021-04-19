@@ -156,7 +156,7 @@ class ApiController extends Controller
             $appointments = Appointment::find($appointment_id);
             $collected_docs =  explode(',',$appointments->docs_ids);
             $docs_to_update = array_diff($send_docs, $collected_docs);
-          
+           
            if(!empty($docs_to_update)){
                 $docs_to_update_val = implode(',',$docs_to_update);
                 $appointments->docs_ids .= $appointments->docs_ids ? ','.$docs_to_update_val: $docs_to_update_val ;
@@ -169,6 +169,7 @@ class ApiController extends Controller
            }
            $final_docs = explode(',',$appointments->docs_ids);
            $missing_docs = array_diff($required_doc, $final_docs);
+       
            if(empty($missing_docs)){
                 $appointments->status = 0;
                 $appointments->save();
