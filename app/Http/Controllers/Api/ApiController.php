@@ -237,6 +237,7 @@ class ApiController extends Controller
                 $result[$i]['occupation_name'] = $occupation->occupation_name;
                 $result[$i]['appointment_date'] = $appointment->appointment_date;
                 $result[$i]['applicant_type'] = $appointment->applicant_type;
+                $result[$i]['appointment_id'] = $appointment->id;
 
                 $i++;
             }
