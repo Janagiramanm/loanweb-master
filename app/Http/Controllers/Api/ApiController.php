@@ -242,7 +242,7 @@ class ApiController extends Controller
             }
             $msg =[
                 'status' => 1,
-                'data' => array($result)
+                'data' => $result
             ];
             return response()->json($msg);
         }
