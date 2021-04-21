@@ -94,6 +94,7 @@ class ApiController extends Controller
             foreach($secondary as $second){
                $sec_cust[$i]['name'] =  $second->name;
                $sec_appointment = Appointment::where('customer_id','=',$second->id)->first();
+               print_r($sec_appointment);
                
                if($sec_appointment->docs_ids != ''){
                     $existingdocs_sec = explode(",", $sec_appointment->docs_ids);
