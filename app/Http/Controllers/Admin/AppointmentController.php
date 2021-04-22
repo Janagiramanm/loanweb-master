@@ -43,7 +43,10 @@ class AppointmentController extends Controller
             $i=0;
             foreach($appointments as $appointment){
                
-                $title = nl2br("Name - ".$appointment->customer_name);
+                $title = "Customer - ".$appointment->customer_name."\n".
+                         "Agent - ".$appointment->agent_name."\n".
+                         "Appointment - ".$appointment->appointment_name."\n".
+                         "Date - ". $appointment->appointment_date;
                 if($appointment->latitude !='' && $appointment->longitude!=''){
                   Mapper::marker($appointment->latitude, $appointment->longitude, ['title' => $title, 'animation' => 'DROP', 'icon' => 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png']);
                 }
