@@ -46,7 +46,7 @@ class AppointmentController extends Controller
                 $title = "Customer - ".$appointment->customer_name."\n".
                          "Agent - ".$appointment->agent_name."\n".
                          "Appointment - ".$appointment->appointment_name."\n".
-                         "Date - ". $appointment->appointment_date;
+                         "Date - ". date('d-m-Y',strtotime($appointment->appointment_date));
                 if($appointment->latitude !='' && $appointment->longitude!=''){
                   Mapper::marker($appointment->latitude, $appointment->longitude, ['title' => $title, 'animation' => 'DROP', 'icon' => 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png']);
                 }
