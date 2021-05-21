@@ -97,7 +97,6 @@ class ApiController extends Controller
                
                if($sec_appointment->docs_ids != ''){
                     $existingdocs_sec = explode(",", $sec_appointment->docs_ids);
-                    print_r($existingdocs_sec);
                     $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->whereNotIn('id', $existingdocs_sec)->get();
                }else{
                 $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->get();
@@ -107,7 +106,7 @@ class ApiController extends Controller
 
         }
 
-        if(!$documents->isEmpty()){
+        if(!empty($documents)){
             $count = count($documents);
             for($i = 0; $i < $count; $i++){
                 $documents[$i]['checked'] = false;
