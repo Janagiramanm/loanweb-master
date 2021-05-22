@@ -56,7 +56,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input type="password" name="password" class="form-control" placeholder="enter password" required>
+                                            <input type="password" name="password" class="form-control" placeholder="Enter password" required>
                                         </div>
                                     </div>
 
@@ -84,13 +84,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>State:</label>
-                                            <input type="text" name="state" placeholder="Bachelor, Master etc." class="form-control">
+                                            <input type="text" name="state" placeholder="State" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Zip Code:</label>
-                                            <input type="text" name="zipcode" placeholder="Design, Development etc." class="form-control">
+                                            <input type="text" name="zipcode" placeholder="Zipcode" maxlength="6" class="form-control">
                                         </div>
                                     </div>
                                 </div>

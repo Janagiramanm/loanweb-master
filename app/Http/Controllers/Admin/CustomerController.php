@@ -354,8 +354,7 @@ class CustomerController extends Controller
             $timeslots = Timeslot::all();
             $typeofappointments = TypeOfAppointment::all();
             $customer = Customer::find($id);
-            // echo "<pre>";
-            // print_r($customer);
+         
             $banks = Bank::all();
             $occupations = Occupation::all();
             $secondary_applicants = SecondaryApplicant::where('customer_id',$id)->get();
@@ -363,9 +362,6 @@ class CustomerController extends Controller
             $branches = BankBranch::where('bank_id','=',$customer->bank_id)->get();
             $builderDetails = BuilderDetail::where('builder_id','=',$customer->builder_name)->get();
 
-            // echo '<pre>';
-            // print_r($branches);
-            // exit;
             return view('back-office.customers.editnewcustomer', compact('customer', 'timeslots', 'typeofappointments', 'banks', 'occupations','secondary_applicants', 'builders','branches', 'builderDetails'));
         } catch (\Exception $e) {
             return redirect(route('back-office.customers.index'))->with($e->getMessage());
@@ -375,10 +371,7 @@ class CustomerController extends Controller
     public function updatenewcustomer(Request $request, $id)
     {
         $input = $request->all();
-        
-    //    echo '<pre>';
-    //    print_r($input);
-    //    exit;
+      
         try {
             if(isset($input['interested'])){
                 $application_status = 2;
@@ -412,8 +405,6 @@ class CustomerController extends Controller
             ]);
 
             
-
-           
             if(isset($secondary_applicants)){
                 $secondary_applicants =  $input['secondary_cust_name'];
                 $secondary_cust_emails =  $input['secondary_cust_email'];
@@ -465,67 +456,6 @@ class CustomerController extends Controller
                 }
             }
           
-            // if(!empty($input['twoapplicant']) && $input['twoapplicant']['name']!=''){
-
-            //     //echo '<pre>';
-            //     // print_r($input['twoapplicant']);
-            //     // exit;
-
-            //     $twoapplicant = new TwoThreeApplicant();
-            //     $twoapplicant->customer_id = $id; 
-            //     $twoapplicant->name = $input['twoapplicant']['name']; 
-            //     $twoapplicant->phone = $input['twoapplicant']['phone']; 
-            //     $twoapplicant->email = $input['twoapplicant']['email']; 
-            //     $twoapplicant->occupation_id = $input['twoapplicant']['occupation_id']; 
-            //     $twoapplicant->zipcode = $input['twoapplicant']['pincode']; 
-            //     $twoapplicant->address = $input['twoapplicant']['address']; 
-            //     $twoapplicant->cust_type = 'twoapplicant'; 
-            //     $twoapplicant->save();
-
-            //     if($input['primary']['appointment_agent'] !=''){
-            //             $appointment = new Appointment();
-            //             $appointment->agent_id  = $input['primary']['appointment_agent'];
-            //             $appointment->customer_id  = $id;
-            //             $appointment->appointment_date  = date('Y-m-d', strtotime($input['primary']['appointment_date']));
-            //             $appointment->timeslot_id  = $input['primary']['appointment_time'];
-            //             $appointment->created_excutive  = Auth::user()->id;
-            //             $appointment->status = 1;
-            //             $appointment->appointmenttype_id = $input['primary']['type_of_appointment'];
-            //             $appointment->applicant_type = 'twoapplicant';
-            //             $appointment->save();
-            //     }
-                
-                
-            // }
-            // if(!empty($input['threeapplicant']) && $input['threeapplicant']['name']!=''){
-
-            //         $threeapplicant = new TwoThreeApplicant();
-            //         $threeapplicant->customer_id = $id; 
-            //         $threeapplicant->name = $input['threeapplicant']['name']; 
-            //         $threeapplicant->phone = $input['threeapplicant']['phone']; 
-            //         $threeapplicant->email = $input['threeapplicant']['email']; 
-            //         $threeapplicant->occupation_id = $input['threeapplicant']['occupation_id']; 
-            //         $threeapplicant->zipcode = $input['threeapplicant']['pincode']; 
-            //         $threeapplicant->address = $input['threeapplicant']['address']; 
-            //         $threeapplicant->cust_type = 'threeapplicant'; 
-            //         $threeapplicant->save();
-
-            //         if($input['secondary']['appointment_agent']!=''){
-            //                 $appointment = new Appointment();
-            //                 $appointment->agent_id  = $input['secondary']['appointment_agent'];
-            //                 $appointment->customer_id  = $id;
-            //                 $appointment->appointment_date  = date('Y-m-d', strtotime($input['secondary']['appointment_date']));
-            //                 $appointment->timeslot_id  = $input['secondary']['appointment_time'];
-            //                 $appointment->created_excutive  = Auth::user()->id;
-            //                 $appointment->status = 1;
-            //                 $appointment->appointmenttype_id = $input['secondary']['type_of_appointment'];
-            //                 $appointment->applicant_type = 'threeapplicant';
-            //                 $appointment->save();
-            //         }
-
-            // }
-
-           
             if(isset($input['interested'])  && $input['interested'] == 1){
 
                // echo $input['cust_phone'];exit;
@@ -540,15 +470,22 @@ class CustomerController extends Controller
                     'applicant_type'=> 'normal'
                 ]);
 
+
                 $customers = DB::table('customers')
                             ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                             ->where([['customers.application_status', '=', 2], ['customers.application_deleted', '=', 0] ])
                             ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone')
                             ->orderByDesc('cust_id')
                             ->get();
-            
+
+                if($input['appointment_agent']!=''){
+                    $agent = User::find($input['appointment_agent']);
+
+                }
+              
+                $telecallerMobile = Auth::user()->phone;
                 //$randomDigit = mt_rand(10000,99999);
-                AppHelper::sendInterestSms($input['cust_phone'],$input['cust_name']);
+                AppHelper::sendInterestSms($input,$agent, $telecallerMobile);
                 // dd($customers);
                 return  Redirect::to('back-office/customers/customers')->with('customers', $customers )->with('message','Agent assignd to ('.$input['cust_name'].')  successfully');
 
@@ -569,19 +506,12 @@ class CustomerController extends Controller
             }
          
         } catch (\Exception $e) {
-             echo '<pre>';
-             print_r($e->getMessage());
-             exit; 
+            
             return redirect()->back()->with($e->getMessage());
         }
     }
 
     public function addSecondaryApplicant(Request $request){
-        
-        // 
-        //   echo '<pre>';
-        //   print_r($request->input());
-         
         
           $secondaryAdd = new SecondaryApplicant();
           $secondaryAdd->is_same_address = 0;
@@ -628,7 +558,7 @@ class CustomerController extends Controller
                         ->get();
         $banks = Bank::all();
         $timeslots = Timeslot::all();
-        $typeofappointments = TypeOfAppointment::where('id', '!=', 1)->get();
+        $typeofappointments = TypeOfAppointment::all();
 
         $customer = Customer::find($id);
         $occupations = Occupation::all();
@@ -675,7 +605,6 @@ class CustomerController extends Controller
                 
             ];
             return response()->json($msg);
-
             exit;
             
 
@@ -844,15 +773,18 @@ class CustomerController extends Controller
         $occupations = Occupation::all();
         $builders = Builder::All();
         $projects = BuilderDetail::where('builder_id','=',$customer->builder_name)->get(); 
+        $branches = BankBranch::where('bank_id','=',$customer->bank_id)->get();
 
         $extradocs = ExtaDocs::where('customer_id', '=', $id)->get();
-        return view('back-office.customers.editsendtobank', compact('appointments', 'timeslots', 'customer', 'banks', 'occupations', 'extradocs','builders','projects'));
+        return view('back-office.customers.editsendtobank', compact('appointments', 'timeslots', 'customer', 'banks', 'occupations', 'extradocs','builders','projects','branches'));
     }
 
     public function updatesendtobank(Request $request, $id)
     {
         $input = $request->all();
         $customer = Customer::find($id);
+     
+        
         try {
             $customer = Customer::where('id', '=', $id)->update([
                 'cust_name'             => $input['cust_name'],
@@ -891,17 +823,29 @@ class CustomerController extends Controller
                         ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone')
                         ->orderByDesc('cust_id')
                         ->get();
+              
                 return redirect()->route('back-office.customers.customers')->with('customers', $customers )->with('message','Peding Doc collection appointment assigned successfully');;
 
             }
 
             if(isset($input['sentToBank'])){
+                //echo "hihihi";exit;
                 $customers = DB::table('customers')
                         ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                         ->where([['customers.application_status', '=', 4], ['customers.application_deleted', '=', 0] ])
                         ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone')
                         ->orderByDesc('cust_id')
                         ->get();
+
+                        
+                        $projects = BuilderDetail::where('builder_id','=',$input['builder_name'])
+                        ->where('id','=',$input['project_name'])->first(); 
+                       
+                        $bank = Bank::find($input['bank_id'])->bank_name;
+                        $branch = BankBranch::find($input['branch_name'])->branch_name;
+                       // print_r($branch);exit;
+                        AppHelper::sendToBankSms($input, $projects, $bank, $branch);
+
                 return redirect()->route('back-office.customers.loginProcess')->with('customers', $customers)->with('message','Custoemr Application is processed to bank Successfullay');;
             }
 
@@ -943,7 +887,6 @@ class CustomerController extends Controller
                                 'customers.applied_loan_amount')
                         ->get();
 
-
         $customer = $customers[0];
 
         return view('back-office.customers.editsanctioned', compact('customer'));
@@ -954,6 +897,7 @@ class CustomerController extends Controller
     {
         $input = $request->all();
 
+      
         try {
 
             $customer = Customer::where('id', '=', $id)->update([
@@ -966,9 +910,19 @@ class CustomerController extends Controller
             $customers = DB::table('customers')
                         ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                         ->where([['customers.application_status', '=', 6], ['customers.application_deleted', '=', 0] ])
-                        ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone')
+                        ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.project_name','customers.bank_id','customers.builder_name','customers.bank_branch')
                         ->orderByDesc('cust_id')
                         ->get();
+
+            
+            $cust = Customer::find($id);
+            $projects = BuilderDetail::where('builder_id','=',$cust['builder_name'])
+            ->where('id','=',$cust['project_name'])->first(); 
+           
+            $bank = Bank::find($cust['bank_id'])->bank_name;
+            $branch = BankBranch::find($cust['branch_name'])->branch_name;
+            
+            AppHelper::sanctionedSMS($input, $projects, $bank, $branch, $cust);
 
             return redirect()->route('back-office.customers.readytodisburse')->with('customers', $customers )->with('message','Custoemr is updated successfully');
         } catch (\Exception $e) {
@@ -1166,6 +1120,7 @@ class CustomerController extends Controller
         $customer = $customers[0];
         $timeslots = Timeslot::all();
         $typeofappointments = TypeOfAppointment::all();
+       
         return view('back-office.customers.editchequefixing', compact('customer', 'typeofappointments', 'timeslots'));
 
     }
@@ -1173,6 +1128,7 @@ class CustomerController extends Controller
     public function updatechequefixing(Request $request, $id)
     {
         $input = $request->all();
+       
         try {
             $customer = Customer::where('id', '=', $id)->get();
             if(isset($input['cheque']) &&  $input['cheque']  == 1){
@@ -1188,6 +1144,13 @@ class CustomerController extends Controller
                     'application_status'    =>  9,
                     'pending_amount'        => $customer[0]->pending_amount - $input['cheque_amount'],
                 ]);
+                
+                $customer = Customer::find($id);
+                // echo '<pre>';
+                // print_r($customer);
+                // exit;
+                $telecallerMobile = Auth::user()->phone;
+                AppHelper::sendChequeFixingSms($input,$customer,$telecallerMobile);
             }
 
             if(isset($input['neft']) &&  $input['neft']  == 1){
@@ -1211,6 +1174,8 @@ class CustomerController extends Controller
                         ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone')
                         ->orderByDesc('cust_id')
                         ->get();
+            
+            
             return redirect()->route('back-office.customers.disbursedapplications')->with('customers', $customers )->with('message','Customer updated successfully');;
 
 

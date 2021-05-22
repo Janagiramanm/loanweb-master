@@ -33,10 +33,11 @@
                         <td>
                         @if($appointment->applicant_type == 'secondary')
                               @php 
+                                 
                                  $secondary = App\Model\SecondaryApplicant::where('customer_id','=',$appointment->customer_id)->first();
 
                               @endphp
-                              {{ $secondary->name }}
+                              {{ isset($secondary->name) ? $secondary->name : '' }}
                         @else
                               {{ $appointment->customer_name }}
                         @endif

@@ -134,7 +134,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-6">
+                            <!-- <div class="form-group col-md-6">
                                 <label for="bank_id">Bank</label>
                                 <select name="bank_id" id="bank_id" class="form-control" required>
                                     <option value="">Select Bank</option>
@@ -146,10 +146,44 @@
                                         @endif
                                     @endforeach
                                 </select>
-                            </div>
-                        </div>
+                            </div> -->
+                            
+                                <div class="form-group col-md-6">
+                                    <label for="bank_id">Bank</label>
+                                    <select name="bank_id" id="bank_id" class="form-control" required>
+                                        <option value="">Select Bank</option>
+                                        @foreach ($banks as $bank)
+                                            @if( $customer->bank_id  == $bank->id )
+                                                <option value="{{ $bank->id }}" selected> {{ $bank->bank_name }} </option>
+                                            @else
+                                                <option value="{{ $bank->id }}"> {{ $bank->bank_name }} </option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                <!-- @foreach ($branches as $branch)
+                                        @php
+                                          echo '<pre>';
+                                          print_r($branch);
+                                    @endphp
+                                    @endforeach -->
+                                    <label for="branch_name">Branch</label>
+                                    <select name="branch_name" id="branch_name" class="form-control" required>
+                                        <option value="">Select Branch</option>
+                                        @foreach ($branches as $branch)
+                                        @php
+                                          echo '<pre>';
+                                          print_r($branch);
+                                    @endphp
+                                        <option @if($customer->bank_branch == $branch->id) selected @endif value="{{ $branch->id }}"> {{ $branch->branch_name }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                           
+                        
 
-                        <div class="form-row">
+                        
                             <div class="form-group col-md-6">
                                 <label for="mmr_payable">MMR Payable</label>
                                 <input type="text" class="form-control" id="mmr_payable" name="mmr_payable"  value="{{ old('mmr_payable') ?? $customer->mmr_payable }}">
@@ -168,10 +202,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
-
-
-                        <div class="form-row">
+                      
                             <div class="form-group col-md-6">
                                 <label for="occupation_id">Customer Occupation</label>
                                 <select name="occupation_id" id="occupation_id" class="form-control" required>
@@ -194,7 +225,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                      
                         <div class="form-group col-md-6">
                             <label for="cust_address">Customer Address</label>
                             <textarea class="form-control" id="cust_address" placeholder="1234 Main St" name="cust_address" required cols="30" rows="3">{{ old('cust_address') ?? $customer->cust_address }}</textarea>
@@ -205,7 +236,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-row">
+                       
                             <div class="form-group col-md-6">
                                 <label for="cust_city">City</label>
                                 <input type="text" class="form-control" id="cust_city" name="cust_city" required value="{{ old('cust_city') ?? $customer->cust_city }}">

@@ -47,7 +47,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="cust_pincode">Pincode</label>
-                                <input type="text" class="form-control" id="cust_pincode" name="cust_pincode" required value="{{ old('cust_pincode') }}">
+                                <input type="text" class="form-control" id="cust_pincode" name="cust_pincode" required maxlength="6" value="{{ old('cust_pincode') }}">
                             </div>
                         </div>
                         <div class="form-row">
@@ -82,7 +82,7 @@
                            
                             <div class="form-group col-md-6">
                                 <label for="bank_id">Bank</label>
-                                <select name="bank_id" id="bank_id" class="form-control" required>
+                                <select name="bank_id" id="bank_id" class="form-control" >
                                     <option value="">Select Bank</option>
                                     @foreach ($banks as $bank)
                                         <option value="{{ $bank->id }}"> {{ $bank->bank_name }} </option>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                     <label for="branch_name">Branch</label>
-                                    <select name="bank_branch" id="branch_name" class="form-control" required>
+                                    <select name="bank_branch" id="branch_name" class="form-control" >
                                         <option value="">Select Branch</option>
                                     </select>
                                 </div>
