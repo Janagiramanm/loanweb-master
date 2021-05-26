@@ -41,8 +41,7 @@ class AppointmentController extends Controller
             ];
 
             $i=0;
-            echo '<pre>';
-            print_r($appointments);
+           
             foreach($appointments as $appointment){
                
                 $title = "Customer - ".$appointment->customer_name."\n".
