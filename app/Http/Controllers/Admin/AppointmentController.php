@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mapper;
+use App\Model\Appointment;
 
 class AppointmentController extends Controller
 {
@@ -55,6 +56,14 @@ class AppointmentController extends Controller
         }
 
         return view('back-office.Appointments.index',  compact('appointments'));
+    }
+
+    public function destroy($id)
+    {
+        $Appointment = Appointment::find($id);
+       
+        $Appointment->delete();
+        return redirect('back-office/appointments');
     }
 
 }

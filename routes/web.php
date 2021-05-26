@@ -145,6 +145,7 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
 
 
     Route::get('/appointments', 'AppointmentController@index')->name('appointments');
+    Route::DELETE('/appointments/destroy/{id}', 'AppointmentController@destroy')->name('appointments.destroy');
     //Route::put('/appointments/edit/{id}', 'AppointmentController@index')->name('appointments.edit');
 
     Route::resource('/cibil','CibilSettingController');
