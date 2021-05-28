@@ -28,10 +28,11 @@ class AppointmentController extends Controller
                         ->get();
         if($appointments){
 
-            Mapper::map(12.9251281, 77.6157007, ['zoom' => 8, 'fullscreenControl' => false, 'center' => true, 'marker' => false, 'cluster' => true, 'clusters' => ['center' => false, 'zoom' => 15, 'size'=> 4], 'language' => 'en']);
+            Mapper::map(17.387140, 78.491684, ['zoom' => 8, 'fullscreenControl' => false, 'center' => true, 'marker' => false, 'cluster' => true, 'clusters' => ['center' => false, 'zoom' => 15, 'size'=> 4], 'language' => 'en']);
+            // Mapper::map(12.9251281, 77.6157007, ['zoom' => 8, 'fullscreenControl' => false, 'center' => true, 'marker' => false, 'cluster' => true, 'clusters' => ['center' => false, 'zoom' => 15, 'size'=> 4], 'language' => 'en']);
 
-            $lat = 12.9251281;
-            $lng = 77.6157007;
+            $lat = 17.387140;
+            $lng = 78.491684;
     
             $icons = [
                 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
