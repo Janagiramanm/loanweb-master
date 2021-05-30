@@ -887,12 +887,14 @@ class CustomerController extends Controller
                                 'customers.loan_amount',
                                 'customers.mmr_payable',
                                 'customers.mmr_paid',
-                                'customers.applied_loan_amount')
+                                'customers.applied_loan_amount',
+                                'customers.builder_name')
                         ->get();
 
         $customer = $customers[0];
+        $project = BuilderDetail::where('builder_id','=',$customer->builder_name)->first(); 
 
-        return view('back-office.customers.editsanctioned', compact('customer'));
+        return view('back-office.customers.editsanctioned', compact('customer','project'));
 
     }
 

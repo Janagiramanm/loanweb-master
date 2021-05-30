@@ -39,7 +39,7 @@
                 </tr>
                 <tr>
                     <th>Project Name:</th>
-                    <td>{{ $customer->project_name }}</td>
+                    <td>{{ $project->project_type_name }}</td>
                 </tr>
                 <tr>
                     <th>Property Cost:</th>
