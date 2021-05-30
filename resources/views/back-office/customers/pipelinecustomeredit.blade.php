@@ -79,7 +79,7 @@
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="cust_name">Customer Name</label>
+                                <label for="cust_name">Customer Name <span class="mandatory">*</span></label>
                                 <input type="text" class="form-control @error('cust_name') is-invalid @enderror" id="cust_name" name="cust_name" required value="{{ $customer->cust_name }}">
                                 @error('cust_name')
                                 <span class="invalid-feedback" role="alert">
@@ -88,8 +88,8 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="cust_phone">Phone Number</label>
-                                <input type="tel" class="form-control @error('cust_phone') is-invalid @enderror" id="cust_phone" name="cust_phone" required value="{{ $customer->cust_phone }}">
+                                <label for="cust_phone">Phone Number <span class="mandatory">*</span></label>
+                                <input type="tel" class="form-control @error('cust_phone') is-invalid @enderror" maxlength="10" id="cust_phone" name="cust_phone" required value="{{ $customer->cust_phone }}">
                                 @error('cust_phone')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -100,7 +100,7 @@
                         <div class="form-row">
 
                             <div class="form-group col-md-6">
-                                <label for="cust_email">E-Mail</label>
+                                <label for="cust_email">E-Mail <span class="mandatory">*</span></label>
                                 <input type="tel" class="form-control @error('cust_email') is-invalid @enderror" id="cust_email" name="cust_email" required value="{{ $customer->cust_email }}">
                                 @error('cust_email')
                                 <span class="invalid-feedback" role="alert">
@@ -109,7 +109,7 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="cust_email">Builder Name</label>
+                                <label for="cust_email">Builder Name <span class="mandatory">*</span></label>
                                 <select class="form-control" name="builder_name" id="builder_name" required>
                                         <option value="">Select Builder</option>
                                         @foreach($builders as $builder)
@@ -128,7 +128,7 @@
                         </div>
                         <div class="form-row">
                         <div class="form-group col-md-6">
-                                <label for="cust_email">Project Name</label>
+                                <label for="cust_email">Project Name <span class="mandatory">*</span></label>
                                 <select class="form-control" name="project_name" id="project_name" required>
                                 <option value="">Select Project</option>
                                 @if($projects)
@@ -146,7 +146,7 @@
                             </div>
                            
                             <div class="form-group col-md-6">
-                                <label for="cust_email">Buying Flat / Door no</label>
+                                <label for="cust_email">Buying Flat / Door no <span class="mandatory">*</span></label>
                                 <input type="text" class="form-control @error('buying_door_no') is-invalid @enderror" id="buying_door_no" name="buying_door_no" required value="{{ $customer->buying_door_no }}">
                                 @error('buying_door_no')
                                     <span class="invalid-feedback" role="alert">
@@ -157,8 +157,8 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="property_cost">Total Cost(Property Cost)</label>
-                                <input type="text" class="form-control"  name="property_cost" id="property_cost" required="required" value="{{ old('property_cost') ?? $customer->property_cost }} ">
+                                <label for="property_cost">Total Cost(Property Cost) <span class="mandatory">*</span></label>
+                                <input type="text" class="form-control"  name="property_cost" id="property_cost" required value="{{ old('property_cost') ?? $customer->property_cost }} ">
                                 <label for="property_cost_txt" id="property_cost_txt"> </label>
                                 @error('property_cost')
                                     <span class="invalid-feedback" role="alert">
@@ -167,7 +167,7 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="bank_id">Bank</label>
+                                <label for="bank_id">Bank <span class="mandatory">*</span></label>
                                 <select name="bank_id" id="bank_id" class="form-control" required>
                                     <option value="">Select Bank</option>
                                     @foreach ($banks as $bank)
@@ -182,6 +182,20 @@
                         </div>
 
                         <div class="form-row">
+                             <div class="form-group col-md-6">
+                              
+                                    <label for="branch_name">Branch <span class="mandatory">*</span></label>
+                                    <select name="branch_name" id="branch_name" class="form-control" required>
+                                        <option value="">Select Branch</option>
+                                        @foreach ($branches as $branch)
+                                        @php
+                                          echo '<pre>';
+                                          print_r($branch);
+                                    @endphp
+                                        <option @if($customer->bank_branch == $branch->id) selected @endif value="{{ $branch->id }}"> {{ $branch->branch_name }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>   
                             <div class="form-group col-md-6">
                                 <label for="mmr_payable">MMR Payable</label>
                                 <input type="text" class="form-control" id="mmr_payable" name="mmr_payable"  value="{{ old('mmr_payable') ?? $customer->mmr_payable }}">
@@ -202,12 +216,9 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
-
-
-                        <div class="form-row">
+                       
                             <div class="form-group col-md-6">
-                                <label for="occupation_id">Customer Occupation</label>
+                                <label for="occupation_id">Customer Occupation <span class="mandatory">*</span></label>
                                 <select name="occupation_id" id="occupation_id" class="form-control" required>
                                     <option value="">Select Occupation</option>
                                     @foreach ($occupations as $occupation)
@@ -220,7 +231,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="applied_loan_amount">Loan Amount Required</label>
+                                <label for="applied_loan_amount">Loan Amount Required <span class="mandatory">*</span></label>
                                 <input type="text" class="form-control" id="applied_loan_amount" name="applied_loan_amount"  value="{{ old('applied_loan_amount') ?? $customer->applied_loan_amount }}">
                                 @error('mmr_paid')
                                     <span class="invalid-feedback" role="alert">
@@ -228,7 +239,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                       
                         <div class="form-group col-md-6">
                             <label for="cust_address">Customer Address</label>
                             <textarea class="form-control" id="cust_address" placeholder="1234 Main St" name="cust_address" required cols="30" rows="3">{{ old('cust_address') ?? $customer->cust_address }}</textarea>
@@ -238,10 +249,11 @@
                                 </span>
                             @enderror
                         </div>
+                        </div>
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="cust_city">City</label>
+                                <label for="cust_city">City <span class="mandatory">*</span></label>
                                 <input type="text" class="form-control" id="cust_city" name="cust_city" required value="{{ old('cust_city') ?? $customer->cust_city }}">
                                 @error('cust_city')
                                 <span class="invalid-feedback" role="alert">
@@ -250,7 +262,7 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="cust_pincode">Pincode</label>
+                                <label for="cust_pincode">Pincode <span class="mandatory">*</span></label>
                                 <input type="text" class="form-control" id="cust_pincode" name="cust_pincode" required value="{{ old('cust_pincode') ?? $customer->cust_pincode }}">
                                 @error('cust_pincode')
                                 <span class="invalid-feedback" role="alert">
@@ -337,7 +349,9 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="appointment_agent">Agent Name</label>
-                                    <select name="appointment_agent" id="appointment_agent" class="form-control"></select>
+                                    <select name="appointment_agent" id="appointment_agent" class="form-control">
+                                       <option value=""> Select Agent</option>
+                                    </select>
                                 </div>
                                 <div class="form-row">
                                   <label  class="btn btn-primary add_first_appointment" id="{{$customer->id}}" >Add Appointment</label>
@@ -503,7 +517,9 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="appointment_agent">Agent Name</label>
-                                        <select name="secondary_appointment_agent" id="appointment_agent-{{$second_applicant->id}}" class="form-control"></select>
+                                        <select name="secondary_appointment_agent" id="appointment_agent-{{$second_applicant->id}}" class="form-control">
+                                           <option value=""> Select Agent</option>
+                                        </select>
                                     </div>
                            
                                 </div>
@@ -560,7 +576,9 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="bank_appointment_agent">Agent Name</label>
-                                    <select name="bank_appointment_agent" id="bank_appointment_agent" class="form-control"></select>
+                                    <select name="bank_appointment_agent" id="bank_appointment_agent" class="form-control">
+                                      <option value=""> Select Agent</option>
+                                    </select>
                                 </div>
 
                             </div>
@@ -876,6 +894,7 @@
                         $("#appointment_agent-"+id).html(selectOptions);
                     } else {
                         var selectOptions = '';
+                        selectOptions += '<option value="">Select Agent</option>';
                         $.each(data, function( key, value ) {
                             selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
                         });
@@ -910,6 +929,7 @@
                         $("#appointment_agent_edit").html(selectOptions);
                     } else {
                         var selectOptions = '';
+                        selectOptions += '<option value="">Select Agent</option>';
                         $.each(data, function( key, value ) {
                             selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
                         });
@@ -942,6 +962,7 @@
                         $("#bank_appointment_agent").html(selectOptions);
                     } else {
                         var selectOptions = '';
+                        selectOptions += '<option value="">Select Agent</option>';
                         $.each(data, function( key, value ) {
                             selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
                         });
@@ -968,7 +989,7 @@
                 }
             });
       
-    });
+    });   selectOptions += '<option value="">Select Agent</option>';    
 
     $("#property_cost").on('keyup',function(){
          var textVal = convertNumberToWords($(this).val());
@@ -991,6 +1012,9 @@
     // $("#two-datepicker").datepicker("setDate",new Date(2021,02,12) );
 </script>
 <style>
+.mandatory{
+    color:red;
+}
 .success-msg {
     padding: 0 30px;
     color: green;

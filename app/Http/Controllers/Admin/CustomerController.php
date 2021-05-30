@@ -559,18 +559,20 @@ class CustomerController extends Controller
         $banks = Bank::all();
         $timeslots = Timeslot::all();
         $typeofappointments = TypeOfAppointment::all();
+       
 
         $customer = Customer::find($id);
         $occupations = Occupation::all();
         $documents = RequiredDoc::where('occupation_id', '=', $customer->occupation_id)->get();
        // $second_applicants = TwoThreeApplicant::where('customer_id','=',$id)->get();
         $second_applicants = SecondaryApplicant::where('customer_id', '=', $id)->get();
-        $projects = BuilderDetail::where('builder_id','=',$customer->builder_name)->get();       
+        $projects = BuilderDetail::where('builder_id','=',$customer->builder_name)->get();  
+        $branches = BankBranch::where('bank_id','=',$customer->bank_id)->get();     
 
         $builders = Builder::All();
     
    
-        return view('back-office.customers.pipelinecustomeredit', compact('appointments', 'timeslots', 'typeofappointments', 'customer', 'banks', 'occupations', 'documents','second_applicants','builders','projects'));
+        return view('back-office.customers.pipelinecustomeredit', compact('appointments', 'timeslots', 'typeofappointments', 'customer', 'banks', 'occupations', 'documents','second_applicants','builders','projects','branches'));
     }
 
     public function changeAgentAppointment(Request $request){
@@ -691,6 +693,7 @@ class CustomerController extends Controller
                 'buying_door_no'        => $input['buying_door_no'],
                 'cust_city'             => $input['cust_city'],
                 'bank_id'               => $input['bank_id'],
+                'bank_branch'           => $input['branch_name'],
                 'occupation_id'         => $input['occupation_id'],
                 'property_cost'         => $input['property_cost'],
                 'mmr_payable'           => $input['mmr_payable'],
