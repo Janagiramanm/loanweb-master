@@ -859,7 +859,7 @@
                         selectOptions += '<option value="">No Agent Available in This Time Slot</option>';
                         $("#appointment_agent").html(selectOptions);
                     } else {
-                        var selectOptions = '';
+                        var selectOptions = '<option value=""> Select Agent</option>';
                         $.each(data, function( key, value ) {
                             selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
                         });
@@ -989,7 +989,7 @@
                 }
             });
       
-    });   selectOptions += '<option value="">Select Agent</option>';    
+    });  
 
     $("#property_cost").on('keyup',function(){
          var textVal = convertNumberToWords($(this).val());
