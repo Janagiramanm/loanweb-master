@@ -82,6 +82,7 @@
                             <div class="form-group col-md-6">
                                 <label for="sanctioned_amount">Sanctioneed Amount:  </label>
                                 <input type="text" class="form-control @error('sanctioned_amount') is-invalid @enderror" id="sanctioned_amount" name="sanctioned_amount" required value="{{ old('sanctioned_amount') }}">
+                                <label for="sanctioned_amount_txt" id="sanctioned_amount_txt"> </label>
                             </div>
                             <div class="form-group col-md-6">
                                 <p>Date Of Sanctioned </p>
@@ -105,4 +106,13 @@
 @endsection
 
 @section('custom-script')
+<script>
+
+    $(document).ready(function(){
+        $("#sanctioned_amount").on('keyup',function(){
+                var textVal = convertNumberToWords($(this).val());
+                $("#sanctioned_amount_txt").text(textVal);
+        }) 
+    });
+</script>
 @endsection
