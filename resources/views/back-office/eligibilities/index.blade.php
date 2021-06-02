@@ -200,7 +200,7 @@
 		$(document).ready(function(){
 
 			$(".form-control-select2").select2({
-				placeholder: "Select",
+				placeholder: "Select "+$(this).attr('name'),
 				allowClear: true
 			});
 			 
