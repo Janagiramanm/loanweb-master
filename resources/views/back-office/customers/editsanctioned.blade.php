@@ -32,7 +32,7 @@
                 <tr>
                     <th>Bank Branch:</th>
                     <td>{{ $customer->branch_name }}</td>
-                </tr>
+                </tr> 
                
                 <tr>
                     <th>Builder Name:</th>
