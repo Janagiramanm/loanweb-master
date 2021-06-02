@@ -487,7 +487,7 @@ class CustomerController extends Controller
                 //$randomDigit = mt_rand(10000,99999);
                 AppHelper::sendInterestSms($input,$agent, $telecallerMobile);
                 // dd($customers);
-                return  Redirect::to('back-office/customers/customers')->with('customers', $customers )->with('message','Agent assignd to ('.$input['cust_name'].')  successfully');
+                return  Redirect::to('back-office/customers/customers')->with('customers', $customers )->with('message','Executive ( '.$agent->name.' ) assignd to ('.$input['cust_name'].')  successfully');
 
             }else{
 
