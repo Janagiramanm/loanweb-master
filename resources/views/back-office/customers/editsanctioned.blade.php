@@ -33,13 +33,18 @@
                     <th>Bank Branch:</th>
                     <td>{{ $customer->branch_name }}</td>
                 </tr>
+               
                 <tr>
-                    <th>Door No:</th>
-                    <td>{{ $customer->buying_door_no }}</td>
+                    <th>Builder Name:</th>
+                    <td>{{ $project->builder_name }}</td>
                 </tr>
                 <tr>
                     <th>Project Name:</th>
-                    <td>{{ $project->project_type_name }}</td>
+                    <td>{{ $project->project_name }}</td>
+                </tr>
+                <tr>
+                    <th>Door No:</th>
+                    <td>{{ $customer->buying_door_no }}</td>
                 </tr>
                 <tr>
                     <th>Property Cost:</th>

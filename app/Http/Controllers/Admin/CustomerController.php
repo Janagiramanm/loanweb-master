@@ -892,7 +892,8 @@ class CustomerController extends Controller
                         ->get();
 
         $customer = $customers[0];
-        $project = BuilderDetail::where('builder_id','=',$customer->builder_name)->first(); 
+        // $project = BuilderDetail::where('builder_id','=',$customer->builder_name)->first(); 
+        $project = Builder::where('id','=',$customer->builder_name)->first(); 
 
         return view('back-office.customers.editsanctioned', compact('customer','project'));
 
