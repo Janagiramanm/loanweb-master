@@ -69,10 +69,10 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="drop_type_of_appointment">Appointment Type</label>
-                                    <select name="drop_type_of_appointment" id="drop_type_of_appointment" class="form-control">
+                                    <select name="drop_type_of_appointment" id="drop_type_of_appointment" class="form-control" disabled>
                                         <option value="">Select Appointment Type</option>
                                         @foreach ($typeofappointments as $type)
-                                            <option value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
+                                            <option @if($type->id==8) selected @endif value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
                                         @endforeach
                                     </select>
                                     <span class="error-lbl" id="drop_type_of_appointment_error"></span>
@@ -130,10 +130,10 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="pickup_type_of_appointment">Appointment Type</label>
-                                    <select name="pickup_type_of_appointment" id="pickup_type_of_appointment" class="form-control">
+                                    <select name="pickup_type_of_appointment" id="pickup_type_of_appointment" class="form-control" disabled>
                                         <option value="">Select Appointment Type</option>
                                         @foreach ($typeofappointments as $type)
-                                            <option value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
+                                            <option @if($type->id==9) selected @endif value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
                                         @endforeach
                                     </select>
                                     <span class="error-lbl" id="pickup_type_of_appointment_error"></span>

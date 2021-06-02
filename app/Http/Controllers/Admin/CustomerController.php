@@ -271,7 +271,7 @@ class CustomerController extends Controller
                 $dropCustomer[] = $appointment->customer_id;
             }
         }
-        $droppedCustomers = Customer::where('application_status','=',9)->whereNotIn('id',$dropCustomer)
+        $droppedCustomers = Customer::where('application_status','=',7)->whereNotIn('id',$dropCustomer)
         ->get();
         $pickupAppoint = ModtAppointment::where('type','=','pickup')->get();
         $pickupAppointments = [];
@@ -487,7 +487,7 @@ class CustomerController extends Controller
                 //$randomDigit = mt_rand(10000,99999);
                 AppHelper::sendInterestSms($input,$agent, $telecallerMobile);
                 // dd($customers);
-                return  Redirect::to('back-office/customers/customers')->with('customers', $customers )->with('message','Executive ( '.$agent->name.' ) assignd to ('.$input['cust_name'].')  successfully');
+                return  Redirect::to('back-office/customers/customers')->with('customers', $customers )->with('message','Executive ( '.$agent->name.' ) assignd to Customer ('.$input['cust_name'].')  successfully');
 
             }else{
 
