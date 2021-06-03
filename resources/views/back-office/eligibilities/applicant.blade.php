@@ -29,7 +29,7 @@
 
                                 {{-- @if ($input['bank'] == "SBI" || $input['bank'] == "HDFC") --}}
                                     <div class="form-group">
-                                        <label class="col-form-label">Gross Salary </label>
+                                        <label class="col-form-label">Gross / Net Salary </label>
                                         <div class="col-lg-9">
                                             <input type="text" name="grossIncome1" class="form-control" placeholder="Gross Income">
                                         </div>
