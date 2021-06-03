@@ -85,6 +85,7 @@
                             <div class="form-group col-md-6">
                                 <label for="disbursement_amount">Demand Amount </label>
                                 <input type="text" class="form-control @error('disbursement_amount') is-invalid @enderror" id="disbursement_amount" name="disbursement_amount" required value="{{ old('disbursement_amount') }}">
+                                <label for="disbursement_amount_txt" id="disbursement_amount_txt"> </label>
                             </div>
                             <div class="form-group col-md-6">
                                 <p>Date Of Demand</p>
@@ -183,6 +184,11 @@
                 $("#appointment-section").hide();
             }
         });
+
+        $("#disbursement_amount").on('keyup',function(){
+                var textVal = convertNumberToWords($(this).val());
+                $("#disbursement_amount_txt").text(textVal);
+        }) 
         // $("#datepicker").datepicker();
     });
 
