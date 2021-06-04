@@ -219,16 +219,18 @@ class ApiController extends Controller
         $appointments = Appointment::where('agent_id','=',$user_id)
         ->where('appointmenttype_id','=',$appointmenttype_id)
         ->where('status','=',1)->get();   
-
+        $result = [];
         if(!$appointments->isEmpty()){
-            $result = [];
+            
             $i=0;
+            // echo '<pre>';
+            // print_r($appointments);//exit;
             foreach($appointments as $appointment){
 
                  $customer = Customer::where('id','=',$appointment->customer_id)->first();
                  $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
 
-                 $secondary = SecondaryApplicant::where('customer_id','=',$customer->id)->get();
+                
 
                 $result[$i]['customer_id'] = $customer->id;
                 $result[$i]['name'] = $customer->cust_name;
@@ -238,6 +240,18 @@ class ApiController extends Controller
                 $result[$i]['appointment_date'] = $appointment->appointment_date;
                 $result[$i]['applicant_type'] = $appointment->applicant_type;
                 $result[$i]['appointment_id'] = $appointment->id;
+
+                if($appointment->applicant_type == 'secondary'){
+                    $secondary = SecondaryApplicant::where('id','=',$appointment->second_customer_id)->first();
+                    $result[$i]['customer_id'] = $secondary->id;
+                    $result[$i]['name'] = $secondary->name;
+                    $result[$i]['mobile'] = $secondary->phone;
+                    $result[$i]['occupation_id'] = $secondary->occupation_id;
+                    $result[$i]['occupation_name'] = $occupation->occupation_name;
+                    $result[$i]['appointment_date'] = $appointment->appointment_date;
+                    $result[$i]['applicant_type'] = $appointment->applicant_type;
+                    $result[$i]['appointment_id'] = $appointment->id;
+                }
 
                 $i++;
             }
