@@ -95,7 +95,7 @@ class ApiController extends Controller
                $sec_cust[$i]['name'] =  $second->name;
                $sec_appointment = Appointment::where('customer_id','=',$second->id)->first();
                
-               if($sec_appointment->docs_ids != ''){
+               if(isset($sec_appointment->docs_ids) != ''){
                     $existingdocs_sec = explode(",", $sec_appointment->docs_ids);
                     $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->whereNotIn('id', $existingdocs_sec)->get();
                }else{
