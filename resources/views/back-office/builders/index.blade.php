@@ -43,7 +43,19 @@
                                 @foreach($builder->builderDetails as $detail)
                                     
                                     <tr> 
-                                        <td>{{ ($detail->project_type == 1 ? 'Apartment' : ($builder->project_type == 2 ? 'Plot' : 'Villa')) }}</td>
+                                        <td>
+                                            @php 
+                                                if($detail->project_type == 1 ){
+                                                    echo 'Apartment';
+                                                }                                                 
+                                                elseif($detail->project_type == 2){
+                                                    echo 'Plot';
+                                                }
+                                                elseif($detail->project_type == 3){
+                                                    echo 'Villa'; 
+                                                } 
+                                            @endphp
+                                        </td>
                                         <td>{{ $detail->project_type_name }}</td>
                                         <td>{{ $detail->range }}</td>
                                         <td>{{ $detail->spoc_name }}</td>
