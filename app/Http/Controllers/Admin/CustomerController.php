@@ -989,11 +989,12 @@ class CustomerController extends Controller
 
 
         $customer = $customers[0];
+        $project = Builder::where('id','=',$customer->builder_name)->first(); 
 
         $timeslots = Timeslot::all();
         $typeofappointments = TypeOfAppointment::all();
 
-        return view('back-office.customers.editreadytodisburse', compact('customer', 'typeofappointments', 'timeslots'));
+        return view('back-office.customers.editreadytodisburse', compact('customer', 'typeofappointments', 'timeslots', 'project'));
     }
 
     public function updatereadytodisburse(Request $request, $id)
