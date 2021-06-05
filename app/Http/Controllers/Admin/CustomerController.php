@@ -1057,6 +1057,7 @@ class CustomerController extends Controller
                                 'customers.created_at as sub_date',
                                 'customers.buying_door_no',
                                 'customers.project_name',
+                                'customers.builder_name',
                                 'customers.cust_name',
                                 'customers.telecallername',
                                 'bank.bank_name',
@@ -1074,11 +1075,13 @@ class CustomerController extends Controller
 
 
         $customer = $customers[0];
+        $project = Builder::where('id','=',$customer->builder_name)->first();  
+
         $timeslots = Timeslot::all();
         $typeofappointments = TypeOfAppointment::all();
         $documents = RequiredDoc::where('type_of_doc', '=', 'Disbursement')->get();
 
-        return view('back-office.customers.editdisbursebank', compact('customer', 'typeofappointments', 'timeslots', 'documents'));
+        return view('back-office.customers.editdisbursebank', compact('customer', 'typeofappointments', 'timeslots', 'documents', 'project'));
     }
 
     public function updatedisbursebank(Request $request, $id)
