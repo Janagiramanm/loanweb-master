@@ -566,7 +566,8 @@ class CustomerController extends Controller
         $documents = RequiredDoc::where('occupation_id', '=', $customer->occupation_id)->get();
        // $second_applicants = TwoThreeApplicant::where('customer_id','=',$id)->get();
         $second_applicants = SecondaryApplicant::where('customer_id', '=', $id)->get();
-        $projects = BuilderDetail::where('builder_id','=',$customer->builder_name)->get();  
+        $projects = Builder::where('id','=',$customer->builder_name)->get();  
+        // $projects = BuilderDetail::where('builder_id','=',$customer->builder_name)->get();  
         $branches = BankBranch::where('bank_id','=',$customer->bank_id)->get();     
 
         $builders = Builder::All();
