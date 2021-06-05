@@ -260,7 +260,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="cust_pincode">Pincode <span class="mandatory">*</span></label>
-                                <input type="text" class="form-control" id="cust_pincode" name="cust_pincode" required value="{{ old('cust_pincode') ?? $customer->cust_pincode }}">
+                                <input type="text" class="form-control" id="cust_pincode" name="cust_pincode" maxlength="6" required value="{{ old('cust_pincode') ?? $customer->cust_pincode }}">
                                 @error('cust_pincode')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
