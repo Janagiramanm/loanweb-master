@@ -1136,6 +1136,7 @@ class CustomerController extends Controller
                         ->select('customers.id as cust_id',
                                 'customers.created_at as sub_date',
                                 'customers.buying_door_no',
+                                'customers.builder_name',
                                 'customers.project_name',
                                 'customers.cust_name',
                                 'customers.telecallername',
@@ -1154,10 +1155,11 @@ class CustomerController extends Controller
                                 'customers.pending_amount','customers.sanctioned_date',  'customers.disburdsment_amount')
                         ->get();
         $customer = $customers[0];
+        $project = Builder::where('id','=',$customer->builder_name)->first(); 
         $timeslots = Timeslot::all();
         $typeofappointments = TypeOfAppointment::all();
        
-        return view('back-office.customers.editchequefixing', compact('customer', 'typeofappointments', 'timeslots'));
+        return view('back-office.customers.editchequefixing', compact('customer', 'typeofappointments', 'timeslots', 'project'));
 
     }
 
