@@ -32,7 +32,7 @@
                     <th>Name</th>
                     <th>E-Mail</th>
                     <th>Phone</th>
-                    <th>Property Cost</th>
+                    <th>Project Name</th>
                     <th>Source</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -48,7 +48,12 @@
                         <td>{{ $customer->cust_name }}</td>
                         <td>{{ $customer->cust_email }}</td>
                         <td>{{ $customer->cust_phone }}</td>
-                        <td>{{ $customer->property_cost }}</td>
+                        <td>
+                             @php
+                             $project = App\Model\Builder::where('id','=',$customer->project_name)->first();
+                             echo $project->project_name;    
+                             @endphp
+                             </td>
                         <td>Dashboard</td>
                         <td class="text-center">
                             <div class="list-icons">
