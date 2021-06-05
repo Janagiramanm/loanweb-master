@@ -970,6 +970,7 @@ class CustomerController extends Controller
                         ->select('customers.id as cust_id',
                                 'customers.created_at as sub_date',
                                 'customers.buying_door_no',
+                                'customers.builder_name',
                                 'customers.project_name',
                                 'customers.cust_name',
                                 'customers.telecallername',
