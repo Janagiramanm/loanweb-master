@@ -1395,10 +1395,11 @@ class CustomerController extends Controller
     public function importnewCustomer(Request $request)
     {
         $file = $request->file('customersheet');
-        $customers  = Excel::toArray(new CustomerImport, $file);
         echo '<pre>';
-        print_r($customers);
+        print_r($file);
         exit;
+        $customers  = Excel::toArray(new CustomerImport, $file);
+      
         $customer = array();
         $count = count($customers[0]);
         foreach($customers[0] as $cust){
