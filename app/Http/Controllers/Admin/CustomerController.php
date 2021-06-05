@@ -1396,6 +1396,9 @@ class CustomerController extends Controller
     {
         $file = $request->file('customersheet');
         $customers  = Excel::toArray(new CustomerImport, $file);
+        echo '<pre>';
+        print_r($customers);
+        exit;
         $customer = array();
         $count = count($customers[0]);
         foreach($customers[0] as $cust){
