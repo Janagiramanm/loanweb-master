@@ -51,7 +51,10 @@
                         <td>
                              @php
                              $project = App\Model\Builder::where('id','=',$customer->project_name)->first();
-                             echo $project->project_name;    
+                             if(isset($project->project_name)){
+                                echo $project->project_name;    
+                             }
+                           
                              @endphp
                              </td>
                         <td>Dashboard</td>
