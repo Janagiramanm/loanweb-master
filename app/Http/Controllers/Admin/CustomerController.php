@@ -776,7 +776,8 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         $occupations = Occupation::all();
         $builders = Builder::All();
-        $projects = BuilderDetail::where('builder_id','=',$customer->builder_name)->get(); 
+        $projects = Builder::where('id','=',$customer->builder_name)->get(); 
+        // $projects = BuilderDetail::where('builder_id','=',$customer->builder_name)->get(); 
         $branches = BankBranch::where('bank_id','=',$customer->bank_id)->get();
 
         $extradocs = ExtaDocs::where('customer_id', '=', $id)->get();

@@ -103,7 +103,7 @@
                                 <option value="">Select Project</option>
                                 @if($projects)
                                     @foreach($projects as $project)
-                                       <option @if( $customer->project_name == $project->id) selected @endif value="{{ $project->id }} "> {{ $project->project_type_name }} </option>
+                                       <option @if( $customer->project_name == $project->id) selected @endif value="{{ $project->id }} "> {{ $project->project_name }} </option>
                                     @endforeach
                                 @endif
                                 </select>
