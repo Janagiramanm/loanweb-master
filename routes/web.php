@@ -134,6 +134,7 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
     /* Ajax call for excutive assignment */
     Route::post('/fetchAgents', 'CustomerController@fetchAgents');
     Route::post('/fetchProjects', 'BuilderController@fetchProjects');
+    Route::post('/cancel-sanction', 'CustomerController@cancelSanction');
     Route::post('/add-secondary-agent-appointment', 'CustomerController@addSecondaryAgentAppoint');
     Route::post('/add-first-agent-appointment', 'CustomerController@addFirstAgentAppoint');
     

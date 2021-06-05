@@ -37,9 +37,12 @@
                 </tr>
                 </thead>
                 <tbody>
+                @php
+                   $index = 1;
+                @endphp
                 @foreach ($customers as $customer)
                     <tr>
-                        <td>{{ $customer->cust_id }}</td>
+                        <td>{{ $index++ }}</td>
                         <td>{{ $customer->cust_name }}</td>
                         <td>{{ $customer->cust_email }}</td>
                         <td>{{ $customer->cust_phone }}</td>

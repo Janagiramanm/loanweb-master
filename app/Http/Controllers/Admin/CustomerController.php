@@ -96,6 +96,26 @@ class CustomerController extends Controller
         return view('back-office.customers.loginProcess', compact('customers'));
     }
 
+    public function cancelSanction(Request $request){
+         
+           $input = $request->input();
+        //    echo '<pre>';
+        //    print_r($input['custId']);
+        //    exit;
+           $cust_id = $input['custId'];
+           $cust = Customer::find($cust_id);
+           $cust->application_status = 3;
+           if($cust->save()){
+               $msg = [
+                   'status'=>1,
+                   'message'=>'success'
+               ];
+             return json_encode($msg);
+           }
+           
+
+    }
+
     /******* * The func sanctioneddata will give us bank approved customers ddata *********** */
     public function sanctionData()
     {
@@ -790,8 +810,7 @@ class CustomerController extends Controller
     {
         $input = $request->all();
         $customer = Customer::find($id);
-     
-        
+ 
         try {
             $customer = Customer::where('id', '=', $id)->update([
                 'cust_name'             => $input['cust_name'],
@@ -802,6 +821,7 @@ class CustomerController extends Controller
                 'builder_name'          => $input['builder_name'],
                 'buying_door_no'        => $input['buying_door_no'],
                 'cust_city'             => $input['cust_city'],
+                'cust_pincode'          => $input['cust_pincode'],
                 'bank_id'               => $input['bank_id'],
                 'occupation_id'         => $input['occupation_id'],
                 'property_cost'         => $input['property_cost'],
@@ -814,6 +834,7 @@ class CustomerController extends Controller
             ]);
 
             if(isset($input['interested'])  && isset($input['appointment_date'])){
+              
                 $appointment = Appointment::create([
                     'agent_id'          => $input['appointment_agent'],
                     'customer_id'       => $id,
@@ -853,7 +874,7 @@ class CustomerController extends Controller
                        // print_r($branch);exit;
                         AppHelper::sendToBankSms($input, $projects, $bank, $branch);
 
-                return redirect()->route('back-office.customers.loginProcess')->with('customers', $customers)->with('message','Custoemr Application is processed to bank Successfullay');;
+                return redirect()->route('back-office.customers.loginProcess')->with('customers', $customers)->with('message','Custoemr Application is processed to bank Successfully');;
             }
 
             $customers = DB::table('customers')

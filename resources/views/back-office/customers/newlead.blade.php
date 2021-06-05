@@ -38,9 +38,12 @@
                 </tr>
                 </thead>
                 <tbody>
+                @php
+                   $index = 1;
+                @endphp
                 @foreach ($customers as $customer)
                     <tr>
-                        <td>{{ $customer->cust_id }}</td>
+                        <td>{{ $index++ }}</td>
 <!--                        <td><img src="{{ asset('client/images/user-pic-1.jpg') }}" style="height:80px; width: 80px; border-radius: 40px;"></td>-->
                         <td>{{ $customer->cust_name }}</td>
                         <td>{{ $customer->cust_email }}</td>

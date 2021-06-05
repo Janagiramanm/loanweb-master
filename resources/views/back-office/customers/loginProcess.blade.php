@@ -42,6 +42,9 @@
                                 <button type="button"  class="btn btn-success d-inline" id="updatestatus">Sanctioned</button>
                             </form>
                         </td>
+                        <td>
+                           <button class="btn btn-danger sanction_cancel" data-toggle="modal"  data-id="{{$customer->cust_id}}"  data-target="#modal_cancel_sanction_from" name="cancel" id="cancel_{{$customer->cust_id}}" class="cancel_sanction">Cancel</button>
+                        </td>
                     </tr>
                 @endforeach
 
@@ -49,9 +52,48 @@
             </table>
         </div>
         <!-- /page length options -->
+        <div id="modal_cancel_sanction_from" class="modal fade" >
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Do you want to cancel this sanction ?</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                    <div class="row">
+                        <button  type="button" id="no-btn" data-dismiss="modal" class="btn btn-danger modal-btn col-3">No</button>
+                        <button  type="button" id="yes-btn" data-id="" class="btn btn-primary modal-btn col-3">Yes</button>
+                    </div>
+
+                    </div>
+                </div>
+        </div>
     </div>
     <!-- /content area -->
+    
 @endsection
+<style>
+   #no-btn{
+        float:left;
+    }
+    .modal-btn {
+        margin-left: 10%;
+        margin-bottom: 10px;
+    }
+    .modal-title {
+        margin-bottom: 0;
+        line-height: 1.5385;
+        margin-left: 7%;
+        padding-bottom: 11px;
+    }
+    @media (min-width: 992px){
+        .modal-lg, .modal-xl {
+            max-width:300px;
+            /* max-width: 900px; */
+            /* min-height: 330px; */
+        }
+    }
+  </style>
 
 @section('custom-script')
     <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
@@ -75,6 +117,35 @@
                         // location.reload();
                         location.replace('/back-office/customers/sanctioned')
                     }, 3000);
+                }
+            });
+
+         
+        });
+        $('.sanction_cancel').on('click',function(){
+                 $('#yes-btn').attr('data-id',$(this).data('id'));
+        });
+
+        $('#yes-btn').on('click',function(){
+            var cust_id = $(this).attr('data-id');
+            $.ajax({
+                url : "<?php echo url('/back-office/cancel-sanction'); ?>",
+                headers: {
+                    'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                },
+                data : JSON.stringify({custId: cust_id, applicationStatus: 4}),
+                type : 'POST',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data) {
+                    if(data.status==1){
+                       // setTimeout(function(){
+                        // location.reload();
+                        location.replace('/back-office/customers/sendtobank');
+                       // }, 1000);
+                    }
+                    
+
                 }
             });
         });
