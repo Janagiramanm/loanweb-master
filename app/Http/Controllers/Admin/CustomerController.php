@@ -1232,6 +1232,7 @@ class CustomerController extends Controller
                                 'customers.created_at as sub_date',
                                 'customers.buying_door_no',
                                 'customers.project_name',
+                                'customers.builder_name',
                                 'customers.cust_name',
                                 'customers.telecallername',
                                 'customers.bank_id',
@@ -1251,13 +1252,14 @@ class CustomerController extends Controller
                                 'customers.pending_amount', 'customers.sanctioned_date')
                         ->get();
         $customer = $customers[0];
+        $project = Builder::where('id','=',$customer->builder_name)->first();  
         $disbursements = DB::table('disbursement_tab')
                             ->join('customers', 'customers.id', '=', 'disbursement_tab.customer_id')
                             ->where('customer_id', '=', $id)
                             ->select('customers.cust_name','disbursement_tab.*')
                             ->get();
 
-        return view('back-office.customers.viewapplication', compact('customer', 'disbursements'));
+        return view('back-office.customers.viewapplication', compact('customer', 'disbursements', 'project'));
     }
 
     public function sendtopartdisb(Request $request, $id)

@@ -39,6 +39,14 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Builder Name:</th>
+                    <td>{{ $project->builder_name }}</td>
+                </tr>
+                <tr>
+                    <th>Project Name:</th>
+                    <td>{{ $project->project_name }}</td>
+                </tr>
+                <tr>
                     <th>Door No:</th>
                     <td>{{ $customer->buying_door_no }}</td>
                 </tr>
