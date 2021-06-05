@@ -188,11 +188,7 @@
                                     <select name="branch_name" id="branch_name" class="form-control" required>
                                         <option value="">Select Branch</option>
                                         @foreach ($branches as $branch)
-                                        @php
-                                          echo '<pre>';
-                                          print_r($branch);
-                                    @endphp
-                                        <option @if($customer->bank_branch == $branch->id) selected @endif value="{{ $branch->id }}"> {{ $branch->branch_name }} </option>
+                                           <option @if($customer->bank_branch == $branch->id) selected @endif value="{{ $branch->id }}"> {{ $branch->branch_name }} </option>
                                         @endforeach
                                     </select>
                                 </div>   
@@ -991,6 +987,27 @@
             });
       
     });  
+
+    $("#bank_id").change(function(){
+      
+      var bank_id = $(this).val();
+      $.ajax({
+          url : "<?php echo url('/back-office/bank/get-branches'); ?>",
+          headers: {
+              'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+          },
+          data : JSON.stringify({bank_id:bank_id}),
+          type : 'POST',
+          contentType: "application/json",
+          dataType: 'json',
+          success: function(response) {
+              if(response.status==1){
+                  $("#branch_name").html(response.data);
+              }
+
+          }
+          });
+ });
 
     $("#property_cost").on('keyup',function(){
          var textVal = convertNumberToWords($(this).val());
