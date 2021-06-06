@@ -217,7 +217,7 @@ class CustomerController extends Controller
     public function allCustomers()
     {
         $customers = Customer::all();
-        $customer_status = ['1'=>'New Leeds','2'=>'Pipeline','3'=>'Send to Bank',
+        $customer_status = ['1'=>'New Leads','2'=>'Pipeline','3'=>'Send to Bank',
                             '4'=>'Login Process','5'=>'Sanctioned','6'=>'Ready to Disburse',
                             '7'=>'Bank Process','8'=>'Cheque Fixing','9'=>'Disbursed',
                             '10'=>'Part Disbursement','11'=>'Part Cheque Fixing','12'=>'Self Funding','13'=>'Not Interested'];
