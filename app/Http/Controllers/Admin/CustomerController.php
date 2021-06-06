@@ -852,7 +852,7 @@ class CustomerController extends Controller
                         ->orderByDesc('cust_id')
                         ->get();
               
-                return redirect()->route('back-office.customers.loginProcess')->with('customers', $customers )->with('message','Peding Doc collection appointment assigned successfully');;
+                return redirect()->route('back-office.customers.customers')->with('customers', $customers )->with('message','Peding Doc collection appointment assigned successfully');;
 
             }
 
@@ -883,7 +883,7 @@ class CustomerController extends Controller
                         ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone')
                         ->orderByDesc('cust_id')
                         ->get();
-            return redirect()->route('back-office.customers.customers')->with('customers', $customers )->with('message','Customer updated successfully');;
+            return redirect()->route('back-office.customers.loginProcess')->with('customers', $customers )->with('message','Customer updated successfully');;
 
         } catch (\Exception $e) {
 
