@@ -323,6 +323,11 @@ class CustomerController extends Controller
         $modtAppoint->appointmenttype_id  = $input['appiontment_typeid'];
         $modtAppoint->type = $input['type'];
         if($modtAppoint->save()){
+
+            $customer = Customer::find($input['customer_id']);
+            $customer->application_status = 9;
+            $customer->save();
+                
             $msg = [
                 'status' => 1,
                 'message' => 'Success'

@@ -68,24 +68,13 @@
                                    
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="drop_type_of_appointment">Appointment Type</label>
-                                    <select name="drop_type_of_appointment" id="drop_type_of_appointment" class="form-control" disabled>
-                                        <option value="">Select Appointment Type</option>
-                                        @foreach ($typeofappointments as $type)
-                                            <option @if($type->id==8) selected @endif value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
-                                        @endforeach
-                                    </select>
-                                    <span class="error-lbl" id="drop_type_of_appointment_error"></span>
-                                </div>
-                            </div>
-                            <div  class="form-row">
-                               
-                                <div class="form-group col-md-6">
                                     <label for="drop_appointment_agent">Agent Name</label>
                                     <select name="drop_appointment_agent" id="drop_appointment_agent" class="form-control"></select>
                                     <span class="error-lbl" id="drop_appointment_agent_error"></span>
                                 </div>
-                             </div>
+                              
+                            </div>
+                            
                             <button type="button" class="btn btn-primary appointment_submit" data-type="drop" id="drop_appointment_submit">Save Appointment</button>
                             <br> <div class="alert-success" id="drop-success"></div>
                       </div>
@@ -129,24 +118,12 @@
                                     <span class="error-lbl" id="pickup_appointment_time_error"></span>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="pickup_type_of_appointment">Appointment Type</label>
-                                    <select name="pickup_type_of_appointment" id="pickup_type_of_appointment" class="form-control" disabled>
-                                        <option value="">Select Appointment Type</option>
-                                        @foreach ($typeofappointments as $type)
-                                            <option @if($type->id==9) selected @endif value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
-                                        @endforeach
-                                    </select>
-                                    <span class="error-lbl" id="pickup_type_of_appointment_error"></span>
-                                </div>
-                            </div>
-                            <div  class="form-row">
-                               
-                                <div class="form-group col-md-6">
                                     <label for="pickup_appointment_agent">Agent Name</label>
                                     <select name="pickup_appointment_agent" id="pickup_appointment_agent" class="form-control"></select>
                                     <span class="error-lbl" id="pickup_appointment_agent_error"></span>
                                 </div>
-                             </div>
+                            </div>
+                            
                             <button type="button" class="btn btn-primary appointment_submit" data-type="pickup" id="pickup_appointment_submit">Save Appointment</button>
                             <br> <div class="alert-success" id="pickup-success"></div>
                       </div>
@@ -181,11 +158,15 @@ $(document).ready(function(){
             var customer_id =  $("#"+modt_type+"_customer_id option:selected" ).val();
             var appointment_date = $("#"+modt_type+"_appointment_date").val();
             var timeslot_id =  $("#"+modt_type+"_appointment_time option:selected" ).val();
-            var appiontment_typeid = $("#"+modt_type+"_type_of_appointment option:selected" ).val();
             var agent_id = $("#"+modt_type+"_appointment_agent option:selected" ).val();
-            var isValid = validateForm(modt_type,customer_id,appointment_date,timeslot_id,appiontment_typeid,agent_id);
+            var isValid = validateForm(modt_type,customer_id,appointment_date,timeslot_id,agent_id);
         
            if(isValid==true){
+               if(modt_type == 'pickup'){
+                var appiontment_typeid = '9';
+               }else{
+                var appiontment_typeid = '8';
+               }
             $.ajax({
                 url : "<?php echo url('/back-office/customers/modt/savemodt'); ?>",
                 headers: {
@@ -238,6 +219,7 @@ $(document).ready(function(){
                         $("#drop_appointment_agent").html(selectOptions);
                     } else {
                         var selectOptions = '';
+                        var selectOptions = '<option value=""> Select Agent</option>';
                         $.each(data, function( key, value ) {
                             selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
                         });
@@ -272,6 +254,7 @@ $(document).ready(function(){
                         $("#pickup_appointment_agent").html(selectOptions);
                     } else {
                         var selectOptions = '';
+                        var selectOptions = '<option value=""> Select Agent</option>';
                         $.each(data, function( key, value ) {
                             selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
                         });
@@ -284,7 +267,7 @@ $(document).ready(function(){
    })  
 });
 
-function validateForm(modt_type,customer_id,appointment_date,timeslot_id,appiontment_typeid,agent_id){
+function validateForm(modt_type,customer_id,appointment_date,timeslot_id,agent_id){
 
       
         var validation = true;
@@ -300,10 +283,6 @@ function validateForm(modt_type,customer_id,appointment_date,timeslot_id,appiont
             $("#"+modt_type+"_appointment_time_error").text('Please select time');
             validation = false;
             
-        }
-        if(appiontment_typeid == ''){
-            $("#"+modt_type+"_type_of_appointment_error").text('Please select appointment type');
-            validation = false;
         }
         if(agent_id == ''){
             $("#"+modt_type+"_appointment_agent_error").text('Please select agent');
