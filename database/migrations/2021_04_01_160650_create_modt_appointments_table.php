@@ -24,6 +24,8 @@ class CreateModtAppointmentsTable extends Migration
             $table->string('docs_ids')->nullable();
             $table->string('applicant_type')->nullable();
             $table->integer('appointmenttype_id')->unsigned();
+            $table->integer('modt_pain')->text();
+            $table->integer('modt_mode')->text();
             $table->text('type')->nullable();
             $table->timestamps();
         });

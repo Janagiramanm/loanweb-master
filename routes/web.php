@@ -137,6 +137,7 @@ Route::namespace('Admin')->prefix('back-office')->name('back-office.')->group(fu
     Route::post('/cancel-sanction', 'CustomerController@cancelSanction');
     Route::post('/add-secondary-agent-appointment', 'CustomerController@addSecondaryAgentAppoint');
     Route::post('/add-first-agent-appointment', 'CustomerController@addFirstAgentAppoint');
+    Route::post('/updateModtValues', 'CustomerController@updateModtValues');
     
     Route::post('/updatestatues', 'CustomerController@updatestatues');
     Route::post('/addnewbankdoc', 'CustomerController@addnewbankdoc');

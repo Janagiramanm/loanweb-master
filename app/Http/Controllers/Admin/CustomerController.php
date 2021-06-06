@@ -327,7 +327,7 @@ class CustomerController extends Controller
             $customer = Customer::find($input['customer_id']);
             $customer->application_status = 9;
             $customer->save();
-                
+
             $msg = [
                 'status' => 1,
                 'message' => 'Success'
@@ -344,6 +344,28 @@ class CustomerController extends Controller
 
         
 
+     }
+
+    public function updateModtValues(Request $request){
+        $input = $request->input();
+        $id = $input['appoint_id'];
+        $modt_paid = $input['modt_paid'];
+        $modt_mode = $input['modt_mode'];
+        $modetappoint = ModtAppointment::find($id);
+        $modetappoint->modt_paid  = $modt_paid;
+        $modetappoint->modt_mode  = $modt_mode;
+        if($modetappoint->save()){
+            $msg = [
+                'status' => 1,
+                'message' => 'Success'
+            ];
+            return response()->json($msg);
+        }
+        $msg = [
+            'status' => 0,
+            'message' => 'Failed'
+        ];
+        return response()->json($msg);
      }
     
 

@@ -60,10 +60,13 @@
                               <td>{{ $value->customer->loan_amount ? $value->customer->loan_amount : '---'  }}</td>
                               <td>{{ $value->customer->file_no ? $value->customer->file_no : '---'  }}</td>
                               <td>
-                                     <input type="text" name="modt_paid" id="modt_paid" />
+                                     <input type="text" name="modt_paid" id="modt_paid_{{ $value->id }}" value="{{ $value->modt_paid }}"  />
                               </td>
                               <td>
-                                     <input type="text" name="modt_mode" id="modt_mode" />
+                                     <input type="text" name="modt_mode" id="modt_mode_{{ $value->id }}" value="{{ $value->modt_mode }}" />
+                              </td>
+                              <td>
+                                     <input class="btn btn-primary save-modt-btn" type="button" data-id="{{ $value->id }}" name="modt_btn" id="modt_btn" value="save" />
                               </td>
 
                            @endif
@@ -96,5 +99,38 @@
 @section('custom-script')
     <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
     <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
+    <script>
+        $(document).ready(function(){
 
+            $('.save-modt-btn').on('click',function(){
+                var appoint_id = $(this).attr('data-id');
+                var modt_paid = $('#modt_paid_'+appoint_id).val();
+                var modt_mode = $('#modt_mode_'+appoint_id).val();
+                
+                    $.ajax({
+                        url : "<?php echo url('/back-office/updateModtValues'); ?>",
+                        headers: {
+                            'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
+                        },
+                        data : JSON.stringify({appoint_id: appoint_id, modt_paid: modt_paid, modt_mode: modt_mode}),
+                        type : 'POST',
+                        contentType: "application/json",
+                        dataType: 'json',
+                        success: function(data) {
+                           // swal("success", data, "success");
+                            setTimeout(function(){
+                                 location.reload();
+                              //  location.replace('/back-office/customers/sanctioned')
+                            }, 1000);
+                        }
+                    });
+            })
+           
+
+         
+        });
+       
+      
+    </script>
 @endsection
+
