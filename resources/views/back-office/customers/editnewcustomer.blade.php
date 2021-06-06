@@ -50,9 +50,6 @@
                                         <label for="cust_email">Project Name</label>
                                         <select class="form-control @error('project_name') is-invalid @enderror" name="project_name" id="project_name" required>
                                             <option value="">Select Project</option>
-                                            @foreach($builders as $builderDetail)
-                                                <option @if($customer->project_name ==$builderDetail->id ) selected @endif  value="{{ $builderDetail->id }}"> {{ $builderDetail->project_name}}</option>
-                                            @endforeach
                                         </select>
                                         <!-- <input type="text" class="form-control @error('project_name') is-invalid @enderror" id="project_name" name="project_name" required value="{{  $customer->project_name }}"> -->
                                         @error('project_name')

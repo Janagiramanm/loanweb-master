@@ -61,6 +61,9 @@ class EligibilityController extends Controller
         // dd($request);
         $input = $request->all();
        
+        // echo '<pre>';
+        // print_r($input);
+        // exit;
         $dob = new DateTime($input['dob']);
         $today   = new DateTime('today');
         $age =  $dob->diff($today)->y;
@@ -102,8 +105,15 @@ class EligibilityController extends Controller
                 }
             }
         }
+       
+        if($input['occupation'] == '1'){
+            return view('back-office.eligibilities.applicant',compact('input'));
+        }else {
+         //   return view('back-office.eligibilities.selfEmployeed');
+         return view('back-office.eligibilities.generalselfemployeed',compact('input'));
+        }
         
-        return view('back-office.eligibilities.applicant',compact('input'));
+        // return view('back-office.eligibilities.applicant',compact('input'));
     }
 
     public function eligibility(Request $request)
