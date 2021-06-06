@@ -70,7 +70,7 @@
                               </td>
 
                            @endif
-                        @endforeach
+                        @endforeach 
                         </tr>
                         @php 
                           $i++;
@@ -117,10 +117,10 @@
                         contentType: "application/json",
                         dataType: 'json',
                         success: function(data) {
-                           // swal("success", data, "success");
+                          
                             setTimeout(function(){
                                  location.reload();
-                              //  location.replace('/back-office/customers/sanctioned')
+                             
                             }, 1000);
                         }
                     });
