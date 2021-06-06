@@ -76,7 +76,7 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="property_cost">Total Cost(Property Cost)</label>
-                                    <input type="number" class="form-control"  name="property_cost" id="property_cost" required="required"  value="{{ old('property_cost') ?? $customer->property_cost }} " autocomplete="no-fill">
+                                    <input type="number" class="form-control"  name="property_cost" id="property_cost" required="required"  value="{{  $customer->property_cost }} " autocomplete="no-fill">
                                     <label for="property_cost_txt" id="property_cost_txt"> </label>
                                     @error('property_cost')
                                         <span class="invalid-feedback" role="alert">
