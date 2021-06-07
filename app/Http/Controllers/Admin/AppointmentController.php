@@ -50,10 +50,20 @@ class AppointmentController extends Controller
                          "Agent - ".$appointment->agent_name."\n".
                          "Appointment - ".$appointment->appointment_name."\n".
                          "Telecaller - ".$appointment->telecallername."\n". 
-                         "Date - ". date('d-m-Y',strtotime($appointment->appointment_date));
+                         "Appointment Date - ". date('d-m-Y',strtotime($appointment->appointment_date))."\n";
+                         "Start Time - ".date('d-m-Y H:i',strtotime($appointment->start_time))."\n";
                 if($appointment->latitude !='' && $appointment->longitude!=''){
-                  Mapper::marker($appointment->latitude, $appointment->longitude, ['title' => $title, 'animation' => 'DROP', 'icon' => 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png']);
+                   Mapper::marker($appointment->latitude, $appointment->longitude, ['title' => $title, 'animation' => 'DROP', 'icon' => 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png']);
                 }
+                if($appointment->stop_lat !='' && $appointment->stop_long!=''){
+                    $stop_title = "Customer - ".$appointment->customer_name."\n".
+                         "Agent - ".$appointment->agent_name."\n".
+                         "Appointment - ".$appointment->appointment_name."\n".
+                         "Telecaller - ".$appointment->telecallername."\n". 
+                         "Appointment Date - ". date('d-m-Y',strtotime($appointment->appointment_date))."\n";
+                         "Stop Time - ".date('d-m-Y H:i',strtotime($appointment->start_time))."\n";
+                    Mapper::marker($appointment->stop_lat, $appointment->stop_long, ['title' => $stop_title, 'animation' => 'DROP', 'icon' => 'http://maps.google.com/mapfiles/ms/icons/red-dot.png']);
+                  }
             } 
         }
 
