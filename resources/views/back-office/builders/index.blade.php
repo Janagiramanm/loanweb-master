@@ -23,7 +23,7 @@
         <th>Project Name</th>
         <th></th>
         <th >Action</th>
-        <?php $k=1; ?>
+        @php $k=1; @endphp
         @foreach ($builders as $builder)
         <tr>
             <td>{{ $k }}</td>
@@ -83,6 +83,7 @@
                             </div>
                         </td>
         </tr>
+        @php $k++; @endphp
         @endforeach
         
         </table>
