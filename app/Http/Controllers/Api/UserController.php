@@ -117,7 +117,7 @@ class UserController extends Controller
 
     public function countAppointment(Request $request){
 
-               $userid = $request->user_id;
+               $userid = $request->userid; 
                $date = date('Y-m-d');
                 $new_appointment_count = Appointment::where('agent_id','=',$userid)
                 ->where('appointment_date','<=',strtotime($date) )
