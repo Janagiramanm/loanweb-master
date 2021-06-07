@@ -51,10 +51,6 @@
                     <td>{{ $customer->buying_door_no }}</td>
                 </tr>
                 <tr>
-                    <th>Project Name:</th>
-                    <td>{{ $customer->project_name }}</td>
-                </tr>
-                <tr>
                     <th>Property Cost:</th>
                     <td>{{ $customer->property_cost }}</td>
                 </tr>
