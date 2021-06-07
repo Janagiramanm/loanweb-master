@@ -50,7 +50,7 @@ class AppointmentController extends Controller
                          "Agent - ".$appointment->agent_name."\n".
                          "Appointment - ".$appointment->appointment_name."\n".
                          "Telecaller - ".$appointment->telecallername."\n". 
-                         "Appointment Date - ". date('d-m-Y',strtotime($appointment->appointment_date))."\n";
+                         "Appointment Date - ". date('d-m-Y',strtotime($appointment->appointment_date))."\n".
                          "Start Time - ".date('d-m-Y H:i',strtotime($appointment->start_time))."\n";
                 if($appointment->latitude !='' && $appointment->longitude!=''){
                    Mapper::marker($appointment->latitude, $appointment->longitude, ['title' => $title, 'animation' => 'DROP', 'icon' => 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png']);
@@ -60,7 +60,7 @@ class AppointmentController extends Controller
                          "Agent - ".$appointment->agent_name."\n".
                          "Appointment - ".$appointment->appointment_name."\n".
                          "Telecaller - ".$appointment->telecallername."\n". 
-                         "Appointment Date - ". date('d-m-Y',strtotime($appointment->appointment_date))."\n";
+                         "Appointment Date - ". date('d-m-Y',strtotime($appointment->appointment_date))."\n".
                          "Stop Time - ".date('d-m-Y H:i',strtotime($appointment->start_time))."\n";
                     Mapper::marker($appointment->stop_lat, $appointment->stop_long, ['title' => $stop_title, 'animation' => 'DROP', 'icon' => 'http://maps.google.com/mapfiles/ms/icons/red-dot.png']);
                   }
