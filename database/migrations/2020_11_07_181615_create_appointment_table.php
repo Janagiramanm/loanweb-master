@@ -26,9 +26,12 @@ class CreateAppointmentTable extends Migration
             $table->string('applicant_type')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
+            $table->string('stop_lat')->nullable();
+            $table->string('stop_long')->nullable();
+            $table->dateTime('start_time')->nullable();
+            $table->dateTime('stop_time')->nullable();
             $table->string('comments')->nullable();
             $table->integer('appointmenttype_id')->unsigned();
-
             $table->timestamps();
         });
     }

@@ -276,13 +276,23 @@ class ApiController extends Controller
         $appointment_id = $input['appointment_id'];
         $latitude = $input['latitude'];
         $longitude = $input['longitude'];
+        $type = $input['type'];
 
         $appointment = Appointment::find($appointment_id);
         if(!$appointment){
             return response()->json(['status'=>0,'message' => "Data Not Found"], 404);
         }
-        $appointment->latitude = $latitude;
-        $appointment->longitude = $longitude;
+        if($type == 'start'){
+            $appointment->latitude = $latitude;
+            $appointment->longitude = $longitude;
+            $appointment->start_time = date('Y-m-d H:i');
+        }
+        if($type == 'stop'){
+            $appointment->stop_lat = $latitude;
+            $appointment->stop_long = $longitude;
+            $appointment->stop_time = date('Y-m-d H:i');
+        }
+        
         if($appointment->save()){
            return response()->json(['status'=>1,'message' => "Latitude and Longitude updated Successfully!"], $this->successStatus);
         }
