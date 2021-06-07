@@ -25,6 +25,7 @@ Route::group([ 'middleware' => 'auth:api'], function() {
     Route::get('user', 'Api\UserController@user');
 
     Route::get('typeofappointments', 'Api\ApiController@typeOfAppointments');
+    Route::post('count-appointment', 'Api\UserController@countAppointment');
 
     Route::post('appointments', 'Api\ApiController@newAppointments');
     

@@ -114,6 +114,57 @@ class UserController extends Controller
         ],200);
     }
 
+    public function countAppointment(Request $request){
+
+               $userid = $request->user_id;
+               $date = date('Y-m-d');
+                $new_appointment_count = Appointment::where('agent_id','=',$userid)
+                ->where('appointment_date','<=',strtotime($date) )
+                ->where('appointmenttype_id','=','1')
+                ->where('status','=',1)
+                ->count();
+
+                $pending_docs_ldfsl = Appointment::where('agent_id','=',$userid)
+                ->where('appointmenttype_id','=','2')
+                ->where('status','=',1)
+                ->count();
+
+                $bank_visit = Appointment::where('agent_id','=',$userid)
+                ->where('appointmenttype_id','=','3')
+                ->where('status','=',1)
+                ->count();
+
+                $pending_docs_bank = Appointment::where('agent_id','=',$userid)
+                ->where('appointmenttype_id','=','4')
+                ->where('status','=',1)
+                ->count();
+
+                $disbursment_docs_collection = Appointment::where('agent_id','=',$userid)
+                ->where('appointmenttype_id','=','5')
+                ->where('status','=',1)
+                ->count();
+
+                $pending_disbursment_docs = Appointment::where('agent_id','=',$userid)
+                ->where('appointmenttype_id','=','6')
+                ->where('status','=',1)
+                ->count();
+
+                $submit_demand = Appointment::where('agent_id','=',$userid)
+                ->where('appointmenttype_id','=','7')
+                ->where('status','=',1)
+                ->count();
+            
+                return response()->json([
+                    'new_appointment' => $new_appointment_count,
+                    'pending_docs_ldfsl' => $pending_docs_ldfsl,
+                    'bank_visit' => $bank_visit,
+                    'pending_docs_bank'=> $pending_docs_bank,
+                    'disbursment_docs_collection'=> $disbursment_docs_collection,
+                    'pending_disbursment_docs' => $pending_disbursment_docs,
+                    'submit_demand' => $submit_demand,
+                ],200);
+    }
+
     public function telecallerCustomers(Request $request){
 
         $username = $request->username;
