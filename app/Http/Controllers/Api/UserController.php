@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Customer;
+use App\Model\ModtAppointment;
 use App\Model\Appointment;
 use App\Model\Builder;
 use App\Model\Bank;
@@ -153,6 +154,10 @@ class UserController extends Controller
                 ->where('appointmenttype_id','=','7')
                 ->where('status','=',1)
                 ->count();
+
+                $modt = ModtAppointment::where('agent_id','=',$userid)
+                ->where('status','=',1)
+                ->count();
             
                 return response()->json([
                     'new_appointment' => $new_appointment_count,
@@ -162,6 +167,7 @@ class UserController extends Controller
                     'disbursment_docs_collection'=> $disbursment_docs_collection,
                     'pending_disbursment_docs' => $pending_disbursment_docs,
                     'submit_demand' => $submit_demand,
+                    'modt' => $modt
                 ],200);
     }
 
