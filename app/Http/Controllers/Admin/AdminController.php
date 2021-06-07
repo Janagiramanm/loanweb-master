@@ -21,7 +21,7 @@ class AdminController extends Controller
         $data['pipeline']   = Customer::where('application_status', '=', 2)->count();
         $data['login']      = Customer::where('application_status', '=', 3)->count();
         $data['sanction']   = Customer::where('application_status', '=', 4)->count();
-        $data['disbursed']  = Customer::where('application_status', '=', 5)->count();
+        $data['disbursed']  = Customer::where('application_status', '=', 9)->count();
         $data['all']        = Customer::count();
         $data['trash']      = Customer::where('application_deleted', '=', 1)->count();
 
