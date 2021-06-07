@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <div class="card">
                 <h2 class="card-header">
-                    Edit Bank
+                    Edit Builder
                 </h2>
                 <div class="card-body">
                     <form action="{{ route('back-office.builders.update', $builder->id) }}" method="post" enctype="multipart/form-data">
