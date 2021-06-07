@@ -231,7 +231,7 @@ class ApiController extends Controller
                  $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
 
                 
-                $result[$i]['start_flag'] = true;
+               
                 $result[$i]['customer_id'] = $customer->id;
                 $result[$i]['name'] = $customer->cust_name;
                 $result[$i]['mobile'] = $customer->cust_phone;
@@ -240,6 +240,7 @@ class ApiController extends Controller
                 $result[$i]['appointment_date'] = $appointment->appointment_date;
                 $result[$i]['applicant_type'] = $appointment->applicant_type;
                 $result[$i]['appointment_id'] = $appointment->id;
+                $result[$i]['start_flag'] = true;
                 if($appointment->start_time != ''){
                     $result[$i]['start_flag'] = false;
                 }
