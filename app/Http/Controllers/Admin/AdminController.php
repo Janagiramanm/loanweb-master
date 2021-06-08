@@ -17,11 +17,11 @@ class AdminController extends Controller
     public function index()
     {
         $data = array();
-        $data['newleads']   = Customer::where('application_status', '=', 1)->count();
-        $data['pipeline']   = Customer::where('application_status', '=', 2)->count();
-        $data['login']      = Customer::where('application_status', '=', 3)->count();
-        $data['sanction']   = Customer::where('application_status', '=', 4)->count();
-        $data['disbursed']  = Customer::where('application_status', '=', 9)->count();
+        $data['newleads']   = Customer::where('application_status', '=', 1)->where('application_deleted', '=', 0)->count();
+        $data['pipeline']   = Customer::where('application_status', '=', 2)->where('application_deleted', '=', 0)->count();
+        $data['login']      = Customer::where('application_status', '=', 3)->where('application_deleted', '=', 0)->count();
+        $data['sanction']   = Customer::where('application_status', '=', 4)->where('application_deleted', '=', 0)->count();
+        $data['disbursed']  = Customer::where('application_status', '=', 9)->where('application_deleted', '=', 0)->count();
         $data['all']        = Customer::count();
         $data['trash']      = Customer::where('application_deleted', '=', 1)->count();
 

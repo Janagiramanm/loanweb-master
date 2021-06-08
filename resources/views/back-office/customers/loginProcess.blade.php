@@ -39,7 +39,7 @@
                         <td class="text-center">
                             <form action="">
                                 <input type="hidden" id="cust_id" name="cust_id" value="{{ $customer->cust_id }}">
-                                <button type="button"  class="btn btn-success d-inline" id="updatestatus">Sanctioned</button>
+                                <button type="button"  class="btn btn-success d-inline sanction_btn" data-id="{{ $customer->cust_id }}" id="{{ $customer->cust_id }}">Sanctioned</button>
                             </form>
                         </td>
                         <td>
@@ -52,7 +52,10 @@
             </table>
         </div>
         <!-- /page length options -->
-        <div id="modal_cancel_sanction_from" class="modal fade" >
+       
+    </div>
+    <!-- /content area -->
+    <div id="modal_cancel_sanction_from" class="modal fade" >
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -68,11 +71,7 @@
                     </div>
                 </div>
         </div>
-    </div>
-    <!-- /content area -->
-    
-@endsection
-<style>
+        <style>
    #no-btn{
         float:left;
     }
@@ -94,14 +93,17 @@
         }
     }
   </style>
+@endsection
+
 
 @section('custom-script')
     <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
     <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
-        $(document).on('click', '#updatestatus', function(){
-            var cust_id = $("#cust_id").val();
+       $(document).ready(function(){
+        $('.sanction_btn').on('click',function(){
+            var cust_id = $(this).attr('data-id');
             $.ajax({
                 url : "<?php echo url('/back-office/updatestatues'); ?>",
                 headers: {
@@ -119,9 +121,8 @@
                     }, 3000);
                 }
             });
-
-         
         });
+
         $('.sanction_cancel').on('click',function(){
                  $('#yes-btn').attr('data-id',$(this).data('id'));
         });
@@ -149,5 +150,6 @@
                 }
             });
         });
+       });       
     </script>
 @endsection
