@@ -228,7 +228,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="applied_loan_amount">Loan Amount Required <span class="mandatory">*</span></label>
-                                <input type="text" class="form-control" id="applied_loan_amount" name="applied_loan_amount"  value="{{ old('applied_loan_amount') ?? $customer->applied_loan_amount }}">
+                                <input type="text" class="form-control" id="applied_loan_amount" name="applied_loan_amount" required value="{{ old('applied_loan_amount') ?? $customer->applied_loan_amount }}" >
                                 <label for="applied_loan_amount_txt" id="applied_loan_amount_txt"> </label>
                                 @error('mmr_paid')
                                     <span class="invalid-feedback" role="alert">

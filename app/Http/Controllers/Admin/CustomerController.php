@@ -1445,7 +1445,7 @@ class CustomerController extends Controller
     {
         $input = $request->all();
         Customer::where('id', '=', $input['hidden_cust_id'])->update(['application_deleted' => true, 'reason' => $input['reason']]);
-        return redirect(route('back-office.customers.newleads'))->with('message','Customer deleted successfully');
+        return redirect(route('back-office.customers.droppedcustomers'))->with('message','Customer deleted successfully');
     }
 
 

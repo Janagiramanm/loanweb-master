@@ -56,13 +56,13 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a href="{{  route('back-office.customers.pipelinecustomeredit', $customer->cust_id)  }}"  class="dropdown-item"><i class="icon-pencil"></i> Edit </a>
-
-                                        <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $customer->cust_id }}').submit();">
+                                        <button type="button" class="dropdown-item modal_cust_destroy" data-toggle="modal" id="delete_btn" data-id="{{ $customer->cust_id }}"  data-target="#modal_delete_from"><i class="icon-bin"></i><span>Remove</span></button>
+                                        <!-- <a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $customer->cust_id }}').submit();">
                                             <i class="icon-bin"></i><span>Remove</span>
                                         </a>
                                         <form id="delete-form-{{ $customer->cust_id }}" action="" method="POST" style="display: none;">
                                             @csrf @method('delete')
-                                        </form>
+                                        </form> -->
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +74,25 @@
             </table>
         </div>
         <!-- /page length options -->
+        <div id="modal_delete_from" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Customer Delete Reason Form</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
 
+                <form action="{{ route('back-office.customers.destroy') }}" class="modal-body form-inline justify-content-center"  method="POST" id="submit_delte_form" enctype="multipart/form-data">
+                    @csrf
+                    @method('POST')
+                    <label>Reason for Delete</label>
+                    <input type="hidden" name="hidden_cust_id" id="hidden_cust_id" value="">
+                    <input name="reason" type="test" id="customersheet" value="" placeholder="Please enter reson for delete" class="form-control mb-2 mr-sm-2 ml-sm-2 mb-sm-0">
+                    <button  type="button" id="submit_delete_form_btn" class="btn bg-danger ml-sm-2 mb-sm-0">Delete Customer</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     </div>
     <!-- /content area -->
@@ -85,5 +103,18 @@
 @section('custom-script')
     <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
     <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
+    <script>
+    $(document).ready(function() {
+        $(".modal_cust_destroy").click(function(){
+            var cust_id = $(this).attr('data-id');
+            $("#hidden_cust_id").val(cust_id);
+            
+        });
+         $('#submit_delete_form_btn').click(function(){
+            $("#submit_delte_form").submit();
+         })
+       // $("#submit_delte_form").submit();
+    })
 
+    </script>
 @endsection

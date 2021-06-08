@@ -66,7 +66,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a href="{{ route('back-office.customers.editnewcustomer', $customer->cust_id) }}"  class="dropdown-item"><i class="icon-pencil"></i> Edit </a>
-                                        <button type="button" class="dropdown-item" data-toggle="modal" id="delete_btn"  data-target="#modal_delete_from"><i class="icon-bin"></i><span>Remove</span></button>
+                                        <button type="button" class="dropdown-item modal_cust_destroy" data-toggle="modal" id="delete_btn" data-id="{{ $customer->cust_id }}" data-target="#modal_delete_from"><i class="icon-bin"></i><span>Remove</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -137,15 +137,23 @@
             if(files){
                 $("#submit_exce_form").submit();
             }else{
-                alert("please select ile");
+                alert("please select file");
             }
         });
 
-        $("#submit_delete_form_btn").click(function(){
-            var cust_id = $('input[name="cust_id"]').val();
+        // $("#submit_delete_form_btn").click(function(){
+        //     var cust_id = $('input[name="cust_id"]').val();
+        //     $("#hidden_cust_id").val(cust_id);
+        //     $("#submit_delte_form").submit();
+        // })
+        $(".modal_cust_destroy").click(function(){
+            var cust_id = $(this).attr('data-id');
             $("#hidden_cust_id").val(cust_id);
+            
+        });
+         $('#submit_delete_form_btn').click(function(){
             $("#submit_delte_form").submit();
-        })
+         })
     })
 
     </script>

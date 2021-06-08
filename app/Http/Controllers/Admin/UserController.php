@@ -79,9 +79,7 @@ class UserController extends Controller
      */
     public function edit(user $user)
     {
-        // if(Gate::denies('edit-users')){
-        //     return redirect()->route('back-office.users.index')->with('warning', 'You are not authorized to edit User');
-        // }
+      
         Gate::define('edit-users', function (User $user) {
             return $user->isAdmin
                         ? Response::allow()
