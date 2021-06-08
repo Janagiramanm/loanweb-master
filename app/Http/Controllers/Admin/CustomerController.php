@@ -1358,8 +1358,9 @@ class CustomerController extends Controller
                             ->get();
         $timeslots = Timeslot::all();
         $typeofappointments = TypeOfAppointment::all();
+        $project = Builder::where('id','=',$customer->builder_name)->first();  
 
-        return view('back-office.customers.editpartdisbursements', compact('customer', 'disbursements', 'timeslots'));
+        return view('back-office.customers.editpartdisbursements', compact('customer', 'disbursements', 'timeslots','project'));
     }
 
     public function updatepartdisbursements(Request $request, $id)

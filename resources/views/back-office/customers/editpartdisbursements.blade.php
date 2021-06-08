@@ -1,7 +1,7 @@
 @extends('layouts.back-office')
 
 @section('parent_link')
-    <a href="{{ url('back-office/customers/customers') }}" class="breadcrumb-item"> View </a>
+    <a href="{{ url('back-office/customers/partdisbursements') }}" class="breadcrumb-item"> Edit PartDisbursement </a>
 @endsection
 
 @section('breadcrum')
@@ -37,12 +37,16 @@
                     <td>{{ $customer->branch_name }}</td>
                 </tr>
                 <tr>
-                    <th>Door No:</th>
-                    <td>{{ $customer->buying_door_no }}</td>
+                    <th>Builder Name:</th>
+                    <td>{{ $project->builder_name }}</td>
                 </tr>
                 <tr>
                     <th>Project Name:</th>
-                    <td>{{ $customer->project_name }}</td>
+                    <td>{{ $project->project_name }}</td>
+                </tr>
+                <tr>
+                    <th>Door No:</th>
+                    <td>{{ $customer->buying_door_no }}</td>
                 </tr>
                 <tr>
                     <th>Property Cost:</th>
@@ -209,7 +213,8 @@
                         selectOptions += '<option value="">No Agent Available in This Time Slot</option>';
                         $("#appointment_agent").html(selectOptions);
                     } else {
-                        var selectOptions = '';
+                        
+                        var selectOptions = '<option value=""> Select Agent</option>';
                         $.each(data, function( key, value ) {
                             selectOptions += '<option value="'+value.agent_id+'">'+ value.agent_name +'</option>';
                         });
