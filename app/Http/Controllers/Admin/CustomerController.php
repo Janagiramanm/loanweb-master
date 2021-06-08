@@ -549,7 +549,7 @@ class CustomerController extends Controller
                             ->get();
 
                             // dd($customers);
-                return  Redirect::to('back-office/customers/newleads')->with('customers', $customers )->with('message','Custoemr ('.$input['cust_name'].')  is updated successfully');
+                return  Redirect::to('back-office/customers/newleads')->with('customers', $customers )->with('message','Customer ('.$input['cust_name'].')  is updated successfully');
 
             }
          
@@ -792,7 +792,7 @@ class CustomerController extends Controller
                         ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone')
                         ->orderByDesc('cust_id')
                         ->get();
-                return redirect()->route('back-office.customers.sendtobank')->with('customers', $customers)->with('message','Custoemr Application is processed to bank');;
+                return redirect()->route('back-office.customers.sendtobank')->with('customers', $customers)->with('message','Customer Application is processed to bank');;
             }
 
             $customers = DB::table('customers')
@@ -901,7 +901,7 @@ class CustomerController extends Controller
                        // print_r($branch);exit;
                         AppHelper::sendToBankSms($input, $projects, $bank, $branch);
 
-                return redirect()->route('back-office.customers.loginProcess')->with('customers', $customers)->with('message','Custoemr Application is processed to bank Successfully');;
+                return redirect()->route('back-office.customers.loginProcess')->with('customers', $customers)->with('message','Customer Application is processed to bank Successfully');;
             }
 
             $customers = DB::table('customers')
@@ -982,7 +982,7 @@ class CustomerController extends Controller
             
             AppHelper::sanctionedSMS($input, $projects, $bank, $branch, $cust);
 
-            return redirect()->route('back-office.customers.readytodisburse')->with('customers', $customers )->with('message','Custoemr is updated successfully');
+            return redirect()->route('back-office.customers.readytodisburse')->with('customers', $customers )->with('message','Customer is updated successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with($e->getMessage());
         }
@@ -1305,7 +1305,7 @@ class CustomerController extends Controller
                         ->orderByDesc('cust_id')
                         ->get();
 
-            return redirect()->route('back-office.customers.partdisbursements')->with('customers', $customers )->with('message','Custoemr is updated successfully');
+            return redirect()->route('back-office.customers.partdisbursements')->with('customers', $customers )->with('message','Customer is updated successfully');
         } catch (\Exception $e) {
             return redirect()->back()->with($e->getMessage());
         }
@@ -1472,7 +1472,7 @@ class CustomerController extends Controller
             $customers = Customer::create($customer);
         }
 
-        return redirect()->back()->with('message', $count.' Custoemr imported successfully');
+        return redirect()->back()->with('message', $count.' Customer imported successfully');
     }
 
     public function importDisbursement(Request $request)
@@ -1497,7 +1497,7 @@ class CustomerController extends Controller
             $customers = Customer::create($customer);
         }
 
-        return redirect()->back()->with('message', $count.' Custoemr imported successfully');
+        return redirect()->back()->with('message', $count.' Customer imported successfully');
     }
 
     // public function importCompleteSheet(Request $request)
