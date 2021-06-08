@@ -127,17 +127,17 @@ class AppHelper
           
             $sanctioned_amount = $input['sanctioned_amount'];
             $bank = $bank."-".$branch;
-            $project_name = $projects->project_type_name;
+            $builder_name = $projects->builder_name;
+            $project_name = $projects->project_name;
            
-             $msg = "An amount of $sanctioned_amount has been Sanctioned through Bank $bank for Customer $customer_name of Project $project_name - {#var#}. - LDFSL";
-           // exit;
+            $msg = "An amount of $sanctioned_amount has been Sanctioned through Bank $bank for Customer $customer_name of Project $builder_name - $project_name. - LDFSL";
             
             $message = urlencode($msg);
             $sender = 'LDFSHL'; 
             $apikey = '10054grh5qlu83137o375o701097r5wsrn6';
             $baseurl = 'https://instantalerts.co/api/web/send?apikey='.$apikey;
 
-            $url = $baseurl.'&sender='.$sender.'&to='.$customer['cust_phone'].'&message='.$message;    
+            $url = $baseurl.'&sender='.$sender.'&to='.$cust['cust_phone'].'&message='.$message;    
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_POST, false);
             curl_setopt($ch, CURLOPT_URL, $url);

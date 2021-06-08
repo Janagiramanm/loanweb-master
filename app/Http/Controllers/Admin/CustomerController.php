@@ -966,8 +966,10 @@ class CustomerController extends Controller
     {
         $input = $request->all();
 
+    //   echo "<pre>";
+    //   print_r($input);
       
-        try {
+        // try {
 
             $customer = Customer::where('id', '=', $id)->update([
                 'sanctioned_amount'    => $input['sanctioned_amount'],
@@ -985,18 +987,24 @@ class CustomerController extends Controller
 
             
             $cust = Customer::find($id);
-            $projects = BuilderDetail::where('builder_id','=',$cust['builder_name'])
-            ->where('id','=',$cust['project_name'])->first(); 
+            $project = Builder::where('id','=',$cust['builder_name'])->first(); 
+            // $projects = BuilderDetail::where('builder_id','=',$cust['builder_name'])
+            // ->where('id','=',$cust['project_name'])->first(); 
            
             $bank = Bank::find($cust['bank_id'])->bank_name;
-            $branch = BankBranch::find($cust['branch_name'])->branch_name;
+            $branch = '';
+            if($cust['branch_name'] != ''){
+                $branch = BankBranch::find($cust['branch_name'])->branch_name;
+            }
             
-            AppHelper::sanctionedSMS($input, $projects, $bank, $branch, $cust);
+            AppHelper::sanctionedSMS($input, $project, $bank, $branch, $cust);
+            //exit;
 
             return redirect()->route('back-office.customers.readytodisburse')->with('customers', $customers )->with('message','Customer is updated successfully');
-        } catch (\Exception $e) {
-            return redirect()->back()->with($e->getMessage());
-        }
+        // } catch (\Exception $e) {
+           
+        //     return redirect()->back()->with($e->getMessage());
+        // }
     }
 
     public function editreadytodisburse(Request $request, $id)
