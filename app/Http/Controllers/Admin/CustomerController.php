@@ -672,15 +672,16 @@ class CustomerController extends Controller
         $input = $request->input();
 
        
-        $isExist = Appointment::where('customer_id','=',$input['customer_id'])
-         ->where('applicant_type','=','normal')->first();
-        if($isExist){
-            $appointment = Appointment::find($isExist->id);
-        }else{
+        // $isExist = Appointment::where('customer_id','=',$input['customer_id'])
+        //  ->where('applicant_type','=','normal')->first();
+        // if($isExist){
+        //     $appointment = Appointment::find($isExist->id);
+        // }else{
            
-            $appointment = new Appointment();
-        }
+        //     $appointment = new Appointment();
+        // }
 
+        $appointment = new Appointment();
         $appointment->agent_id = $input['agent_id'];
         $appointment->appointment_date =  date('Y-m-d', strtotime($input['apdate']));
         $appointment->customer_id = $input['customer_id'];
@@ -703,14 +704,14 @@ class CustomerController extends Controller
     public function addSecondaryAgentAppoint(Request $request){
 
         $input = $request->input();
-        // $isExist = Appointment::where('customer_id','=',$input['customer_id'])
-        // ->where('second_customer_id','=',$input['second_customer_id'])->first();
-        // if($isExist){
-        //     $appointment = Appointment::find($isExist->id);
-        // }else{
-        //     $appointment = new Appointment();
-        // }
-        $appointment = new Appointment();
+        $isExist = Appointment::where('customer_id','=',$input['customer_id'])
+        ->where('second_customer_id','=',$input['second_customer_id'])->first();
+        if($isExist){
+            $appointment = Appointment::find($isExist->id);
+        }else{
+            $appointment = new Appointment();
+        }
+       // $appointment = new Appointment();
         $appointment->agent_id = $input['agent_id'];
         $appointment->appointment_date =  date('Y-m-d', strtotime($input['apdate']));
         $appointment->customer_id = $input['customer_id'];
