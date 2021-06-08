@@ -16,7 +16,7 @@ class CreateApplicationStatus extends Migration
         Schema::create('application_status', function (Blueprint $table) {
             $table->id();
             $table->string('status');
-            $table->string('comment');
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }

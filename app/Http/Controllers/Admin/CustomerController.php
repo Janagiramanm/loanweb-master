@@ -418,13 +418,16 @@ class CustomerController extends Controller
     public function updatenewcustomer(Request $request, $id)
     {
         $input = $request->all();
-      
+       
         try {
             if(isset($input['interested'])){
                 $application_status = 2;
             }
             else if(isset($input['self-funding'])){
                 $application_status = 12;
+            }
+            else if(isset($input['not-interested'])){
+                $application_status = 13;
             }
             else{
                 $application_status = 1;
@@ -537,7 +540,11 @@ class CustomerController extends Controller
                 // dd($customers);
                 return  Redirect::to('back-office/customers/customers')->with('customers', $customers )->with('message','Executive ( '.$agent->name.' ) assignd to Customer ('.$input['cust_name'].')  successfully');
 
-            }else{
+            }
+            else if(isset($input['not-interested'])){
+                return  Redirect::to('back-office/customers/not-interested');
+            }
+            else{
 
                
               
