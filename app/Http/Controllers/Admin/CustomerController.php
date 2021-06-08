@@ -1334,6 +1334,7 @@ class CustomerController extends Controller
                                 'customers.created_at as sub_date',
                                 'customers.buying_door_no',
                                 'customers.project_name',
+                                'customers.builder_name',
                                 'customers.cust_name',
                                 'customers.telecallername',
                                 'bank.bank_name',
