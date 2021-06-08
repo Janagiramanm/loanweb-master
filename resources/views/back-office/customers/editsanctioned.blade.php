@@ -1,7 +1,7 @@
 @extends('layouts.back-office')
 
 @section('parent_link')
-    <a href="{{ url('back-office/customers/customers') }}" class="breadcrumb-item"> Sanctioned Customers </a>
+    <a href="{{ url('back-office/customers/sanctioned') }}" class="breadcrumb-item"> Sanctioned Customers </a>
 @endsection
 
 @section('breadcrum')
