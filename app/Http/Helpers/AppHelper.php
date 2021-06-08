@@ -54,13 +54,13 @@ class AppHelper
              
                 $flat_no = $input['buying_door_no'];
 
-                $project_name = $projects->project_type_name;
+                $project_name = $projects->project_name;
              
                 $bank = $bank."-".$branch;
 
                 $msg = "Customer $customer of Project $project_name - $flat_no has been sent to Bank: $bank, and the loan is under process.\n- LDFSL";
  // $msg = "Customer $customer of Project $project_name - $flat_no has been sent to Bank: $bank, and the loan is under process.- LDFSL";
-              // exit;
+              //exit;
                 $message = urlencode($msg);
                 $sender = 'LDFSHL'; 
                 $apikey = '10054grh5qlu83137o375o701097r5wsrn6';

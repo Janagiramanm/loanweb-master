@@ -845,6 +845,9 @@ class CustomerController extends Controller
         $input = $request->all();
         $customer = Customer::find($id);
  
+        // echo '<pre>';
+        // print_r($input);
+        // exit;
         try {
             $customer = Customer::where('id', '=', $id)->update([
                 'cust_name'             => $input['cust_name'],
@@ -899,12 +902,12 @@ class CustomerController extends Controller
                         ->orderByDesc('cust_id')
                         ->get();
 
-                        
-                        $projects = BuilderDetail::where('builder_id','=',$input['builder_name'])
-                        ->where('id','=',$input['project_name'])->first(); 
+                        // $projects = BuilderDetail::where('builder_id','=',$input['builder_name'])
+                        // ->where('id','=',$input['project_name'])->first(); 
                        
                         $bank = Bank::find($input['bank_id'])->bank_name;
                         $branch = BankBranch::find($input['branch_name'])->branch_name;
+                        $projects = Builder::where('id','=',$input['builder_name'])->first(); 
                        // print_r($branch);exit;
                         AppHelper::sendToBankSms($input, $projects, $bank, $branch);
 
