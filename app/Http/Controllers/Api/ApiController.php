@@ -164,6 +164,7 @@ class ApiController extends Controller
                 $appointments->save();
             
                 $customer->docs_ids .=  $customer->docs_ids ? ','.$docs_to_update_val : $docs_to_update_val;
+                $appointments->status = 0;
                 $customer->save();
 
            }
@@ -240,9 +241,9 @@ class ApiController extends Controller
                 $result[$i]['appointment_date'] = $appointment->appointment_date;
                 $result[$i]['applicant_type'] = $appointment->applicant_type;
                 $result[$i]['appointment_id'] = $appointment->id;
-                $result[$i]['start_flag'] = true;
+                $result[$i]['start_flag'] = "true";
                 if($appointment->start_time != ''){
-                    $result[$i]['start_flag'] = false;
+                    $result[$i]['start_flag'] = "false";
                 }
 
                 if($appointment->applicant_type == 'secondary'){

@@ -163,13 +163,13 @@
                         </div>
 
 
-                        <span>If all docments are correct for disbursement proceed for check fixing.</span>
+                        <span>If all documents are correct for disbursement proceed for check fixing.</span>
                         <div class="form-row">
                             <div class="form-group col">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="sentToBank" name="sentToBank" value="{{ old('sentToBank') ?? 1 }}">
                                     <label class="form-check-label" for="sentToBank">
-                                        Successfully send to Bank
+                                        Cheque Fixing
                                     </label>
                                 </div>
                             </div>
