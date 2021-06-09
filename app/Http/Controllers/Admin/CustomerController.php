@@ -327,6 +327,16 @@ class CustomerController extends Controller
             // $customer = Customer::find($input['customer_id']);
             // $customer->application_status = 9;
             // $customer->save();
+            $appointment = Appointment::create([
+                'agent_id'          => $input['agent_id'],
+                'customer_id'       => $input['customer_id'],
+                'appointment_date'  => date('Y-m-d', strtotime($input['appointment_date'])),
+                'timeslot_id'       => $input['timeslot_id'],
+                'created_excutive'  => Auth::user()->id,
+                'status'            => 1,
+                'appointmenttype_id'=> $input['appiontment_typeid'],
+                'applicant_type'=> 'modt'
+            ]);
 
             $msg = [
                 'status' => 1,

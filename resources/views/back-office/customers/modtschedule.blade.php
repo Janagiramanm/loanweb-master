@@ -167,6 +167,7 @@ $(document).ready(function(){
                }else{
                 var appiontment_typeid = '8';
                }
+               
             $.ajax({
                 url : "<?php echo url('/back-office/customers/modt/savemodt'); ?>",
                 headers: {

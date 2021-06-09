@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Customer;
 use App\Exports\CustomerExport;
 use App\Model\Appointment;
+use App\Model\ModtAppointment;
 use App\Model\Occupation;
 use App\Model\SecondaryApplicant;
 use App\User;
@@ -210,6 +211,52 @@ class ApiController extends Controller
 
         return response()->json(['success' => $output], $this->successStatus);
 
+    }
+
+    public function modtAppointments(Request $request){
+        $agent_id = $request->user_id;
+        $appointments = ModtAppointment::where('agent_id','=',$agent_id)
+        ->where('status','=',1)->get(); 
+        $result = [];
+        if(!$appointments->isEmpty()){
+            
+            $i=0;
+            // echo '<pre>';
+            // print_r($appointments);//exit;
+            foreach($appointments as $appointment){
+
+                 $customer = Customer::where('id','=',$appointment->customer_id)->first();
+                 $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
+
+                
+               
+                $result[$i]['customer_id'] = $customer->id;
+                $result[$i]['name'] = $customer->cust_name;
+                $result[$i]['mobile'] = $customer->cust_phone;
+                $result[$i]['occupation_id'] = $occupation->id;
+                $result[$i]['occupation_name'] = $occupation->occupation_name;
+                $result[$i]['appointment_date'] = $appointment->appointment_date;
+                $result[$i]['applicant_type'] = $appointment->applicant_type;
+                $result[$i]['appointment_id'] = $appointment->id;
+                $result[$i]['start_flag'] = "true";
+                if($appointment->start_time != ''){
+                    $result[$i]['start_flag'] = "false";
+                }
+
+                $i++;
+            }
+            $msg =[
+                'status' => 1,
+                'data' => $result
+            ];
+            return response()->json($msg);
+        }
+
+        $msg = [
+            'status' => 0,
+             'message' => 'Data not found'
+        ];
+        return response()->json($msg);
     }
 
     public function appointmentDetails(Request $request){
