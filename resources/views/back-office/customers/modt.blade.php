@@ -53,18 +53,21 @@
                              <td>{{ $value->customer->telecallername }}</td>
                              <td>{{ $value->user->name }}</td>
                              <td>{{ $value->timeslot->time_slot }}</td>
-                           @else
-                              <td> {{ $value->customer->telecallername ? $value->customer->telecallername : '---'  }}</td>
-                              <td>{{ $value->user->name ? $value->user->name : '---' }}</td>
-                              <td>{{ $value->timeslot->time_slot ? $value->timeslot->time_slot : '---'  }}</td>
-                              <td>{{ $value->customer->loan_amount ? $value->customer->loan_amount : '---'  }}</td>
-                              <td>{{ $value->customer->file_no ? $value->customer->file_no : '---'  }}</td>
+                             @endif
+                             <td> @if($type == 'pickup') 
+                                  {{ $value->customer->telecallername ? $value->customer->telecallername : '---'  }} @endif</td>
+                              <td>@if($type == 'pickup') {{ $value->user->name ? $value->user->name : '---' }} @endif </td>
+                              <td>@if($type == 'pickup') {{ $value->timeslot->time_slot ? $value->timeslot->time_slot : '---'  }} @endif</td>
+                              <td>@if($type == 'pickup') {{ $value->customer->loan_amount ? $value->customer->loan_amount : '---'  }} @endif</td>
+                              <td>@if($type == 'pickup') {{ $value->customer->file_no ? $value->customer->file_no : '---'  }} @endif</td>
                               <td>
                                      <input type="text" name="modt_paid" id="modt_paid_{{ $value->id }}" value="{{ $value->modt_paid }}"  />
                               </td>
-                           @endif
-                           <td>
+                              <td>
                                      <input type="text" name="modt_mode" id="modt_mode_{{ $value->id }}" value="{{ $value->modt_mode }}" />
+                              </td>
+                              <td>
+                                     <input type="text" name="modt_receipt" id="modt_receipt_{{ $value->id }}" value="{{ $value->modt_receipt }}" />
                               </td>
                               <td>
                                      <input class="btn btn-primary save-modt-btn" type="button" data-id="{{ $value->id }}" name="modt_btn" id="modt_btn" value="save" />
