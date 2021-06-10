@@ -63,7 +63,7 @@
                                             </label>
                                         </div>
                                         <div>
-                                            <input class="form-check-input drop-up-checkbox" type="checkbox" id="not_interested" name="not_interested" value="not_interest">
+                                            <input class="form-check-input drop-up-checkbox" type="checkbox" id="not_interested" name="not_interested" value="13">
                                             <label class="form-check-label drop-up-label" for="not_interested">
                                                 Not Interested
                                             </label>
