@@ -162,10 +162,10 @@ class ApiController extends Controller
                 $docs_to_update_val = implode(',',$docs_to_update);
                 $appointments->docs_ids .= $appointments->docs_ids ? ','.$docs_to_update_val: $docs_to_update_val ;
                 $appointments->comments = $comment;
+                $appointments->status = 0;
                 $appointments->save();
             
                 $customer->docs_ids .=  $customer->docs_ids ? ','.$docs_to_update_val : $docs_to_update_val;
-                $appointments->status = 0;
                 $customer->save();
 
            }
