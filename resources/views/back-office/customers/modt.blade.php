@@ -35,6 +35,7 @@
                     <th>FILE NO</th>
                     <th>MODT PAID</th>
                     <th>MODT MODE</th>
+                    <th>MODT RECEIPT</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -108,13 +109,14 @@
                 var appoint_id = $(this).attr('data-id');
                 var modt_paid = $('#modt_paid_'+appoint_id).val();
                 var modt_mode = $('#modt_mode_'+appoint_id).val();
+                var modt_receipt = $('#modt_receipt_'+appoint_id).val();
                 
                     $.ajax({
                         url : "<?php echo url('/back-office/updateModtValues'); ?>",
                         headers: {
                             'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                         },
-                        data : JSON.stringify({appoint_id: appoint_id, modt_paid: modt_paid, modt_mode: modt_mode}),
+                        data : JSON.stringify({appoint_id: appoint_id, modt_paid: modt_paid, modt_mode: modt_mode,modt_receipt: modt_receipt}),
                         type : 'POST',
                         contentType: "application/json",
                         dataType: 'json',

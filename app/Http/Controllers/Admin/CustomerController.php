@@ -361,9 +361,11 @@ class CustomerController extends Controller
         $id = $input['appoint_id'];
         $modt_paid = $input['modt_paid'];
         $modt_mode = $input['modt_mode'];
+        $modt_receipt = $input['modt_receipt'];
         $modetappoint = ModtAppointment::find($id);
         $modetappoint->modt_paid  = $modt_paid;
         $modetappoint->modt_mode  = $modt_mode;
+        $modetappoint->modt_receipt  = $modt_receipt;
         if($modetappoint->save()){
             $msg = [
                 'status' => 1,
