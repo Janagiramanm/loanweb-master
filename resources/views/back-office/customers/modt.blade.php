@@ -62,14 +62,13 @@
                               <td>
                                      <input type="text" name="modt_paid" id="modt_paid_{{ $value->id }}" value="{{ $value->modt_paid }}"  />
                               </td>
-                              <td>
+                           @endif
+                           <td>
                                      <input type="text" name="modt_mode" id="modt_mode_{{ $value->id }}" value="{{ $value->modt_mode }}" />
                               </td>
                               <td>
                                      <input class="btn btn-primary save-modt-btn" type="button" data-id="{{ $value->id }}" name="modt_btn" id="modt_btn" value="save" />
                               </td>
-
-                           @endif
                         @endforeach 
                         </tr>
                         @php 
