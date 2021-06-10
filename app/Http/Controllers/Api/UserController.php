@@ -155,7 +155,8 @@ class UserController extends Controller
                 ->where('status','=',1)
                 ->count();
 
-                $modt = ModtAppointment::where('agent_id','=',$userid)
+                $modt = Appointment::where('agent_id','=',$userid)
+                ->whereIn('appointmenttype_id',['8','9'])
                 ->where('status','=',1)
                 ->count();
             
