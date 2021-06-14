@@ -59,7 +59,7 @@
                              @endphp
                              </td>
                         <td>{{ $customer->telecallername }}</td>
-                        <td>{{ $customer->created_at }}</td>
+                        <td>{{ $customer->created_at->format('d-m-Y') }}</td>
                         <td>Dashboard</td>
                         <td class="text-center">
                             <div class="list-icons">
