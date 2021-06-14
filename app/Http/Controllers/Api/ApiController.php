@@ -75,9 +75,7 @@ class ApiController extends Controller
             }
         }
         
-        elseif($type_id  == 4){
-            $extra_docs = ExtaDocs::where('customer_id', '=', $id)->get();
-        }   
+         
         elseif($type_id  == 3) {
             $cust_docs = Customer::where('id', '=', $id)->get();
             if(isset($cust_docs[0])){
@@ -125,6 +123,9 @@ class ApiController extends Controller
         }else{
             $documents = [];
         }
+        if($type_id  == 4){
+            $extra_docs = ExtaDocs::where('customer_id', '=', $id)->get();
+        }  
 
         //$extra_docs = ExtaDocs::where('customer_id', '=', $id)->get();
 
