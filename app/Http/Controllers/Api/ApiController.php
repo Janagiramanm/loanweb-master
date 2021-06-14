@@ -64,6 +64,7 @@ class ApiController extends Controller
         $id = $input['cust_id'];
         $type_id = $input['ap_type_id'];
         $occupation_id = $input['occupation_id'];
+        $extra_docs = [];
         if($type_id  == 1 ||  $type_id  == 2){
             $cust_docs = Customer::where('id', '=', $id)->get();
             if(isset($cust_docs[0])){
