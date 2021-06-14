@@ -125,7 +125,7 @@ class ApiController extends Controller
             $documents = [];
         }
 
-        $documents['extra_docs'] = ExtaDocs::where('customer_id', '=', $id)->get();
+        $extra_docs = ExtaDocs::where('customer_id', '=', $id)->get();
 
        
         $secondary = SecondaryApplicant::where('customer_id','=', $id)->get();
@@ -157,6 +157,7 @@ class ApiController extends Controller
                 'status' => 1,
                 'customer' =>[
                     'primary' => $documents,
+                    'extra_docs'=>$extra_docs,
                     'secondary_customer' => $sec_cust 
                 ]
                 
