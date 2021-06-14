@@ -137,14 +137,16 @@ class ApiController extends Controller
             $i=0;
             foreach($secondary as $second){
                $sec_cust[$i]['name'] =  $second->name;
-            //    $sec_appointment = Appointment::where('customer_id','=',$second->id)
-            //    ->where('applicant_type','=','secondary')->first();
-               $cust_docs = Customer::where('id', '=', $second->customer_id)->get();
-               if(isset($cust_docs[0])){
-                    $existingdocs_sec = explode(",", $cust_docs[0]['docs_ids']);
+               $sec_appointment = Appointment::where('customer_id','=',$second->id)
+               ->where('applicant_type','=','secondary')->first();
+               if(isset($sec_appointment->docs_ids) != ''){
+                    $existingdocs_sec = explode(",", $sec_appointment->docs_ids);
                     $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->whereNotIn('id', $existingdocs_sec)->get();
                }else{
-                $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->get();
+                    if($second->is_same_address !=1){
+                        $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->get();
+                    }
+                   
                }
                 $i++;
             }
