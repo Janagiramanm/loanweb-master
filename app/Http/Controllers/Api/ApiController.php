@@ -136,6 +136,7 @@ class ApiController extends Controller
         if($secondary){
             $i=0;
             foreach($secondary as $second){
+               $sec_cust[$i]['secondary_customer_id'] =  $second->id;
                $sec_cust[$i]['name'] =  $second->name;
                $sec_appointment = Appointment::where('customer_id','=',$second->id)
                ->where('applicant_type','=','secondary')->first();
