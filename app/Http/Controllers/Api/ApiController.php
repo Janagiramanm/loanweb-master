@@ -143,9 +143,8 @@ class ApiController extends Controller
                     $existingdocs_sec = explode(",", $sec_appointment->docs_ids);
                     $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->whereNotIn('id', $existingdocs_sec)->get();
                }else{
-                    if($second->is_same_address !=1){
+                    
                         $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->get();
-                    }
                    
                }
                 $i++;
