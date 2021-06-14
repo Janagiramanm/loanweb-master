@@ -150,6 +150,12 @@ class ApiController extends Controller
 
         }
 
+        if(!empty($extra_docs)){
+            if(empty($documents)){
+                $documents = $extra_docs;
+            }
+        }
+
         if(!empty($documents)){
             $count = count($documents);
             for($i = 0; $i < $count; $i++){
