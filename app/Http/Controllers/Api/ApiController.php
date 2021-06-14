@@ -87,11 +87,10 @@ class ApiController extends Controller
             }
         }
         else if($type_id==3){
-            $cust_docs = Customer::where('id', '=', $id)->get();
-            print_r($cust_docs);
-            exit;
-            if(isset($cust_docs[0])){
-                $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
+            $cust_docs = Customer::where('id', '=', $id)->first();
+           
+            if($cust_docs){
+                $existingdocs = explode(",", $cust_docs['docs_ids']);
                 $documents = RequiredDoc::where('type_of_doc', '=', 'Bank Visit')->whereNotIn('id', $existingdocs)->get();
             }else{
                 $documents = RequiredDoc::where('type_of_doc', '=', 'Bank Visit')->get();
