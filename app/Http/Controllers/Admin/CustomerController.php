@@ -53,7 +53,7 @@ class CustomerController extends Controller
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 1], ['customers.application_deleted', '=', 0] ])
-                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost','customers.project_name') 
+                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost','customers.project_name','customers.telecallername','customers.created_at') 
                     ->orderBy('cust_id', 'DESC')
                     ->get();
 

@@ -176,7 +176,7 @@ class UserController extends Controller
 
         $username = $request->username;
         $customers = Customer::where('telecallername','=',$username)
-        ->orWhereNull('telecallername')
+        //->orWhereNull('telecallername')
         ->get();
         $builder_name = null;
         $bank_name  = null;

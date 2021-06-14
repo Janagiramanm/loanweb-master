@@ -33,6 +33,8 @@
                     <th>E-Mail</th>
                     <th>Phone</th>
                     <th>Project Name</th>
+                    <th>Telecaller</th>
+                    <th>Date Created</th>
                     <th>Source</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -56,6 +58,8 @@
                            
                              @endphp
                              </td>
+                        <td>{{ $customer->telecallername }}</td>
+                        <td>{{ $customer->created_at }}</td>
                         <td>Dashboard</td>
                         <td class="text-center">
                             <div class="list-icons">
