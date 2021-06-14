@@ -72,9 +72,12 @@ class ApiController extends Controller
             }else{
                 $documents = RequiredDoc::where('occupation_id', '=', $occupation_id )->get();
             }
-        }elseif($type_id  == 4){
+        }
+        
+        elseif($type_id  == 4){
             $documents = ExtaDocs::where('customer_id', '=', $id)->get();
-        }elseif($type_id  == 5 || $type_id  == 6) {
+        }     
+        else if($type_id  == 5 || $type_id  == 6) {
             $cust_docs = Customer::where('id', '=', $id)->get();
             if(isset($cust_docs[0])){
                 $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
@@ -82,8 +85,51 @@ class ApiController extends Controller
             }else{
                 $documents = RequiredDoc::where('type_of_doc', '=', 'Disbursement')->get();
             }
-        }else{
+        }
+        else if($type_id==3){
+            $cust_docs = Customer::where('id', '=', $id)->get();
+            if(isset($cust_docs[0])){
+                $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
+                $documents = RequiredDoc::where('type_of_doc', '=', 'Bank Visit')->whereNotIn('id', $existingdocs)->get();
+            }else{
+                $documents = RequiredDoc::where('type_of_doc', '=', 'Bank Visit')->get();
+            }
+        }
+        else if($type_id==7){
+            $cust_docs = Customer::where('id', '=', $id)->get();
+            if(isset($cust_docs[0])){
+                $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
+                $documents = RequiredDoc::where('type_of_doc', '=', 'Submit Demand')->whereNotIn('id', $existingdocs)->get();
+            }else{
+                $documents = RequiredDoc::where('type_of_doc', '=', 'Submit Demand')->get();
+            }
+        }
+        else if($type_id==8){
+            $cust_docs = Customer::where('id', '=', $id)->get();
+            if(isset($cust_docs[0])){
+                $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
+                $documents = RequiredDoc::where('type_of_doc', '=', 'MODT Drop')->whereNotIn('id', $existingdocs)->get();
+            }else{
+                $documents = RequiredDoc::where('type_of_doc', '=', 'MODT Drop')->get();
+            }
+        }
+        else if($type_id==9){
+            $cust_docs = Customer::where('id', '=', $id)->get();
+            if(isset($cust_docs[0])){
+                $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
+                $documents = RequiredDoc::where('type_of_doc', '=', 'MODT Pickup')->whereNotIn('id', $existingdocs)->get();
+            }else{
+                $documents = RequiredDoc::where('type_of_doc', '=', 'MODT Pickup')->get();
+            }
+        }
+        else{
             $documents = [];
+        }
+
+        $extra =  ExtaDocs::where('customer_id', '=', $id)->get();
+
+        if($extra){
+            $documents['extra_doc'] = $extra;
         }
 
        
