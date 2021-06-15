@@ -300,12 +300,10 @@ class CustomerController extends Controller
                   $pickupAppointments[] = $appointment->customer_id;
             }
         }
-        $pickupCustomers = Customer::where('application_status','=',9)->whereIn('id',$dropCustomer)
+        $pickupCustomers = Customer::whereIn('id',$dropCustomer)
         ->whereNotIn('id',$pickupAppointments)
         ->get();
-        // echo '<pre>';
-        // print_r($pickupCustomers);
-         return view('back-office.customers.modtschedule',compact(['timeslots','typeofappointments','droppedCustomers','pickupCustomers']));
+        return view('back-office.customers.modtschedule',compact(['timeslots','typeofappointments','droppedCustomers','pickupCustomers']));
 
      }
 
