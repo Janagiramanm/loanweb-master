@@ -80,7 +80,7 @@
                         <input type="hidden" name="cust_id" id="cust_id" value="{{ $customer->cust_id }}">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="sanctioned_amount">Sanctioneed Amount:  </label>
+                                <label for="sanctioned_amount">Sanctioned Amount:  </label>
                                 <input type="text" class="form-control @error('sanctioned_amount') is-invalid @enderror" id="sanctioned_amount" name="sanctioned_amount" required value="{{ old('sanctioned_amount') }}">
                                 <label for="sanctioned_amount_txt" id="sanctioned_amount_txt"> </label>
                             </div>
