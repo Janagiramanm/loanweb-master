@@ -272,8 +272,15 @@ class CustomerController extends Controller
                // print_r($modtAppointment);
 
                  //echo $modtAppointment->customer->sanctioned_amount;
-
+            //$agent = User::find($modtAppointment->agent_id)->name;
             $result[$modtAppointment->customer_id][$modtAppointment->type]=$modtAppointment;
+          //  $result[$modtAppointment->customer_id]['agent']=$agent;
+            
+            // echo '<pre>';
+            // print_r($result);
+            // exit;
+            //$result['agent'] = $agent;
+            
 
          }
         

@@ -15,7 +15,7 @@ class ModtAppointment extends Model
     }
 
     public function user(){
-        return $this->hasOne(User::class,'id','created_excutive');
+        return $this->hasOne(User::class,'id','agent_id');
     }
 
     public function timeslot(){
