@@ -202,8 +202,8 @@ class UserController extends Controller
                 }
                 if($project_id){
                     // $project =  BuilderDetail::where('id','=',$project_id)->first();
-                    $project =  Builder::where('id','=',$builder_id)->first()->project_name;
-                    $project_name = isset($project->project_name) ? $project->project_name : null;
+                    $project_name =  Builder::where('id','=',$project_id)->first()->project_name;
+                    //$project_name = isset($project->project_name) ? $project->project_name : null;
                 }
                 if($customer->occupation_id){
                     $occupation = Occupation::where('id','=',$customer->occupation_id)->first()->occupation_name;
