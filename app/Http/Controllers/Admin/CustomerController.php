@@ -54,11 +54,12 @@ class CustomerController extends Controller
         $telecallerName = '';
         $username =  $user->name;
         if($username != 'Admin User'){
-         $telecallerName = " ,['telecallername', '=', $username]";
+         $telecallerName = ['customers.telecallername', '=', $username];
         }
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
-                    ->where([['customers.application_status', '=', 1], ['customers.application_deleted', '=', 0]. $telecallerName])
+                    ->where([['customers.application_status', '=', 1], ['customers.application_deleted', '=', 0],$telecallerName])
+                    
                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost','customers.project_name','customers.telecallername','customers.created_at') 
                     ->orderBy('cust_id', 'DESC')
                     ->get();
