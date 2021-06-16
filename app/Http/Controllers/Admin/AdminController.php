@@ -69,8 +69,8 @@ class AdminController extends Controller
         //$data['login']      = Customer::where('application_status', '=', 4)->where('application_deleted', '=', 0)->count();
         //$data['sanction']   = Customer::where('application_status', '=', 5)->where('application_deleted', '=', 0)->count();
         //$data['disbursed']  = Customer::where('application_status', '=', 9)->where('application_deleted', '=', 0)->count();
-        // $data['all']        = Customer::count();
-        // $data['trash']      = Customer::where('application_deleted', '=', 1)->count();
+        //$data['all']        = Customer::count();
+        //$data['trash']      = Customer::where('application_deleted', '=', 1)->count();
 
         $appointments = DB::table('appointment')
                         ->join('customers', 'customers.id', '=', 'appointment.customer_id')

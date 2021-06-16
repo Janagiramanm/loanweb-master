@@ -163,10 +163,11 @@
 						<li class="nav-item">
                             <a href="{{ url('back-office/builders') }}" class="nav-link <?php if(\Request::is('back-office/builders')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Builders</span></a>
                         </li>
-						@endif
+						
 						<li class="nav-item">
                             <a href="{{ url('back-office/applicationstatus') }}" class="nav-link <?php if(\Request::is('back-office/applicationstatus')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Application Status</span></a>
                         </li>
+						@endif
                         <li class="nav-item nav-item-submenu <?php if(strpos($_SERVER['REQUEST_URI'], 'back-office/customers')) { echo 'nav-item-expanded nav-item-open'; }?>">
                             <a href="#" class="nav-link"><i class="icon-pencil3"></i> <span>Customers</span></a>
                             <ul class="nav nav-group-sub" data-submenu-title="Form components">

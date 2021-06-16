@@ -201,8 +201,9 @@ class UserController extends Controller
                     $branch_name = BankBranch::where('id','=',$branch_id)->first()->branch_name;
                 }
                 if($project_id){
-                    $project =  BuilderDetail::where('id','=',$project_id)->first();
-                    $project_name = isset($project->project_type_name) ? $project->project_type_name : null;
+                    // $project =  BuilderDetail::where('id','=',$project_id)->first();
+                    $project =  Builder::where('id','=',$builder_id)->first()->project_name;
+                    $project_name = isset($project->project_name) ? $project->project_name : null;
                 }
                 if($customer->occupation_id){
                     $occupation = Occupation::where('id','=',$customer->occupation_id)->first()->occupation_name;
