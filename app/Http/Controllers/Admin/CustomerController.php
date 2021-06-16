@@ -53,16 +53,17 @@ class CustomerController extends Controller
         $user = Auth::user();
         $telecallerName = '';
         $username =  $user->name;
-        if($username != 'Admin User'){
-         $telecallerName = ['customers.telecallername', '=', $username];
-        }
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 1], ['customers.application_deleted', '=', 0]])
                     
                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost','customers.project_name','customers.telecallername','customers.created_at') 
-                    ->orderBy('cust_id', 'DESC')
-                    ->get();
+                    ->orderBy('cust_id', 'DESC');
+        if($username != 'Admin User'){
+            $customers->where('customers.telecallername','=',$username);
+        }
+
+         $customers->get();
 
         return view('back-office.customers.newlead', compact('customers') );
     }
