@@ -53,8 +53,9 @@ class CustomerController extends Controller
         $user = Auth::user();
         $telecallerName = '';
         $username =  $user->name;
-        if($username != 'Admin User')
-        $telecallerName = " ,['telecallername', '=', $username]";
+        if($username != 'Admin User'){
+         $telecallerName = " ,['telecallername', '=', $username]";
+        }
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 1], ['customers.application_deleted', '=', 0]. $telecallerName])
