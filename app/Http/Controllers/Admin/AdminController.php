@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Customer;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+
 
 class AdminController extends Controller
 {
@@ -17,13 +19,58 @@ class AdminController extends Controller
     public function index()
     {
         $data = array();
-        $data['newleads']   = Customer::where('application_status', '=', 1)->where('application_deleted', '=', 0)->count();
-        $data['pipeline']   = Customer::where('application_status', '=', 2)->where('application_deleted', '=', 0)->count();
-        $data['login']      = Customer::where('application_status', '=', 4)->where('application_deleted', '=', 0)->count();
-        $data['sanction']   = Customer::where('application_status', '=', 5)->where('application_deleted', '=', 0)->count();
-        $data['disbursed']  = Customer::where('application_status', '=', 9)->where('application_deleted', '=', 0)->count();
-        $data['all']        = Customer::count();
-        $data['trash']      = Customer::where('application_deleted', '=', 1)->count();
+        $user = Auth::user();
+        $username =  $user->name;
+
+        $newlead_query = Customer::where('application_status', '=', 1)->where('application_deleted', '=', 0);
+        if($username != 'Admin User'){
+            $newlead_query->where('telecallername','=',$username);
+        }
+        $data['newleads']   = $newlead_query->count();
+
+        $pipeline = Customer::where('application_status', '=', 2)->where('application_deleted', '=', 0);
+        if($username != 'Admin User'){
+            $pipeline->where('telecallername','=',$username);
+        }
+        $data['pipeline']   = $pipeline->count();
+
+        $login = Customer::where('application_status', '=', 4)->where('application_deleted', '=', 0);
+        if($username != 'Admin User'){
+            $login->where('telecallername','=',$username);
+        }
+        $data['login']   = $login->count();
+
+        $sanction = Customer::where('application_status', '=', 5)->where('application_deleted', '=', 0);
+        if($username != 'Admin User'){
+            $sanction->where('telecallername','=',$username);
+        }
+        $data['sanction']   = $sanction->count();
+
+        $disbursed = Customer::where('application_status', '=', 9)->where('application_deleted', '=', 0);
+        if($username != 'Admin User'){
+            $disbursed->where('telecallername','=',$username);
+        }
+        $data['disbursed']   = $disbursed->count();
+
+        $all = Customer::where('application_deleted', '=', 0);
+        if($username != 'Admin User'){
+            $all->where('telecallername','=',$username);
+        }
+        $data['all']   = $all->count();
+
+        $trash = Customer::where('application_deleted', '=', 1);
+        if($username != 'Admin User'){
+            $trash->where('telecallername','=',$username);
+        }
+        $data['trash']   = $trash->count();
+
+        //$data['newleads']   = Customer::where('application_status', '=', 1)->where('application_deleted', '=', 0)->count();
+        //$data['pipeline']   = Customer::where('application_status', '=', 2)->where('application_deleted', '=', 0)->count();
+        //$data['login']      = Customer::where('application_status', '=', 4)->where('application_deleted', '=', 0)->count();
+        //$data['sanction']   = Customer::where('application_status', '=', 5)->where('application_deleted', '=', 0)->count();
+        //$data['disbursed']  = Customer::where('application_status', '=', 9)->where('application_deleted', '=', 0)->count();
+        // $data['all']        = Customer::count();
+        // $data['trash']      = Customer::where('application_deleted', '=', 1)->count();
 
         $appointments = DB::table('appointment')
                         ->join('customers', 'customers.id', '=', 'appointment.customer_id')

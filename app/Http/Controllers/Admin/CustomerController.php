@@ -224,7 +224,15 @@ class CustomerController extends Controller
     /******* * The func allCustomers will give us  All the customer *********** */
     public function allCustomers()
     {
-        $customers = Customer::all();
+        $user = Auth::user();
+        $telecallerName = '';
+        $username =  $user->name;
+        $query = Customer::where('application_deleted','=',0);
+        if($username != 'Admin User'){
+            $query->where('telecallername','=',$username);
+        }
+        $customers =  $query->get();
+       
         $customer_status = ['1'=>'New Leads','2'=>'Pipeline','3'=>'Send to Bank',
                             '4'=>'Login Process','5'=>'Sanctioned','6'=>'Ready to Disburse',
                             '7'=>'Bank Process','8'=>'Cheque Fixing','9'=>'Disbursed',
