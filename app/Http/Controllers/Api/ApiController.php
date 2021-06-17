@@ -159,7 +159,7 @@ class ApiController extends Controller
         //     }
         // }
 
-        if(!empty($documents)){
+        if(!empty($documents) || !empty($extra_docs)){
             $count = count($documents);
             for($i = 0; $i < $count; $i++){
                 $documents[$i]['checked'] = false;
@@ -175,6 +175,7 @@ class ApiController extends Controller
             ];
             return response()->json( $msg, $this->successStatus);
         }
+
 
         $msg = [
             'status' => 0,
