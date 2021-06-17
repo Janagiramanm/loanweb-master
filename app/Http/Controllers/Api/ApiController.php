@@ -153,11 +153,11 @@ class ApiController extends Controller
 
         }
 
-        if(!empty($extra_docs)){
-            if(empty($documents)){
-                $documents = $extra_docs;
-            }
-        }
+        // if(!empty($extra_docs)){
+        //     if(empty($documents)){
+        //         $documents = $extra_docs;
+        //     }
+        // }
 
         if(!empty($documents)){
             $count = count($documents);
@@ -191,6 +191,8 @@ class ApiController extends Controller
         $doc_ids        = $input['document_ids'];
         $cust_id        = $input['customer_id'];
         $appointment_id = $input['appointment_id'];
+        $sec_cust_id    = $input['secondary_customer_id'];
+        $sec_doc_ids    = $input['secondary_customer_docs'];
         $comment = $input['comment'];
 
         $user = Auth::user();
