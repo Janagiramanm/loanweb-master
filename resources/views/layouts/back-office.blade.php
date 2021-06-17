@@ -25,7 +25,12 @@
     <script src="{{ asset('admin/global_assets/js/main/currencyToWord.js') }}"></script>
 
 </head>
-
+<style>
+.navbar-brand img {
+    height: 2rem;
+    display: block;
+}
+</style>
 <body>
 	<!-- Main navbar -->
 	<div class="navbar navbar-expand-md navbar-dark">
@@ -51,13 +56,13 @@
 				</li>
 			</ul>
 			<span class="navbar-text ml-md-3 mr-md-auto">
-				<span class="badge bg-success">Online</span>
+				
 			</span>
 			<ul class="navbar-nav">
 				<li class="nav-item dropdown dropdown-user">
 					<a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
-						<img src="{{ asset('admin/global_assets/images/placeholders/pic.jpeg') }}" width="38" height="38" class="rounded-circle" alt="">
-						<span>Venkat</span>
+						<img src="{{ asset('admin/global_assets/images/placeholders/pic.png') }}" width="38" height="38" class="rounded-circle" alt="">
+						<span>{{ Auth::user()->name }}</span>
 					</a>
 
 					<div class="dropdown-menu dropdown-menu-right">
@@ -65,9 +70,7 @@
 						<a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
 						<a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span class="badge badge-pill bg-blue ml-auto">58</span></a>
 						<div class="dropdown-divider"></div> --}}
-						<a href="#" class="dropdown-item"><i class="icon-cog5"></i> Change Password</a>
-
-                        <a class="dropdown-item" href="{{ route('logout') }}"
+						<a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();"><i class="icon-switch2"></i>
                             {{ __('Logout') }}
@@ -110,24 +113,24 @@
 				<div class="sidebar-user">
 					<div class="card-body">
 						<div class="media">
-							<div class="mr-3">
+							<!-- <div class="mr-3">
 								<a href="#"><img src="{{ asset('admin/global_assets/images/placeholders/pic.jpeg') }}" width="38" height="38" class="rounded-circle" alt=""></a>
-							</div>
+							</div> -->
 
 							<div class="media-body">
-								<div class="media-title font-weight-semibold">{{ Auth::user()->name }}</div>
-								<div class="font-size-xs opacity-50">
+								<div class="media-title font-weight-semibold">Hello, {{ Auth::user()->name }}</div>
+								<!-- <div class="font-size-xs opacity-50">
 									<i class="icon-pin font-size-sm"></i> &nbsp;{{ Auth::user()->address }}
-								</div>
+								</div> -->
 							</div>
 
-							<div class="ml-3 align-self-center">
+							<!-- <div class="ml-3 align-self-center">
 								<a href="#" class="text-white"><i class="icon-cog3"></i></a>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
-				<!-- /user menu -->
+				 <!--//user menu -->
 
 
 				<!-- Main navigation -->
@@ -135,7 +138,7 @@
 					<ul class="nav nav-sidebar" data-nav-type="accordion">
 
 						<!-- Main -->
-						<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
+						<!-- <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li> -->
 						<li class="nav-item">
 							<a href="{{ url("back-office/") }}" class="nav-link <?php if(\Request::is('back-office')){ echo 'active'; } ?>">
 								<i class="icon-home4"></i>
@@ -278,7 +281,8 @@
 		</div>
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text ml-lg-auto">
-				&copy; {{ date('Y') }} <a href="#">scopo</a> by <a href="" target="_blank">Venkat Reddy</a>
+				&copy; {{ date('Y') }} <a href="http://loandarbar.in/"><b>LDFSL</b></a> - Loan Darbar Financial Services Pvt. Ltd.
+				<!-- &copy; {{ date('Y') }} <a href="#">LDFSL</a> by <a href="" target="_blank">Venkat Reddy</a> -->
 			</span>
 		</div>
 	</div>

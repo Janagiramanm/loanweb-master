@@ -91,9 +91,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-form-label">Income from Intrest / Dividend</label>
+                                    <label class="col-form-label">Income from Interest / Dividend</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="interestDividend1" class="form-control" placeholder="Income from Intrest / Dividend">
+                                        <input type="text" name="interestDividend1" class="form-control" placeholder="Income from Interest / Dividend">
                                     </div>
                                 </div>
 
@@ -236,9 +236,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-form-label">Income from Intrest / Dividend</label>
+                                    <label class="col-form-label">Income from Interest / Dividend</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="interestDividend1" class="form-control" placeholder="Income from Intrest / Dividend">
+                                        <input type="text" name="interestDividend1" class="form-control" placeholder="Income from Interest / Dividend">
                                     </div>
                                 </div>
 
@@ -377,9 +377,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-form-label">Income from Intrest / Dividend</label>
+                                    <label class="col-form-label">Income from Interest / Dividend</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="interestDividend2" class="form-control" placeholder="Income from Intrest / Dividend">
+                                        <input type="text" name="interestDividend2" class="form-control" placeholder="Income from Interest / Dividend">
                                     </div>
                                 </div>
 
@@ -521,9 +521,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-form-label">Income from Intrest / Dividend</label>
+                                    <label class="col-form-label">Income from Interest / Dividend</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="interestDividend1" class="form-control" placeholder="Income from Intrest / Dividend">
+                                        <input type="text" name="interestDividend1" class="form-control" placeholder="Income from Interest / Dividend">
                                     </div>
                                 </div>
 
@@ -662,9 +662,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-form-label">Income from Intrest / Dividend</label>
+                                    <label class="col-form-label">Income from Interest / Dividend</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="interestDividend2" class="form-control" placeholder="Income from Intrest / Dividend">
+                                        <input type="text" name="interestDividend2" class="form-control" placeholder="Income from Interest / Dividend">
                                     </div>
                                 </div>
 
@@ -803,9 +803,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-form-label">Income from Intrest / Dividend</label>
+                                    <label class="col-form-label">Income from Interest / Dividend</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="interestDividend3" class="form-control" placeholder="Income from Intrest / Dividend">
+                                        <input type="text" name="interestDividend3" class="form-control" placeholder="Income from Interest / Dividend">
                                     </div>
                                 </div>
 
@@ -886,9 +886,9 @@
                                 @if ($input['cibilScore'] > 800 || $input['company'] != '' || $input['buyCompany'] != '')
 
                                     <div class="form-group row">
-                                        <label class="col-lg-3 col-form-label">Rate Of Intrest</label>
+                                        <label class="col-lg-3 col-form-label">Rate Of Interest</label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="rateOfIntrest" value="{{$input['interest']}}"  class="form-control" placeholder="Rate Of Intrest">
+                                            <input type="text" name="rateOfInterest" value="{{$input['interest']}}"  class="form-control" placeholder="Rate Of Interest">
                                         </div>
                                     </div>
 
@@ -897,7 +897,7 @@
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label">Rate Of Interest</label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="rateOfIntrest" value="9.15"  class="form-control" placeholder="Rate Of Intrest">
+                                            <input type="text" name="rateOfInterest" value="9.15"  class="form-control" placeholder="Rate Of Interest">
                                         </div>
                                     </div>
 
