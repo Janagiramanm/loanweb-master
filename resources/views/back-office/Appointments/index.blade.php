@@ -48,7 +48,14 @@
                                     <td>{{ $appointment->status }}</td>
                                     <td>{{ $appointment->appointment_name }}</td>
                                     <td>{{ $appointment->telecallername }}</td>
-                                    <td>{{ $appointment->appointment_date }} {{ $appointment->time_slot }}</td>
+                                    <td>
+                                    @php
+                                      if($appointment->appointment_date !=''){
+                                        echo date('d-m-Y', strtotime($appointment->appointment_date));
+                                      }
+                                     @endphp
+                                    
+                                    {{ $appointment->time_slot }}</td>
                                     <td>
                                      @php
                                       if($appointment->start_time !=''){
