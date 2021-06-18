@@ -190,8 +190,8 @@ class ApiController extends Controller
         $doc_ids        = $input['document_ids'];
         $cust_id        = $input['customer_id'];
         $appointment_id = $input['appointment_id'];
-        $sec_cust_id    = $input['secondary_customer_id'];
-        $sec_doc_ids    = $input['secondary_customer_docs'];
+       // $sec_cust_id    = $input['secondary_customer_id'];
+       // $sec_doc_ids    = $input['secondary_customer_docs'];
         $comment = $input['comment'];
 
         $user = Auth::user();
