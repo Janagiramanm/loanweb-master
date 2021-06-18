@@ -879,9 +879,7 @@ class CustomerController extends Controller
         $input = $request->all();
         $customer = Customer::find($id);
  
-        // echo '<pre>';
-        // print_r($input);
-        // exit;
+       
         try {
             $customer = Customer::where('id', '=', $id)->update([
                 'cust_name'             => $input['cust_name'],
@@ -901,7 +899,8 @@ class CustomerController extends Controller
                 'telecallername'        => Auth::user()->name,
                 'applied_loan_amount'   => $input['applied_loan_amount'],
                 'emp_id'                => isset($input['appointment_agent']) ? $input['appointment_agent'] : $customer->emp_id ,
-                'application_status'    => isset($input['sentToBank']) == 1 ? 4 : 3
+                'application_status'    => isset($input['sentToBank']) == 1 ? 4 : 3,
+                'file_no'               => $input['file_number']
             ]);
 
             if(isset($input['interested'])  && isset($input['appointment_date'])){
