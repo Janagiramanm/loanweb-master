@@ -1,7 +1,7 @@
 @extends('layouts.back-office')
 
 @section('parent_link')
-    <a href="{{ url('back-office/customers/customers') }}" class="breadcrumb-item"> View </a>
+    <a href="{{ url('back-office/customers/disbursedapplications') }}" class="breadcrumb-item"> Disbursed Customers </a>
 @endsection
 
 @section('breadcrum')
