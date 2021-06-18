@@ -32,8 +32,9 @@
                                 <th>Customer Type</th>
                                 <th>Appointment Type</th>
                                 <th>Telecaller</th>
-                                <th>Date</th>
-                                <th>Time</th>
+                                <th>Appointment Date</th>
+                                <th>Start</th>
+                                <th>End</th>
                                 <th></th>
                                
                                 
@@ -47,8 +48,9 @@
                                     <td>{{ $appointment->status }}</td>
                                     <td>{{ $appointment->appointment_name }}</td>
                                     <td>{{ $appointment->telecallername }}</td>
-                                    <td>{{ $appointment->appointment_date }}</td>
-                                    <td>{{ $appointment->time_slot }}</td>
+                                    <td>{{ $appointment->appointment_date }} {{ $appointment->time_slot }}</td>
+                                    <td>{{ $appointment->start_time }}</td>
+                                    <td>{{ $appointment->stop_time }}</td>
                                     <td>
                                         <div class="list-icons">
                                             <div class="dropdown">
