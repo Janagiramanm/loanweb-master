@@ -49,8 +49,21 @@
                                     <td>{{ $appointment->appointment_name }}</td>
                                     <td>{{ $appointment->telecallername }}</td>
                                     <td>{{ $appointment->appointment_date }} {{ $appointment->time_slot }}</td>
-                                    <td>{{ $appointment->start_time }}</td>
-                                    <td>{{ $appointment->stop_time }}</td>
+                                    <td>
+                                     @php
+                                      if($appointment->start_time !=''){
+                                        echo date('d-m-Y h:i A', strtotime($appointment->start_time));
+                                      }
+                                       
+                                     @endphp
+                                    </td>
+                                    <td>
+                                     @php
+                                     if($appointment->stop_time !=''){
+                                       echo date('d-m-Y h:i A', strtotime($appointment->stop_time));
+                                     }
+                                     @endphp
+                                    </td>
                                     <td>
                                         <div class="list-icons">
                                             <div class="dropdown">
