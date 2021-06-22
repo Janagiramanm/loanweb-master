@@ -776,12 +776,12 @@
 										<span class="input-group-prepend">
 											<span class="input-group-text"><i class="icon-calendar5"></i></span>
 										</span>
-										<input type="text" class="form-control pickadate-limits" placeholder="Select Date" name="secondary_appointment_date" id="secondary_datepicker" required>
+										<input type="text" class="form-control pickadate-limits" placeholder="Select Date" name="secondary_appointment_date" id="secondary_datepicker" >
 									</div>
 								</div>
                                 <div class="form-group col-md-6">
                                     <label for="appointment_time">Time</label>
-                                    <select name="secondary_appointment_time" id="secondary_appointment_time" class="form-control" required>
+                                    <select name="secondary_appointment_time" id="secondary_appointment_time" class="form-control" >
                                         <option value="">Select Time</option>
                                         @foreach ($timeslots as $time)
                                             <option value="{{ $time->id }}"> {{ $time->time_slot }} </option>
@@ -797,7 +797,7 @@
                             <div  class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="type_of_appointment">Appointment Type</label>
-                                    <select name="type_of_appointment" id="type_of_appointment" class="form-control" required>
+                                    <select name="type_of_appointment" id="type_of_appointment" class="form-control" >
                                         <option value="">Select Appointment Type</option>
                                         @foreach ($typeofappointments as $type)
                                             <option value="{{ $type->id }}"> {{ $type->appointment_name }} </option>
@@ -806,7 +806,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="appointment_agent">Agent Name</label>
-                                    <select name="secondary_appointment_agent" id="secondary_appointment_agent" class="form-control" required></select>
+                                    <select name="secondary_appointment_agent" id="secondary_appointment_agent" class="form-control" ></select>
                                 </div>
                             </div>
                            
