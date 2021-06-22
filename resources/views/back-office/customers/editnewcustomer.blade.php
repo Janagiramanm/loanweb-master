@@ -868,14 +868,11 @@
 
         $("#secondary-applicant-same-add").click(function(){
             if ($(this).is(":checked")) {
-               /// var cust_addres = $("#cust_address").val();
+            
                 $("#secondary_cust_address").val($("#cust_address").val());
                 $("#secondary_cust_city").val($("#cust_city").val());
                 $("#secondary_cust_pincode").val($("#cust_pincode").val());
               
-                // $("#secondary_appointment_time").removeAttribute('required');​​​​​
-                // $("#type_of_appointment").prop('required','');​​​​​​​​​
-                // $("#secondary_appointment_agent").prop('required',false);​​​​​
                 $("#secondary-appointment-section").hide();
                 
             }else{
