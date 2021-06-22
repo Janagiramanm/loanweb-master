@@ -25,7 +25,7 @@
                 </div>
             </div>
 
-            <table class="table datatable-show-all">
+            <table class="table datatable-pagination">
                 <thead>
                 <tr>
                     <th>#</th>
