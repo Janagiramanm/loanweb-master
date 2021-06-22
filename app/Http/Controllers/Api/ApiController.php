@@ -154,6 +154,27 @@ class ApiController extends Controller
 
             }
         }
+        if($input['applicant_type']=='both'){
+            $secondary = SecondaryApplicant::where('customer_id','=', $id)->get();
+                           
+              if($secondary){
+                  $i=0;
+                  foreach($secondary as $second){
+                  $sec_cust[$i]['secondary_customer_id'] =  $second->id;
+                  $sec_cust[$i]['name'] =  $second->name;
+                  $sec_appointment = Appointment::where('customer_id','=',$second->id)
+                  ->where('applicant_type','=','secondary')->first();
+                  if(isset($sec_appointment->docs_ids) != ''){
+                          $existingdocs_sec = explode(",", $sec_appointment->docs_ids);
+                          $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->whereNotIn('id', $existingdocs_sec)->get();
+                  }else{
+                          $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->get();
+                  }
+                      $i++;
+                  }
+  
+              }
+          }
 
         // if(!empty($extra_docs)){
         //     if(empty($documents)){
