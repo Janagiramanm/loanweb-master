@@ -113,6 +113,9 @@
          $('#submit_delete_form_btn').click(function(){
             $("#submit_delte_form").submit();
          })
+         $('#DataTables_Table_0').dataTable( {
+            "autoWidth": false
+        });
        // $("#submit_delte_form").submit();
     })
 
