@@ -25,7 +25,7 @@
                 </div>
             </div>
 
-            <table class="table " id="newleads">
+            <table class="table datatable-pagination">
                 <thead>
                 <tr>
                     <th>#</th>
@@ -133,7 +133,7 @@
 
 @section('custom-script')
 <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
-    <!-- <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script> -->
+    <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
     <script>
     $(document).ready(function() {
         $("#submit_exce_form_btn").on("click",function() {
@@ -158,9 +158,7 @@
          $('#submit_delete_form_btn').click(function(){
             $("#submit_delte_form").submit();
          })
-        //  $('#newleads').dataTable( {
-        //     "autoWidth": false
-        // });
+        
     })
 
     </script>
