@@ -25,6 +25,7 @@ class CreateSecondaryApplicantsTable extends Migration
             $table->string('zipcode')->nullable();
             $table->string('cust_type')->nullable();
             $table->string('is_same_address')->nullable();
+            $table->string('docs_ids')->nullable();
             $table->timestamps();
         });
     }

@@ -451,6 +451,9 @@ class CustomerController extends Controller
     public function updatenewcustomer(Request $request, $id)
     {
         $input = $request->all();
+        // echo '<pre>';
+        // print_r($input);
+        // exit;
        
         try {
             if(isset($input['interested'])){
@@ -540,9 +543,35 @@ class CustomerController extends Controller
                 }
             }
           
+            $app_type = 1;
             if(isset($input['interested'])  && $input['interested'] == 1){
 
-               // echo $input['cust_phone'];exit;
+            //    echo $input['cust_phone'];
+               if(isset($input['secondary_id']) !=''){
+                $secCustomers = [];
+                   foreach($input['secondary_id'] as $key => $second_cust_id){
+                      $secondaryCust =  SecondaryApplicant::where('id','=',$second_cust_id)->first();
+                      if($secondaryCust->is_same_address == 1){
+                          $secCustomers[] = $second_cust_id;
+                      }
+                   }
+               
+                    $secondCustomers =  implode(',',$secCustomers);
+                    $app_type = 0;
+                    $appointment = Appointment::create([
+                        'agent_id'          => $input['appointment_agent'],
+                        'customer_id'       => $id,
+                        'second_customer_id' =>$secondCustomers,
+                        'appointment_date'  => date('Y-m-d', strtotime($input['appointment_date'])),
+                        'timeslot_id'       => $input['appointment_time'],
+                        'created_excutive'  => Auth::user()->id,
+                        'status'            => 1,
+                        'appointmenttype_id'=> $input['type_of_appointment'],
+                        'applicant_type'=> 'both'
+                    ]);
+                
+               }
+               if($app_type == 1){
                 $appointment = Appointment::create([
                     'agent_id'          => $input['appointment_agent'],
                     'customer_id'       => $id,
@@ -551,8 +580,10 @@ class CustomerController extends Controller
                     'created_excutive'  => Auth::user()->id,
                     'status'            => 1,
                     'appointmenttype_id'=> $input['type_of_appointment'],
-                    'applicant_type'=> 'normal'
+                    'applicant_type'=> 'primary'
                 ]);
+               }
+               
 
 
                 $customers = DB::table('customers')
@@ -912,7 +943,8 @@ class CustomerController extends Controller
                     'timeslot_id'       => $input['appointment_time'],
                     'created_excutive'  => Auth::user()->id,
                     'status'            => 1,
-                    'appointmenttype_id'=> $input['type_of_appointment']
+                    'appointmenttype_id'=> $input['type_of_appointment'],
+                    'applicant_type' => 'primary'
                 ]);
 
                 $customers = DB::table('customers')

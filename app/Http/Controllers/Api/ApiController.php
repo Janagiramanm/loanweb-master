@@ -64,14 +64,18 @@ class ApiController extends Controller
         $id = $input['cust_id'];
         $type_id = $input['ap_type_id'];
         $occupation_id = $input['occupation_id'];
+        $applicant_type = $input['applicant_type'];
         $extra_docs = [];
+        $documents = [];
         if($type_id  == 1 ||  $type_id  == 2){
-            $cust_docs = Customer::where('id', '=', $id)->get();
-            if(isset($cust_docs[0])){
-                $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
-                $documents = RequiredDoc::where('occupation_id', '=', $occupation_id )->whereNotIn('id', $existingdocs)->get();
-            }else{
-                $documents = RequiredDoc::where('occupation_id', '=', $occupation_id )->get();
+            if($applicant_type!='secondary'){
+                $cust_docs = Customer::where('id', '=', $id)->get();
+                if(isset($cust_docs[0])){
+                    $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
+                    $documents = RequiredDoc::where('occupation_id', '=', $occupation_id )->whereNotIn('id', $existingdocs)->get();
+                }else{
+                    $documents = RequiredDoc::where('occupation_id', '=', $occupation_id )->get();
+                }
             }
         }
         
@@ -128,27 +132,27 @@ class ApiController extends Controller
         }  
 
         //$extra_docs = ExtaDocs::where('customer_id', '=', $id)->get();
-
-       
-        $secondary = SecondaryApplicant::where('customer_id','=', $id)->get();
-       
         $sec_cust = [];
-        if($secondary){
-            $i=0;
-            foreach($secondary as $second){
-               $sec_cust[$i]['secondary_customer_id'] =  $second->id;
-               $sec_cust[$i]['name'] =  $second->name;
-               $sec_appointment = Appointment::where('customer_id','=',$second->id)
-               ->where('applicant_type','=','secondary')->first();
-               if(isset($sec_appointment->docs_ids) != ''){
-                    $existingdocs_sec = explode(",", $sec_appointment->docs_ids);
-                    $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->whereNotIn('id', $existingdocs_sec)->get();
-               }else{
-                     $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->get();
-               }
-                $i++;
-            }
+        if($input['applicant_type']=='secondary'){
+          $secondary = SecondaryApplicant::where('id','=', $id)->get();
+                         
+            if($secondary){
+                $i=0;
+                foreach($secondary as $second){
+                $sec_cust[$i]['secondary_customer_id'] =  $second->id;
+                $sec_cust[$i]['name'] =  $second->name;
+                $sec_appointment = Appointment::where('customer_id','=',$second->id)
+                ->where('applicant_type','=','secondary')->first();
+                if(isset($sec_appointment->docs_ids) != ''){
+                        $existingdocs_sec = explode(",", $sec_appointment->docs_ids);
+                        $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->whereNotIn('id', $existingdocs_sec)->get();
+                }else{
+                        $sec_cust[$i]['documents']= RequiredDoc::where('occupation_id', '=', $second->occupation_id )->get();
+                }
+                    $i++;
+                }
 
+            }
         }
 
         // if(!empty($extra_docs)){
@@ -157,11 +161,21 @@ class ApiController extends Controller
         //     }
         // }
 
-        if(!empty($documents) || !empty($extra_docs)){
-            $count = count($documents);
-            for($i = 0; $i < $count; $i++){
-                $documents[$i]['checked'] = false;
+        if(!empty($documents) || !empty($sec_cust) || !empty($extra_docs)){
+           
+            if(isset($documents)!=''){
+                $count = count($documents);
+                for($i = 0; $i < $count; $i++){
+                    $documents[$i]['checked'] = false;
+                }
             }
+            // if(isset($sec_cust[$i]['documents'])!=''){
+            //     $count = count($sec_cust[$i]['documents']);
+            //     for($i = 0; $i < $count; $i++){
+            //         $sec_cust[$i]['checked'] = false;
+            //     }
+            // }
+           
             $msg = [
                 'status' => 1,
                 'customer' =>[
@@ -190,17 +204,23 @@ class ApiController extends Controller
         $doc_ids        = $input['document_ids'];
         $cust_id        = $input['customer_id'];
         $appointment_id = $input['appointment_id'];
+        $appointment_type = $input['appointment_type'];
        // $sec_cust_id    = $input['secondary_customer_id'];
        // $sec_doc_ids    = $input['secondary_customer_docs'];
         $comment = $input['comment'];
+
 
         $user = Auth::user();
         $user_id =  $user->id;
 
         try{
-           
             $send_docs = explode(',',$doc_ids);
-            $customer = Customer::find($cust_id);
+            if($appointment_type == 'secondary'){
+                $customer = SecondaryApplicant::find($cust_id);
+            }
+            if($appointment_type != 'secondary'){
+                $customer = Customer::find($cust_id);
+            }
             $req_documents = RequiredDoc::where('occupation_id', '=', $customer->occupation_id)->get();
             if($req_documents){
                 foreach($req_documents as $req_doc){
@@ -209,28 +229,75 @@ class ApiController extends Controller
                 
             }
             $appointments = Appointment::find($appointment_id);
-            $collected_docs =  explode(',',$appointments->docs_ids);
-            $docs_to_update = array_diff($send_docs, $collected_docs);
-           
-           if(!empty($docs_to_update)){
-                $docs_to_update_val = implode(',',$docs_to_update);
-                $appointments->docs_ids .= $appointments->docs_ids ? ','.$docs_to_update_val: $docs_to_update_val ;
-                $appointments->comments = $comment;
-                $appointments->status = 0;
-                $appointments->save();
+                  
+                if($appointment_type == 'primary'){
+                   $collected_docs =  explode(',',$appointments->docs_ids);
+                }
+                if($appointment_type == 'secondary' ){
+                   $collected_docs =  explode(',',$customer->docs_ids);
+                }
+                if($appointment_type !='both'){
+                    $docs_to_update = array_diff($send_docs, $collected_docs);
             
-                $customer->docs_ids .=  $customer->docs_ids ? ','.$docs_to_update_val : $docs_to_update_val;
-                $customer->save();
+                    if(!empty($docs_to_update)){
+                            $docs_to_update_val = implode(',',$docs_to_update);
+                            $appointments->docs_ids .= $appointments->docs_ids ? ','.$docs_to_update_val: $docs_to_update_val ;
+                            $appointments->comments = $comment;
+                            $appointments->status = 0;
+                            $appointments->save();
+                        
+                            
+                              $customer->docs_ids .=  $customer->docs_ids ? ','.$docs_to_update_val : $docs_to_update_val;
+                              $customer->save();
+                           
+                    }
+                    $final_docs = explode(',',$appointments->docs_ids);
+                    $missing_docs = array_diff($required_doc, $final_docs);
+                    if(empty($missing_docs)){
+                            $appointments->status = 0;
+                            $appointments->save();
+                    }
+                }
+                if($appointment_type == 'both'){
+                    if($input['customer_id'] != ''){
+                            $collected_docs =  explode(',',$appointments->docs_ids);
+                            $docs_to_update = array_diff($send_docs, $collected_docs);
+                            if(!empty($docs_to_update)){
+                                    $docs_to_update_val = implode(',',$docs_to_update);
+                                    $appointments->docs_ids .= $appointments->docs_ids ? ','.$docs_to_update_val: $docs_to_update_val ;
+                                    $appointments->comments = $comment;
+                                    $appointments->status = 0;
+                                    $appointments->save();
+                                
+                                    $customer->docs_ids .=  $customer->docs_ids ? ','.$docs_to_update_val : $docs_to_update_val;
+                                    $customer->save();
+                            }
+                            $final_docs = explode(',',$appointments->docs_ids);
+                            $missing_docs = array_diff($required_doc, $final_docs);
+                            if(empty($missing_docs)){
+                                    $appointments->status = 0;
+                                    $appointments->save();
+                            }
+                    }
+                    if($input['second_customer_id']!=''){
+                        foreach($input['second_customer_id'] as $key => $secondCustId){
 
-           }
-           $final_docs = explode(',',$appointments->docs_ids);
-           $missing_docs = array_diff($required_doc, $final_docs);
-       
-           if(empty($missing_docs)){
-                $appointments->status = 0;
-                $appointments->save();
-            }
-      
+                            $sCustomer = SecondaryApplicant::find($secondCustId);
+                            $collected_docs = explode(',',$sCustomer->docs_ids);
+                            $send_docs = explode(',',$input['second_doc_ids'][$secondCustId]);
+                            $docs_to_update = array_diff($send_docs, $collected_docs);
+                            if(!empty($docs_to_update)){
+                                $docs_to_update_val = implode(',',$docs_to_update);
+                                $sCustomer->docs_ids .=  $sCustomer->docs_ids ? ','.$docs_to_update_val : $docs_to_update_val;
+                                $sCustomer->save();
+                            }
+                           
+                        }
+                    }
+
+                }
+               
+            
             return response()->json(['status'=>1,'message' => "Documents Submitted Successfully!"], $this->successStatus);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], $this->successStatus);
@@ -320,7 +387,10 @@ class ApiController extends Controller
 
         $appointments = Appointment::where('agent_id','=',$user_id)
         ->where('appointmenttype_id','=',$appointmenttype_id)
-        ->where('status','=',1)->get();   
+        ->where('status','=',1)->get();  
+        // echo '<pre>';
+        // print_r($appointments);
+        // exit; 
         $result = [];
         if(!$appointments->isEmpty()){
             
@@ -329,36 +399,66 @@ class ApiController extends Controller
             // print_r($appointments);//exit;
             foreach($appointments as $appointment){
 
-                 $customer = Customer::where('id','=',$appointment->customer_id)->first();
-                 $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
-
-                
-               
-                $result[$i]['customer_id'] = $customer->id;
-                $result[$i]['name'] = $customer->cust_name;
-                $result[$i]['mobile'] = $customer->cust_phone;
-                $result[$i]['occupation_id'] = $occupation->id;
-                $result[$i]['occupation_name'] = $occupation->occupation_name;
-                $result[$i]['appointment_date'] = $appointment->appointment_date;
-                $result[$i]['applicant_type'] = $appointment->applicant_type;
-                $result[$i]['appointment_id'] = $appointment->id;
-                $result[$i]['start_flag'] = "true";
-                if($appointment->start_time != ''){
-                    $result[$i]['start_flag'] = "false";
+                if($appointment->applicant_type!='secondary'){
+                    $customer = Customer::where('id','=',$appointment->customer_id)->first();
+                    $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
+                    $result[$i]['customer_id'] = $customer->id;
+                    $result[$i]['name'] = $customer->cust_name;
+                    $result[$i]['mobile'] = $customer->cust_phone;
+                    $result[$i]['occupation_id'] = $occupation->id;
+                    $result[$i]['occupation_name'] = $occupation->occupation_name;
+                    $result[$i]['appointment_date'] = $appointment->appointment_date;
+                    $result[$i]['applicant_type'] = $appointment->applicant_type;
+                    $result[$i]['appointment_id'] = $appointment->id;
+                    $result[$i]['start_flag'] = "true";
+                    if($appointment->start_time != ''){
+                        $result[$i]['start_flag'] = "false";
+                    }
                 }
-
-                if($appointment->applicant_type == 'secondary'){
-                    $secondary = SecondaryApplicant::where('id','=',$appointment->second_customer_id)->first();
-                    $result[$i]['customer_id'] = $secondary->id;
-                    $result[$i]['name'] = $secondary->name;
-                    $result[$i]['mobile'] = $secondary->phone;
-                    $result[$i]['occupation_id'] = $secondary->occupation_id;
+                if($appointment->applicant_type=='secondary'){
+                   // echo $appointment->customer_id;exit;
+                    $sec_customer = SecondaryApplicant::where('id','=',$appointment->second_customer_id)->first();
+                    $occupation = Occupation::where('id','=', $sec_customer->occupation_id)->first();
+                    $result[$i]['customer_id'] = $sec_customer->id;
+                    $result[$i]['name'] = $sec_customer->name;
+                    $result[$i]['mobile'] = $sec_customer->phone;
+                    $result[$i]['occupation_id'] = $occupation->id;
                     $result[$i]['occupation_name'] = $occupation->occupation_name;
                     $result[$i]['appointment_date'] = $appointment->appointment_date;
                     $result[$i]['applicant_type'] = $appointment->applicant_type;
                     $result[$i]['appointment_id'] = $appointment->id;
                 }
-
+                if($appointment->applicant_type=='both'){
+                        if($appointment->second_customer_id!=''){
+                            
+                            $sCustIds = explode(',',$appointment->second_customer_id);
+                            $secondary = SecondaryApplicant::whereIn('id',$sCustIds)->get();
+                        
+                            if($secondary){
+                                foreach($secondary as $ss => $second){
+                                    $sec_occupation = Occupation::where('id','=', $second->occupation_id)->first();
+                                    // $result['secondary'][$ss]['customer_id'] = $second->id;
+                                    // $result['secondary'][$ss]['name'] = $second->name;
+                                    // $result['secondary'][$ss]['mobile'] = $second->phone;
+                                    // $result['secondary'][$ss]['occupation_id'] = $second->occupation_id;
+                                    // $result['secondary'][$ss]['occupation_name'] = $sec_occupation->occupation_name;
+                                    // $result['secondary'][$ss]['appointment_date'] = $appointment->appointment_date;
+                                    // $result['secondary'][$ss]['applicant_type'] = $appointment->applicant_type;
+                                    // $result['secondary'][$ss]['appointment_id'] = $appointment->id;
+                                    $result[$i]['secondary'][$ss]['customer_id'] = $second->id;
+                                    $result[$i]['secondary'][$ss]['name'] = $second->name;
+                                    $result[$i]['secondary'][$ss]['mobile'] = $second->phone;
+                                    $result[$i]['secondary'][$ss]['occupation_id'] = $second->occupation_id;
+                                    $result[$i]['secondary'][$ss]['occupation_name'] = $sec_occupation->occupation_name;
+                                    $result[$i]['secondary'][$ss]['appointment_date'] = $appointment->appointment_date;
+                                    $result[$i]['secondary'][$ss]['applicant_type'] = $appointment->applicant_type;
+                                    $result[$i]['secondary'][$ss]['appointment_id'] = $appointment->id;
+                                }
+                            }
+                                
+                        }
+                }
+              
                 $i++;
             }
             $msg =[
