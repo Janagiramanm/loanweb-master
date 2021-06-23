@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table datatable-save-state">
+            <table class="table datatable-pagination">
                 <thead>
                     <tr>
                         <th>#</th>
