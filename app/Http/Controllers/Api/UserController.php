@@ -212,7 +212,7 @@ class UserController extends Controller
                 $secondary_customers = SecondaryApplicant::where('customer_id','=', $customer->id)->get();
 
                 $result[$i]['customer_name'] = $customer->cust_name;
-                $result[$i]['customer_phone'] = $customer->cust_phone;
+                $result[$i]['customer_phone'] = str_replace('/', ',', $customer->cust_phone);
                 $result[$i]['buying_door_no'] = $customer->buying_door_no;
                 $result[$i]['builder_id'] = $builder_id;
                 $result[$i]['builder_name'] = $builder_name;
