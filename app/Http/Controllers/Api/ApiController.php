@@ -413,6 +413,7 @@ class ApiController extends Controller
         // print_r($appointments);
         // exit; 
         $result = [];
+        
         if(!$appointments->isEmpty()){
             
             $i=0;
@@ -454,7 +455,7 @@ class ApiController extends Controller
                             
                             $sCustIds = explode(',',$appointment->second_customer_id);
                             $secondary = SecondaryApplicant::whereIn('id',$sCustIds)->get();
-                        
+                            $result[$i]['secondary']=[];
                             if($secondary){
                                 foreach($secondary as $ss => $second){
                                     $sec_occupation = Occupation::where('id','=', $second->occupation_id)->first();
