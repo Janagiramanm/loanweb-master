@@ -420,7 +420,7 @@ class ApiController extends Controller
             // echo '<pre>';
             // print_r($appointments);//exit;
             foreach($appointments as $appointment){
-                $result[$i]['secondary']=[];
+               // $result[$i]['secondary']=[];
                 if($appointment->applicant_type!='secondary'){
                     $customer = Customer::where('id','=',$appointment->customer_id)->first();
                     $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
@@ -436,6 +436,7 @@ class ApiController extends Controller
                     if($appointment->start_time != ''){
                         $result[$i]['start_flag'] = "false";
                     }
+                    $result[$i]['secondary']=[];
                 }
                 if($appointment->applicant_type=='secondary'){
                    // echo $appointment->customer_id;exit;
@@ -449,6 +450,7 @@ class ApiController extends Controller
                     $result[$i]['appointment_date'] = $appointment->appointment_date;
                     $result[$i]['applicant_type'] = $appointment->applicant_type;
                     $result[$i]['appointment_id'] = $appointment->id;
+                    $result[$i]['secondary']=[];
                 }
                 if($appointment->applicant_type=='both'){
                         if($appointment->second_customer_id!=''){
