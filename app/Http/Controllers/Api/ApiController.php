@@ -420,7 +420,7 @@ class ApiController extends Controller
             // echo '<pre>';
             // print_r($appointments);//exit;
             foreach($appointments as $appointment){
-
+                $result[$i]['secondary']=[];
                 if($appointment->applicant_type!='secondary'){
                     $customer = Customer::where('id','=',$appointment->customer_id)->first();
                     $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
@@ -455,7 +455,7 @@ class ApiController extends Controller
                             
                             $sCustIds = explode(',',$appointment->second_customer_id);
                             $secondary = SecondaryApplicant::whereIn('id',$sCustIds)->get();
-                            $result[$i]['secondary']=[];
+                            
                             if($secondary){
                                 foreach($secondary as $ss => $second){
                                     $sec_occupation = Occupation::where('id','=', $second->occupation_id)->first();
