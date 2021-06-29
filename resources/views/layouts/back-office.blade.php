@@ -26,11 +26,31 @@
 
 </head>
 <style>
-.navbar-brand img {
-    height: 2rem;
-    display: block;
-}
-</style>
+		.navbar-brand img {
+			height: 2rem;
+			display: block;
+		}
+		.navbar-dark {
+   
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 9999;
+		}
+		.page-content {
+				
+				margin-top: 4%;
+		}
+		</style>
+		@if (!auth()->user()->isAdmin())
+		<style>
+		.sidebar-expand-md:not(.sidebar-component):not(.sidebar-fixed) .sidebar-content {
+
+			position:fixed;
+		}
+   		 </style>
+		@endif
+	</style>
 <body>
 	<!-- Main navbar -->
 	<div class="navbar navbar-expand-md navbar-dark">
@@ -332,7 +352,7 @@
 
     @show
 
-
+   
 
 </body>
 </html>
