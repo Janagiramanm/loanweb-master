@@ -46,26 +46,34 @@
                     @foreach($result as $key =>  $res)
                        <tr>
                          <td>{{ $i }}</td>
-                        @foreach($res as $type => $value)
-                            @if($type == 'drop')
+                        @foreach($result[$key]['drop'] as $value)
+                           
                                 <td>{{ $value->customer->cust_name }}</td>
                                 <td>{{ $value->customer->bank['bank_name'] }}</td>
                                 <td>{{ $value->modt_amount }}</td>
                                 <td>{{ $value->customer->telecallername }}</td>
                                 <td>{{ $value->user->name }}</td>
                                 <td>{{ $value->timeslot->time_slot }} </td>
-                            @endif
                            
                         @endforeach
-                        @foreach($res as $type => $value) 
-                             @if($type == 'pickup')
-                                <td>@if($type == 'pickup') {{ $value->customer->telecallername ? $value->customer->telecallername : '---'  }} @endif</td>
-                                <td>@if($type == 'pickup') {{ $value->user->name ? $value->user->name : '---' }} @endif</td>
-                                <td>@if($type == 'pickup') {{ $value->timeslot->time_slot ? $value->timeslot->time_slot : '---'  }} @endif</td>
-                                <td>@if($type == 'pickup') {{ $value->customer->loan_amount ? $value->customer->loan_amount : '---'  }} @endif</td>
-                                <td>@if($type == 'pickup') {{ $value->customer->file_no ? $value->customer->file_no : '---'  }} @endif</td>
-                             @endif
-                        @endforeach   
+                      
+                        @if(isset($result[$key]['pickup']))
+                            @foreach($result[$key]['pickup'] as  $value) 
+                                
+                                    <td>  {{ $value->customer->telecallername ? $value->customer->telecallername : '---'  }} </td>
+                                    <td>  {{ $value->user->name ? $value->user->name : '---' }} @endif</td>
+                                    <td>  {{ $value->timeslot->time_slot ? $value->timeslot->time_slot : '---'  }} </td>
+                                    <td>  {{ $value->customer->loan_amount ? $value->customer->loan_amount : '---'  }} </td>
+                                    <td>  {{ $value->customer->file_no ? $value->customer->file_no : '---'  }} </td>
+                                
+                            @endforeach  
+                        @else
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                        @endif 
                         @foreach($res as $type => $value) 
                               @if($type == 'drop')
                               <td>
