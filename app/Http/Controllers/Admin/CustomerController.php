@@ -273,9 +273,10 @@ class CustomerController extends Controller
         // ->orderByDesc('customers.id')
         // ->get();
 
-         $modtAppointments = ModtAppointment::get();
+         $dropAppointments = ModtAppointment::where('type','=','drop')->get();
+         $pickupAppointments = ModtAppointment::where('type','=','pickup')->get();
          $result = [];
-         foreach($modtAppointments as $modtAppointment){
+         foreach($dropAppointments as $modtAppointment){
 
                 
                 $sanctioned_amount = $modtAppointment->customer->sanctioned_amount;
@@ -290,7 +291,7 @@ class CustomerController extends Controller
                  //echo $modtAppointment->customer->sanctioned_amount;
             //$agent = User::find($modtAppointment->agent_id)->name;
             $result[$modtAppointment->customer_id][$modtAppointment->type]=$modtAppointment;
-            if(!isset($modtAppointment->type) == 'pickup'){
+            if(isset($modtAppointment->type) == 'pickup'){
                 $result[$modtAppointment->customer_id]['pickup']=$modtAppointment;
             }
           //  $result[$modtAppointment->customer_id]['agent']=$agent;
@@ -300,9 +301,7 @@ class CustomerController extends Controller
             
 
          }
-            echo '<pre>';
-            print_r($result);
-            exit;
+            
          return view('back-office.customers.modt', compact('result'));
 
      }
