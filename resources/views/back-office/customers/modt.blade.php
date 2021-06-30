@@ -55,13 +55,7 @@
                                 <td>{{ $value->user->name }}</td>
                                 <td>{{ $value->timeslot->time_slot }} </td>
                             @endif
-                            @if($type == 'drop' || $type != 'pickup'))
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                            @endif
+                           
                         @endforeach
                         @foreach($res as $type => $value) 
                        
