@@ -299,6 +299,9 @@ class CustomerController extends Controller
             
 
          }
+         echo '<pre>';
+         print_r($result);
+         exit;
            
          return view('back-office.customers.modt', compact('result'));
 
