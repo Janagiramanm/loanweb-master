@@ -57,13 +57,12 @@
                             @endif
                         @endforeach
                         @foreach($res as $type => $value) 
-                            @if($type == 'pickup')
-                                <td>{{ $value->customer->telecallername ? $value->customer->telecallername : '---'  }}</td>
-                                <td>{{ $value->user->name ? $value->user->name : '---' }}</td>
-                                <td>{{ $value->timeslot->time_slot ? $value->timeslot->time_slot : '---'  }}</td>
-                                <td>{{ $value->customer->loan_amount ? $value->customer->loan_amount : '---'  }}</td>
-                                <td>{{ $value->customer->file_no ? $value->customer->file_no : '---'  }}</td>
-                            @endif
+                            
+                                <td>@if($type == 'pickup') {{ $value->customer->telecallername ? $value->customer->telecallername : '---'  }} @endif</td>
+                                <td>@if($type == 'pickup') {{ $value->user->name ? $value->user->name : '---' }} @endif</td>
+                                <td>@if($type == 'pickup') {{ $value->timeslot->time_slot ? $value->timeslot->time_slot : '---'  }} @endif</td>
+                                <td>@if($type == 'pickup') {{ $value->customer->loan_amount ? $value->customer->loan_amount : '---'  }} @endif</td>
+                                <td>@if($type == 'pickup') {{ $value->customer->file_no ? $value->customer->file_no : '---'  }} @endif</td>
                         @endforeach   
                         @foreach($res as $type => $value) 
                               @if($type == 'drop')
