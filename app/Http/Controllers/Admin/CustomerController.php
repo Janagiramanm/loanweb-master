@@ -290,6 +290,9 @@ class CustomerController extends Controller
                  //echo $modtAppointment->customer->sanctioned_amount;
             //$agent = User::find($modtAppointment->agent_id)->name;
             $result[$modtAppointment->customer_id][$modtAppointment->type]=$modtAppointment;
+            if(!isset($modtAppointment->type) == 'pickup'){
+                $result[$modtAppointment->customer_id]['pickup']=$modtAppointment;
+            }
           //  $result[$modtAppointment->customer_id]['agent']=$agent;
             
             
