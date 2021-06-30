@@ -61,7 +61,7 @@
                             @foreach($result[$key]['pickup'] as  $value) 
                                 
                                     <td>  {{ $value->customer->telecallername ? $value->customer->telecallername : '---'  }} </td>
-                                    <td>  {{ $value->user->name ? $value->user->name : '---' }} @endif</td>
+                                    <td>  {{ $value->user->name ? $value->user->name : '---' }} </td>
                                     <td>  {{ $value->timeslot->time_slot ? $value->timeslot->time_slot : '---'  }} </td>
                                     <td>  {{ $value->customer->loan_amount ? $value->customer->loan_amount : '---'  }} </td>
                                     <td>  {{ $value->customer->file_no ? $value->customer->file_no : '---'  }} </td>
