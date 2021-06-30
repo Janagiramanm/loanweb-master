@@ -292,14 +292,14 @@ class CustomerController extends Controller
             $result[$modtAppointment->customer_id][$modtAppointment->type]=$modtAppointment;
           //  $result[$modtAppointment->customer_id]['agent']=$agent;
             
-            // echo '<pre>';
-            // print_r($result);
-            // exit;
+            
             //$result['agent'] = $agent;
             
 
          }
-        
+            echo '<pre>';
+            print_r($result);
+            exit;
          return view('back-office.customers.modt', compact('result'));
 
      }
