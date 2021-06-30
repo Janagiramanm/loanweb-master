@@ -56,7 +56,7 @@
                                 <td>{{ $value->timeslot->time_slot }} </td>
                             @endif
                         @endforeach
-                        @foreach($res as $type => $value)
+                        @foreach($res as $type => $value) 
                             @if($type == 'pickup')
                                 <td>{{ $value->customer->telecallername ? $value->customer->telecallername : '---'  }}</td>
                                 <td>{{ $value->user->name ? $value->user->name : '---' }}</td>
