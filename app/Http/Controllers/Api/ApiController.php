@@ -450,6 +450,10 @@ class ApiController extends Controller
                     $result[$i]['appointment_date'] = $appointment->appointment_date;
                     $result[$i]['applicant_type'] = $appointment->applicant_type;
                     $result[$i]['appointment_id'] = $appointment->id;
+                    $result[$i]['start_flag'] = "true";
+                    if($appointment->start_time != ''){
+                        $result[$i]['start_flag'] = "false";
+                    }
                     $result[$i]['secondary']=[];
                 }
                 if($appointment->applicant_type=='both'){
@@ -477,6 +481,10 @@ class ApiController extends Controller
                                     $result[$i]['secondary'][$ss]['appointment_date'] = $appointment->appointment_date;
                                     $result[$i]['secondary'][$ss]['applicant_type'] = $appointment->applicant_type;
                                     $result[$i]['secondary'][$ss]['appointment_id'] = $appointment->id;
+                                    $result[$i]['secondary'][$ss]['start_flag'] = "true";
+                                    if($appointment->start_time != ''){
+                                        $result[$i]['start_flag'] = "false";
+                                    }
                                 }
                             }
                                 
