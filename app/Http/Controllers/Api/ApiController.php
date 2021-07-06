@@ -70,7 +70,7 @@ class ApiController extends Controller
         if($type_id  == 1 ||  $type_id  == 2){
             if($applicant_type!='secondary'){
                 $cust_docs = Customer::where('id', '=', $id)->get();
-                if(isset($cust_docs[0])){
+                if(isset($cust_docs[0]) && $cust_docs[0]['docs_ids'] !=''){
                     $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
                     $documents = RequiredDoc::where('occupation_id', '=', $occupation_id )->whereNotIn('id', $existingdocs)->get();
                 }else{
@@ -82,7 +82,7 @@ class ApiController extends Controller
          
         elseif($type_id  == 3) {
             $cust_docs = Customer::where('id', '=', $id)->get();
-            if(isset($cust_docs[0])){
+            if(isset($cust_docs[0]) && $cust_docs[0]['docs_ids'] !=''){
                 $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
                 $documents = RequiredDoc::where('type_of_doc', '=', 'Bank Visit')->whereNotIn('id', $existingdocs)->get();
             }else{
@@ -91,7 +91,7 @@ class ApiController extends Controller
         }  
         elseif($type_id==7){
             $cust_docs = Customer::where('id', '=', $id)->get();
-            if(isset($cust_docs[0])){
+            if(isset($cust_docs[0]) && $cust_docs[0]['docs_ids'] !=''){
                 $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
                 $documents = RequiredDoc::where('type_of_doc', '=', 'Submit Demand')->whereNotIn('id', $existingdocs)->get();
             }else{
@@ -100,7 +100,7 @@ class ApiController extends Controller
         }
         elseif($type_id==8){
             $cust_docs = Customer::where('id', '=', $id)->get();
-            if(isset($cust_docs[0])){
+            if(isset($cust_docs[0]) && $cust_docs[0]['docs_ids'] !=''){
                 $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
                 $documents = RequiredDoc::where('type_of_doc', '=', 'MODT Drop')->whereNotIn('id', $existingdocs)->get();
             }else{
@@ -109,7 +109,7 @@ class ApiController extends Controller
         }
         elseif($type_id==9){
             $cust_docs = Customer::where('id', '=', $id)->get();
-            if(isset($cust_docs[0])){
+            if(isset($cust_docs[0]) && $cust_docs[0]['docs_ids'] !=''){
                 $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
                 $documents = RequiredDoc::where('type_of_doc', '=', 'MODT Pickup')->whereNotIn('id', $existingdocs)->get();
             }else{
@@ -118,7 +118,7 @@ class ApiController extends Controller
         }  
         elseif($type_id  == 5 || $type_id  == 6) {
             $cust_docs = Customer::where('id', '=', $id)->get();
-            if(isset($cust_docs[0])){
+            if(isset($cust_docs[0]) && $cust_docs[0]['docs_ids'] !=''){
                 $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
                 $documents = RequiredDoc::where('type_of_doc', '=', 'Disbursement')->whereNotIn('id', $existingdocs)->get();
             }else{
