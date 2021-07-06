@@ -70,9 +70,7 @@ class ApiController extends Controller
         if($type_id  == 1 ||  $type_id  == 2){
             if($applicant_type!='secondary'){
                 $cust_docs = Customer::where('id', '=', $id)->get();
-                echo '<pre>';
-                print_r($cust_docs);
-                exit;
+               
                 if(isset($cust_docs[0]) && $cust_docs[0]['docs_ids'] !=''){
                     $existingdocs = explode(",", $cust_docs[0]['docs_ids']);
                     $documents = RequiredDoc::where('occupation_id', '=', $occupation_id )->whereNotIn('id', $existingdocs)->get();
