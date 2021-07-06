@@ -452,10 +452,7 @@ class CustomerController extends Controller
     public function updatenewcustomer(Request $request, $id)
     {
         $input = $request->all();
-        // echo '<pre>';
-        // print_r($input);
-        // exit;
-       
+              
         try {
             if(isset($input['interested'])){
                 $application_status = 2;

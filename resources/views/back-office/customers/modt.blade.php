@@ -46,34 +46,9 @@
                     @foreach($result as $key =>  $res)
                        <tr>
                          <td>{{ $i }}</td>
-                        @foreach($result[$key]['drop'] as $value)
-                           
-                                <td>{{ $value->customer->cust_name }}</td>
-                                <td>{{ $value->customer->bank['bank_name'] }}</td>
-                                <td>{{ $value->modt_amount }}</td>
-                                <td>{{ $value->customer->telecallername }}</td>
-                                <td>{{ $value->user->name }}</td>
-                                <td>{{ $value->timeslot->time_slot }} </td>
-                           
-                        @endforeach
-                      
-                        @if(isset($result[$key]['pickup']))
-                            @foreach($result[$key]['pickup'] as  $value) 
-                                
-                                    <td>  {{ $value->customer->telecallername ? $value->customer->telecallername : '---'  }} </td>
-                                    <td>  {{ $value->user->name ? $value->user->name : '---' }} </td>
-                                    <td>  {{ $value->timeslot->time_slot ? $value->timeslot->time_slot : '---'  }} </td>
-                                    <td>  {{ $value->customer->loan_amount ? $value->customer->loan_amount : '---'  }} </td>
-                                    <td>  {{ $value->customer->file_no ? $value->customer->file_no : '---'  }} </td>
-                                
-                            @endforeach  
-                        @else
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                        @endif 
+                        @php 
+                         echo
+                        @endphp
                         @foreach($res as $type => $value) 
                               @if($type == 'drop')
                               <td>
