@@ -333,6 +333,35 @@ class ApiController extends Controller
 
     }
 
+    public function submitExtraDocs(Request $request){
+        $input = $request->all();
+        $doc_ids        = $input['document_ids'];
+        $cust_id        = $input['customer_id'];
+        $appointment_id = $input['appointment_id'];
+
+        $customer = Customer::find($cust_id);
+        if($customer){
+            $send_docs = explode(',',$doc_ids);
+            $collected_docs =  explode(',',$customer->extradocs);
+            $docs_to_update = array_diff($send_docs, $collected_docs);
+            if(!empty($docs_to_update)){
+                $docs_to_update_val = implode(',',$docs_to_update);
+                $customer->extradocs .=  $customer->extradocs ? ','.$docs_to_update_val : $docs_to_update_val;
+                $customer->save();
+            }
+        }
+        $appointments = Appointment::find($appointment_id);
+        if($appointments){
+            $appointments->status = 0;
+            $appointments->save();
+        }
+       
+        return response()->json(['status'=>1,'message' => "Extra Documents Submitted Successfully!"], $this->successStatus);
+       
+    }
+
+
+
     public function closedAppointments(Request $request)
     {
         $user = Auth::user();

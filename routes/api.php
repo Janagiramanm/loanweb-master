@@ -33,6 +33,7 @@ Route::group([ 'middleware' => 'auth:api'], function() {
     
 
     Route::post('submitapplication', 'Api\ApiController@submitApplication');
+    Route::post('submit-extra-docs', 'Api\ApiController@submitExtraDocs');
     Route::post('kyc-details', 'Api\ApiController@kycDetails');
 
     Route::get('closedappointments', 'Api\ApiController@closedAppointments');
