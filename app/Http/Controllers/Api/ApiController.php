@@ -302,7 +302,7 @@ class ApiController extends Controller
                             }
                     }
                     if($input['second_customer_id']!=''){
-                        foreach($input['second_customer_id'] as $key => $secondCustId){
+                        foreach($input['second_customer_id'] as $secondCustId){
 
                             $sCustomer = SecondaryApplicant::find($secondCustId);
                             $collected_docs = explode(',',$sCustomer->docs_ids);
