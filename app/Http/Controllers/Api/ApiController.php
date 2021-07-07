@@ -224,7 +224,6 @@ class ApiController extends Controller
         $input = $request->all();
 
         $doc_ids        = $input['document_ids'];
-        $extra_doc_ids        = $input['extra_document_ids'];
         $cust_id        = $input['customer_id'];
         $appointment_id = $input['appointment_id'];
         $appointment_type = $input['appointment_type'];
