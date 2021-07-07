@@ -749,7 +749,7 @@ class CustomerController extends Controller
         $appointment->customer_id = $input['customer_id'];
         $appointment->second_customer_id = null;
         $appointment->timeslot_id = $input['aptime'];
-        $appointment->applicant_type = 'normal';
+        $appointment->applicant_type = 'primary';
         $appointment->appointmenttype_id = $input['appointment_type'];
         $appointment->created_excutive  = Auth::user()->id;
         $appointment->status            = 1;
