@@ -853,7 +853,8 @@ class CustomerController extends Controller
                     'timeslot_id'       => $input['sent_to_bank_time'],
                     'created_excutive'  => Auth::user()->id,
                     'status'            => 1,
-                    'appointmenttype_id'=> $input['bank_appointment']
+                    'appointmenttype_id'=> $input['bank_appointment'],
+                    'applicant_type'    => 'primary'
                 ]);
 
                 $customers = DB::table('customers')
