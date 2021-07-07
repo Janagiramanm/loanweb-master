@@ -224,6 +224,7 @@ class ApiController extends Controller
         $input = $request->all();
 
         $doc_ids        = $input['document_ids'];
+        $extra_doc_ids        = $input['extra_document_ids'];
         $cust_id        = $input['customer_id'];
         $appointment_id = $input['appointment_id'];
         $appointment_type = $input['appointment_type'];
@@ -313,7 +314,12 @@ class ApiController extends Controller
                                 $sCustomer->docs_ids .=  $sCustomer->docs_ids ? ','.$docs_to_update_val : $docs_to_update_val;
                                 $sCustomer->save();
                             }
-                           
+                            $final_docs = explode(',',$sCustomer->docs_ids);
+                            $missing_docs = array_diff($required_doc, $final_docs);
+                            if(empty($missing_docs)){
+                                    $appointments->status = 0;
+                                    $appointments->save();
+                            }
                         }
                     }
 
