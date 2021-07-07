@@ -311,14 +311,15 @@ class ApiController extends Controller
                             if(!empty($docs_to_update)){
                                 $docs_to_update_val = implode(',',$docs_to_update);
                                 $sCustomer->docs_ids .=  $sCustomer->docs_ids ? ','.$docs_to_update_val : $docs_to_update_val;
+                                $appointments->status = 0;
                                 $sCustomer->save();
                             }
-                            $final_docs = explode(',',$sCustomer->docs_ids);
-                            $missing_docs = array_diff($required_doc, $final_docs);
-                            if(empty($missing_docs)){
-                                    $appointments->status = 0;
-                                    $appointments->save();
-                            }
+                            // $final_docs = explode(',',$sCustomer->docs_ids);
+                            // $missing_docs = array_diff($required_doc, $final_docs);
+                            // if(empty($missing_docs)){
+                            //         $appointments->status = 0;
+                            //         $appointments->save();
+                            // }
                         }
                     }
 
