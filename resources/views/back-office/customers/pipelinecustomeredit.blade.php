@@ -443,8 +443,8 @@
                                     <div class="form-group col">
                                         <h1>* List of documents</h1>
                                         <?php
-                                            if(isset($customer->docs_ids)){
-                                                $presentdocs = explode(",",$customer->docs_ids);
+                                            if(isset($second_applicant->docs_ids)){
+                                                $presentdocs = explode(",",$second_applicant->docs_ids);
                                             }else{
                                                 $presentdocs = array();
                                             }
