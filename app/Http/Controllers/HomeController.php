@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use App\Model\Bank;
 use App\Model\Occupation;
 use App\Customer;
+use Redirect;
 
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('comingsoon');
+       // return view('comingsoon');
+        return Redirect::guest('login');
     }
 
     public function about()
