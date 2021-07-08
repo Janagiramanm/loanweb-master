@@ -14,8 +14,8 @@ class HomeController extends Controller
     public function index()
     {
         //echo "comeiusius";exit;
-        // return view('comingsoon');
-        return Redirect::guest('login');
+         return view('comingsoon');
+        //return Redirect::guest('login');
     }
 
     public function about()
