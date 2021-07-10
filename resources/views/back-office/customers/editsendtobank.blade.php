@@ -269,10 +269,25 @@
                         <div class="form-row">
                             <div class="form-group col">
                                 <h1>* List of documents shall be displayed here</h1>
+                                <?php
+                                    if(isset($customer->extradocs)){
+                                        $presentdocs = explode(",",$customer->extradocs);
+                                    }else{
+                                        $presentdocs = array();
+                                    }
+                                    
+                                   
+                                ?>
                                 <ul>
                                     @foreach ($extradocs as $doc)
-                                        <li>{{ $doc->doc_name }}</li>
+                                        
+                                        @if (in_array($doc->id, $presentdocs))
+                                                <li><del>{{ $doc->doc_name }}</del></li>
+                                            @else
+                                                <li>{{ $doc->doc_name }}</li>
+                                        @endif
                                     @endforeach
+                                  
                                 </ul>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_form_vertical"> Add New Doc <i class="icon-play3 ml-2"></i></button>
                                 {{-- <button type="button" class="btn btn-primary"><span style="font-size: 17px ">+</span></button> --}}
