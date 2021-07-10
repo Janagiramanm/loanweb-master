@@ -523,7 +523,7 @@
             });
       
     });
-    $("#mmr_paid").keyup();
+   
     $("#property_cost").on('keyup',function(){
          var textVal = convertNumberToWords($(this).val());
          $("#property_cost_txt").text(textVal);

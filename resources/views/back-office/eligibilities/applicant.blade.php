@@ -31,14 +31,16 @@
                                     <div class="form-group">
                                         <label class="col-form-label">Gross / Net Salary </label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="grossIncome1" class="form-control" placeholder="Gross Income">
+                                            <input type="text" name="grossIncome1" class="form-control str_convert" id="gross_income" placeholder="Gross Income">
+                                            <label for="gross_income_txt" id="gross_income_txt"> </label>
                                         </div>
                                     </div>
                                 {{-- @else
                                     <div class="form-group">
                                         <label class="col-form-label">Net Salary </label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="netIncome1" class="form-control" placeholder="Net Income">
+                                            <input type="text" name="netIncome1" class="form-control str_convert" id="net_salary" placeholder="Net Income">
+                                            <label for="net_salary_txt" id="net_salary_txt"> </label>
                                         </div>
                                     </div>
                                 @endif --}}
@@ -47,25 +49,29 @@
                                 <div class="form-group row">
                                     <label class="col-form-label">Rental Income Decleared In 3ITRs</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="rentalItr1" class="form-control" placeholder="Rental Income">
+                                        <input type="text" name="rentalItr1" class="form-control str_convert" id="rental_itr1" placeholder="Rental Income">
+                                        <label for="rental_itr1_txt" id="rental_itr1_txt"> </label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label">Rental Income 2 Not shown In ITRs</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="rentalNonItr1" class="form-control" placeholder="Rental Income 2">
+                                        <input type="text" name="rentalNonItr1" id="rental_non_itrl1" class="form-control str_convert" placeholder="Rental Income 2">
+                                        <label for="rental_non_itrl1_txt" id="rental_non_itrl1_txt"> </label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label">Variable Overtime</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="variableOT1" class="form-control" placeholder="Variable Overtime">
+                                        <input type="text" name="variableOT1" id="variable_overtime" class="form-control str_convert" placeholder="Variable Overtime">
+                                        <label for="variable_overtime_txt" id="variable_overtime_txt"> </label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label">FIXED INCENTIVES QUARTERLY</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="fixedIncentivesQuat1" class="form-control" placeholder="FIXED INCENTIVES QUARTERLY">
+                                        <input type="text" name="fixedIncentivesQuat1" id="fixed_incentive_qtr" class="form-control str_convert" placeholder="FIXED INCENTIVES QUARTERLY">
+                                        <label for="fixed_incentive_qtr_txt" id="fixed_incentive_qtr_txt"> </label>
                                     </div>
                                 </div>
                             </div>
@@ -75,25 +81,29 @@
                                 <div class="form-group row">
                                     <label class="col-form-label">VARIABLE INCENTIVES / BONUS QUARTERLY</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="variableIncentivesQuat1" class="form-control" placeholder="VARIABLE INCENTIVES / BONUS QUARTERLY">
+                                        <input type="text" name="variableIncentivesQuat1" id="variable_incentive_quat1" class="form-control str_convert" placeholder="VARIABLE INCENTIVES / BONUS QUARTERLY">
+                                        <label for="variable_incentive_quat1_txt" id="variable_incentive_quat1_txt"> </label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label">VARIABLE INCENTIVES / BONUS HALF YEARLY</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="variableIncentivesHalf1" class="form-control" placeholder="VARIABLE INCENTIVES / BONUS HALF YEARLY">
+                                        <input type="text" name="variableIncentivesHalf1" id="variable_incentive_half1" class="form-control str_convert" placeholder="VARIABLE INCENTIVES / BONUS HALF YEARLY">
+                                        <label for="variable_incentive_half1_txt" id="variable_incentive_half1_txt"> </label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label">VARIABLE INCENTIVES / Bonus Yearly</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="variableIncentivesYear1" class="form-control" placeholder="VARIABLE INCENTIVES / Bonus Yearly">
+                                        <input type="text" name="variableIncentivesYear1" id="variable_incentive_year1" class="form-control str_convert" placeholder="VARIABLE INCENTIVES / Bonus Yearly">
+                                        <label for="variable_incentive_year1_txt" id="variable_incentive_year1_txt"> </label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label">Income from Interest / Dividend</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="interestDividend1" class="form-control" placeholder="Income from Interest / Dividend">
+                                        <input type="text" name="interestDividend1" id="interest_dividend1" class="form-control str_convert" placeholder="Income from Interest / Dividend">
+                                        <label for="interest_dividend1_txt" id="interest_dividend1_txt"> </label>
                                     </div>
                                 </div>
 
@@ -110,25 +120,30 @@
                                 <div class="form-group row">
                                     <label class="col-form-label">AGRICULTURAL INCOME</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="agriculturalIncome1" class="form-control" placeholder="AGRICULTURAL INCOME">
+                                        <input type="text" name="agriculturalIncome1" id="agricultural_income1" class="form-control str_convert" placeholder="AGRICULTURAL INCOME">
+                                        <label for="agricultural_income1_txt" id="agricultural_income1_txt"> </label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label">LIC / BROKER COMISSION /NSC / KVP/IVP/POSTAL SAVINGS COMISSION - NEW BUSINESS  AS PER ITRS</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="lic50New1" class="form-control" placeholder="LIC / BROKER COMISSION /NSC / KVP/IVP/POSTAL SAVINGS COMISSION ">
+                                        <input type="text" name="lic50New1" id="lic_50new1" class="form-control str_convert" placeholder="LIC / BROKER COMISSION /NSC / KVP/IVP/POSTAL SAVINGS COMISSION ">
+                                        <label for="lic_50new1_txt" id="lic_50new1_txt"> </label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label">LIC / BROKER COMISSION /NSC / KVP/IVP/POSTAL SAVINGS COMISSION - 100% OF RENEWAL BUSINESS AS PER ITRS</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="lic100Renew1" class="form-control" placeholder="LIC / BROKER COMISSION /NSC / KVP/IVP/POSTAL SAVINGS COMISSION - 100% OF RENEWAL BUSINESS AS PER ITRS">
+                                        <input type="text" name="lic100Renew1" id="lic_100_renew" class="form-control str_convert" placeholder="LIC / BROKER COMISSION /NSC / KVP/IVP/POSTAL SAVINGS COMISSION - 100% OF RENEWAL BUSINESS AS PER ITRS">
+                                        <label for="lic_100_renew_txt" id="lic_100_renew_txt"> </label>
+
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label">ANY OTHER INCOME</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="otherSources1" class="form-control" placeholder="Other Income">
+                                        <input type="text" name="otherSources1" id="other_sources1" class="form-control str_convert" placeholder="Other Income">
+                                        <label for="other_sources1_txt" id="other_sources1_txt"> </label>
                                     </div>
                                 </div>
                             </div>
@@ -139,13 +154,15 @@
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label">CAR LOAN / HOME LOAN / PL /OTHER EXISTING EMIS</label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="allLoans1" class="form-control" placeholder="Any loans">
+                                            <input type="text" name="allLoans1" id="all_loans1" class="form-control str_convert" placeholder="Any loans">
+                                            <label for="all_loans1_txt" id="all_loans1_txt"> </label>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label">CREDIT CARD PAYMENTS  (ALL CREDIT CARD OUTSTANDING AMOUNT)</label>
                                         <div class="col-lg-9">
-                                            <input type="text" name="creditCardBills1" class="form-control" placeholder="Credit Card Emi">
+                                            <input type="text" name="creditCardBills1" id="credit_card_bill1" class="form-control str_convert" placeholder="Credit Card Emi">
+                                            <label for="credit_card_bill1_txt" id="credit_card_bill1_txt"> </label>
                                         </div>
                                     </div>
 
@@ -914,14 +931,17 @@
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label">Cost Of The Property</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="costOfProperty" class="form-control" placeholder="Cost Of The Property">
+                                        <input type="text" name="costOfProperty" id="cost_of_property" class="form-control str_convert" placeholder="Cost Of The Property">
+                                        <label for="cost_of_property_txt" id="cost_of_property_txt"> </label>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label">Loan Amount Requested</label>
                                     <div class="col-lg-9">
-                                        <input type="text" name="loanRequested" class="form-control" placeholder="Loan Amount Requested">
+                                        <input type="text" name="loanRequested" id="loan_required" class="form-control str_convert" placeholder="Loan Amount Requested">
+                                        <label for="loan_required_txt" id="loan_required_txt"> </label>
+
                                     </div>
                                 </div>
 
@@ -943,5 +963,19 @@
     </form>
     <button class="btn btn-secondary" onclick="window.history.back();">Go Back</button>
 </div>
+@endsection
+@section('custom-script')
+
+
+<script>
+
+   $(".str_convert").on('keyup',function(){
+         var selectId = $(this).attr('id');
+         var textVal = convertNumberToWords($(this).val());
+         $("#"+selectId+'_txt').text(textVal);
+        
+     })
+</script>
+
 @endsection
 

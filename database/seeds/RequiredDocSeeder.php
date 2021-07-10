@@ -241,7 +241,11 @@ class RequiredDocSeeder extends Seeder
             'type_of_doc'   => 'Disbursement',
             'from_whom'     => 'Customer'
         ]);
-
+        RequiredDoc::create([
+            'doc_name'      => 'Submitted Document',
+            'type_of_doc'   => 'Bank Visit',
+            
+        ]);
 
 
 
