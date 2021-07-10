@@ -158,7 +158,9 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="property_cost">Total Cost(Property Cost) <span class="mandatory">*</span></label>
-                                <input type="text" class="form-control"  name="property_cost" id="property_cost" required value="{{ old('property_cost') ?? $customer->property_cost }} ">
+                                <input type="text" class="form-control"  name="property_cost" id="property_cost" required 
+                                value="{{ old('property_cost') ?? $customer->property_cost }} "
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                                 <label for="property_cost_txt" id="property_cost_txt"> </label>
                                 @error('property_cost')
                                     <span class="invalid-feedback" role="alert">
@@ -194,7 +196,9 @@
                                 </div>   
                             <div class="form-group col-md-6">
                                 <label for="mmr_payable">MMR Payable</label>
-                                <input type="text" class="form-control" id="mmr_payable" name="mmr_payable"  value="{{ old('mmr_payable') ?? $customer->mmr_payable }}">
+                                <input type="text" class="form-control" id="mmr_payable" name="mmr_payable" 
+                                 value="{{ old('mmr_payable') ?? $customer->mmr_payable }}"
+                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                                 <label for="mmr_payable_txt" id="mmr_payable_txt"> </label>
                                 @error('mmr_payable')
                                     <span class="invalid-feedback" role="alert">
@@ -204,7 +208,9 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="cust_pincode">MMR Paid</label>
-                                <input type="text" class="form-control" id="mmr_paid" name="mmr_paid"  value="{{ old('mmr_paid') ?? $customer->mmr_paid }}">
+                                <input type="text" class="form-control" id="mmr_paid" name="mmr_paid" 
+                                 value="{{ old('mmr_paid') ?? $customer->mmr_paid }}"
+                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
                                 <label for="mmr_paid_txt" id="mmr_paid_txt"> </label>
                                 @error('mmr_paid')
                                     <span class="invalid-feedback" role="alert">
@@ -228,7 +234,9 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="applied_loan_amount">Loan Amount Required <span class="mandatory">*</span></label>
-                                <input type="text" class="form-control" id="applied_loan_amount" name="applied_loan_amount" required value="{{ old('applied_loan_amount') ?? $customer->applied_loan_amount }}" >
+                                <input type="text" class="form-control" id="applied_loan_amount" name="applied_loan_amount" required 
+                                value="{{ old('applied_loan_amount') ?? $customer->applied_loan_amount }}"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" >
                                 <label for="applied_loan_amount_txt" id="applied_loan_amount_txt"> </label>
                                 @error('mmr_paid')
                                     <span class="invalid-feedback" role="alert">

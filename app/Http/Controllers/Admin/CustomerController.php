@@ -953,7 +953,7 @@ class CustomerController extends Controller
                         ->orderByDesc('cust_id')
                         ->get();
               
-                return redirect()->route('back-office.customers.customers')->with('customers', $customers )->with('message','Peding Doc collection appointment assigned successfully');;
+                return redirect()->route('back-office.customers.sendtobank')->with('customers', $customers )->with('message','Peding Doc collection appointment assigned successfully');;
 
             }
 
