@@ -105,7 +105,7 @@
         </div>
     </div>
     <!-- /inline form modal -->
-
+ 
     <!-- Inline form modal -->
     <div id="modal_delete_from" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
