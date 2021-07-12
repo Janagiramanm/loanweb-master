@@ -46,9 +46,7 @@
                     @foreach($result as $key =>  $res)
                        <tr>
                          <td>{{ $i }}</td>
-                        @php 
-                         echo
-                        @endphp
+                      
                         @foreach($res as $type => $value) 
                               @if($type == 'drop')
                               <td>
