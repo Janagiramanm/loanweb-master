@@ -766,7 +766,7 @@
            
             //alert(date);
             $.ajax({
-                url : "/back-office/add-first-agent-appointment",
+                url : "<?php echo url('/back-office/add-first-agent-appointment'); ?>"",
                 headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                 },
@@ -791,7 +791,7 @@
             var customer_id = $("#edit-id").val();
             //alert(date);
             $.ajax({
-                url : "/back-office/add-secondary-agent-appointment",
+                url : "<?php echo url('back-office/add-secondary-agent-appointment'); ?>",
                 headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                 },
@@ -816,7 +816,7 @@
             alert("please select date");
         }else{
             $.ajax({
-                url : "/back-office/change-agent-appointment",
+                url : "<?php echo url('/back-office/change-agent-appointment'); ?>",
                 headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                 },
