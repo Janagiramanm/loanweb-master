@@ -766,7 +766,7 @@
            
             //alert(date);
             $.ajax({
-                url : "/back-office/add-first-agent-appointment",
+                url : "<?php echo url('/back-office/public/back-office/add-first-agent-appointment'); ?>",
                 headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                 },
@@ -791,7 +791,7 @@
             var customer_id = $("#edit-id").val();
             //alert(date);
             $.ajax({
-                url : "/back-office/add-secondary-agent-appointment",
+                url : "<?php echo url('/back-office/public/back-office/add-secondary-agent-appointment'); ?>",
                 headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                 },
@@ -816,7 +816,7 @@
             alert("please select date");
         }else{
             $.ajax({
-                url : "/back-office/change-agent-appointment",
+                url : "<?php echo url('/back-office/public/back-office/change-agent-appointment'); ?>",
                 headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                 },
@@ -850,7 +850,7 @@
             alert("please select date");
         }else{
             $.ajax({
-                url : "<?php echo url('/back-office/fetchAgents'); ?>",
+                url : "<?php echo url('/back-office/public/back-office/fetchAgents'); ?>",
                 headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                 },
@@ -884,7 +884,7 @@
             alert("please select date");
         }else{
             $.ajax({
-                url : "<?php echo url('/back-office/fetchAgents'); ?>",
+                url : "<?php echo url('/back-office/public/back-office/fetchAgents'); ?>",
                 headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                 },
@@ -919,7 +919,7 @@
             alert("please select date");
         }else{
             $.ajax({
-                url : "<?php echo url('/back-office/fetchAgents'); ?>",
+                url : "<?php echo url('/back-office/public/back-office/fetchAgents'); ?>",
                 headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                 },
@@ -952,7 +952,7 @@
             alert("please select date");
         }else{
             $.ajax({
-                url : "<?php echo url('/back-office/fetchAgents'); ?>",
+                url : "<?php echo url('/back-office/public/back-office/fetchAgents'); ?>",
                 headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                 },
@@ -981,7 +981,7 @@
     $("#builder_name").change(function(){
         var id = $(this).val();
         $.ajax({
-                url : "<?php echo url('/back-office/fetchProjects'); ?>",
+                url : "<?php echo url('/back-office/public/back-office/fetchProjects'); ?>",
                 headers: {
                     'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
                 },
@@ -1000,7 +1000,7 @@
       
       var bank_id = $(this).val();
       $.ajax({
-          url : "<?php echo url('/back-office/bank/get-branches'); ?>",
+          url : "<?php echo url('/back-office/public/back-office/bank/get-branches'); ?>",
           headers: {
               'X-CSRF-TOKEN': '<?php echo csrf_token();  ?>'
           },
@@ -1013,9 +1013,10 @@
                   $("#branch_name").html(response.data);
               }
 
-          }
+          } 
           });
  });
+  
 
     $("#property_cost").on('keyup',function(){
          var textVal = convertNumberToWords($(this).val());
