@@ -32,8 +32,8 @@
                     <th>Name</th>
                     <th>E-Mail</th>
                     <th>Phone</th>
-                    <!-- <th>Project Name</th>
-                    <th>Telecaller</th> -->
+                    <th>Project Name</th>
+                    <th>Telecaller</th>
                     <th>Date Created</th>
                     <th>Source</th>
                     <th class="text-center">Actions</th>
@@ -49,7 +49,7 @@
                         <td>{{ $customer->cust_name }}</td>
                         <td>{{ $customer->cust_email }}</td>
                         <td>{{ $customer->cust_phone }}</td>
-                        <!-- <td>
+                        <td>
                              @php
                              $project = App\Model\Builder::where('id','=',$customer->project_name)->first();
                              if(isset($project->project_name)){
@@ -58,7 +58,7 @@
                            
                              @endphp
                              </td>
-                        <td>{{ $customer->telecallername }}</td> -->
+                        <td>{{ $customer->telecallername }}</td>
                         <td>@php echo date('d-m-Y',strtotime($customer->created_at)); @endphp</td>
                         <td>Dashboard</td>
                         <td class="text-center">
