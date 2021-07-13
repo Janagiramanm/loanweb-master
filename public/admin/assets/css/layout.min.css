@@ -1362,6 +1362,9 @@ body {
     box-shadow: -4px 2px 4px rgba(0, 0, 0, 0.15),
         4px 2px 4px rgba(0, 0, 0, 0.15);
 }
+.modal-open .modal {
+    margin-top: 10%;
+}
 @media (min-width: 992px) {
     .layout-boxed,
     .layout-boxed > .navbar {
