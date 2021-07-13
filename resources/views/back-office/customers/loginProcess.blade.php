@@ -142,7 +142,7 @@
                     if(data.status==1){
                        // setTimeout(function(){
                         // location.reload();
-                        location.replace('/back-office/customers/sendtobank');
+                        location.replace("<?php echo url('/back-office/customers/sendtobank'); ?>");
                        // }, 1000);
                     }
                     
