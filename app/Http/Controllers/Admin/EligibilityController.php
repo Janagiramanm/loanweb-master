@@ -122,9 +122,23 @@ class EligibilityController extends Controller
     public function eligibility(Request $request)
     {
         $input = $request->all();
+      
         $fmt = new NumberFormatter($locale = 'en_IN', NumberFormatter::CURRENCY);
         $compArr = array("E", "SP", "P", "G", "SG");
         $salaryIncome1 = 0;
+        $rentalItr1 = 0;
+        $rentalNonItr1 = 0;
+        $variableOT1 = 0;
+        $fixedIncentivesQuat1 = 0;
+        $variableIncentivesQuat1 = 0;
+        $variableIncentivesHalf1 = 0;
+        $variableIncentivesYear1 = 0;
+        $interestDividend1 = 0;
+        $agriculturalIncome1 = 0;
+        $lic50New1 = 0;
+        $lic100Renew1 = 0;
+        $otherSources1 = 0;
+
         if (isset($input['applicant1'])) {
          
             if (isset($input['grossIncome1'])) {
@@ -134,18 +148,42 @@ class EligibilityController extends Controller
             if(isset($input['netIncome1'] )){
                 $salaryIncome1 = $input['netIncome1'];
             }
-            $rentalItr1 = $input['rentalItr1'] / 12;
-            $rentalNonItr1 = ($input['rentalNonItr1'] * 0.75)/12;
-            $variableOT1 = ($input['variableOT1']*0.5)/3;
-            $fixedIncentivesQuat1 = $input['fixedIncentivesQuat1']/3;
-            $variableIncentivesQuat1 = ($input['variableIncentivesQuat1']*0.5)/3;
-            $variableIncentivesHalf1 = ($input['variableIncentivesHalf1']*0.5)/6;
-            $variableIncentivesYear1 = ($input['variableIncentivesYear1']*0.5)/12;
-            $interestDividend1 = ($input['interestDividend1']*0.5)/12;
-            $agriculturalIncome1 = $input['agriculturalIncome1']/12;
-            $lic50New1 = ($input['lic50New1']*0.5)/12;
-            $lic100Renew1 = $input['lic100Renew1']/12;
-            $otherSources1 = ($input['otherSources1']*0.5)/12;
+            if(isset($input['rentalItr1'] )){
+                $rentalItr1 = $input['rentalItr1'] / 12;
+            }
+            if(isset($input['rentalNonItr1'] )){
+                $rentalNonItr1 = ($input['rentalNonItr1'] * 0.75)/12;
+            }
+            if(isset($input['variableOT1'] )){
+                $variableOT1 = ($input['variableOT1']*0.5)/3;
+            }
+            if(isset($input['fixedIncentivesQuat1'] )){
+                $fixedIncentivesQuat1 = $input['fixedIncentivesQuat1']/3;
+            }
+            if(isset($input['variableIncentivesQuat1'] )){
+                $variableIncentivesQuat1 = ($input['variableIncentivesQuat1']*0.5)/3;
+            }
+            if(isset($input['variableIncentivesHalf1'] )){
+                $variableIncentivesHalf1 = ($input['variableIncentivesHalf1']*0.5)/6;
+            }
+            if(isset($input['variableIncentivesYear1'] )){
+                $variableIncentivesYear1 = ($input['variableIncentivesYear1']*0.5)/12;
+            }
+            if(isset($input['interestDividend1'] )){
+                $interestDividend1 = ($input['interestDividend1']*0.5)/12;
+            }
+            if(isset($input['agriculturalIncome1'] )){
+                $agriculturalIncome1 = $input['agriculturalIncome1']/12;
+            }
+            if(isset($input['lic50New1'] )){
+                $lic50New1 = ($input['lic50New1']*0.5)/12;
+            }
+            if(isset($input['lic100Renew1'] )){
+                $lic100Renew1 = $input['lic100Renew1']/12;
+            }
+            if(isset($input['otherSources1'] )){
+                $otherSources1 = ($input['otherSources1']*0.5)/12;
+            }
 
             if(in_array($input['companyType'], $compArr)){
                 if((60 - $input['ageOfApplicant1']) >= 20 ){
@@ -170,11 +208,11 @@ class EligibilityController extends Controller
             $totalIncome1 =  (int)($salaryIncome1 + $rentalItr1 + $rentalNonItr1 +  $variableOT1  + $fixedIncentivesQuat1 +  $variableIncentivesQuat1 + $variableIncentivesHalf1 + $variableIncentivesYear1 +  $interestDividend1 + $agriculturalIncome1  +  $lic50New1 + $lic100Renew1  + $otherSources1);
 
 
-            if($input['companyType'] == "E"){
+            if(isset($input['companyType']) && $input['companyType'] == "E"){
                 $first = $totalIncome1 + ($totalIncome1 * 0.07);
                 $second = $first + ($first * 0.07);
                 $stepUpIncome = $second + ($second * 0.07);
-            } elseif ($input['companyType'] == "SP"){
+            } elseif (isset($input['companyType']) && $input['companyType'] == "SP"){
                 $first = $totalIncome1 + ($totalIncome1 * 0.06);
                 $second = $first + ($first * 0.06);
                 $stepUpIncome = $second + ($second * 0.06);
@@ -184,14 +222,17 @@ class EligibilityController extends Controller
                 $stepUpIncome = $second + ($second * 0.05);
             }
 
-            $allLoans1 = $input['allLoans1'];
-            $crediBills1 = $input['creditCardBills1'];
+            $allLoans1 = isset($input['allLoans1']) ? $input['allLoans1'] : 0 ;
+            $crediBills1 = isset($input['creditCardBills1']) ? $input['creditCardBills1'] : 0;
             $totalLiabilityes1 = $allLoans1 + ($crediBills1 * 0.05);
             $totalObligations1 = number_format($totalLiabilityes1);
             $foir = (float)(0.6);
-            $rateOfIntrest = $input['rateOfIntrest']/100;
-            $costOfProperty = $input['costOfProperty'];
-            $loanRequested = $input['loanRequested'];
+            $rateOfIntrest = 0;
+            if(isset($input['otherSources1'] )){
+              $rateOfIntrest = $input['rateOfIntrest']/100;
+            }
+            $costOfProperty = isset($input['costOfProperty']) ? $input['costOfProperty']:0;
+            $loanRequested = isset($input['loanRequested']) ? $input['loanRequested'] : 0;
 
 
             if($costOfProperty <= 3000000){
@@ -205,6 +246,9 @@ class EligibilityController extends Controller
 
             $marginPaidInAmount =  $costOfProperty * $marginPaid ;
             $eligibleLoanAsPerProperty =  $costOfProperty * $ltv;
+            $emi = 0;
+            $eligibilityAsPerIncome = 0;
+            $finalEligibility = 0;
 
 
             if(in_array($input['companyType'], $compArr)){
@@ -228,14 +272,16 @@ class EligibilityController extends Controller
 
                 $x = pow((1+$rateOfIntrest/12),($loan_tenure1 * 12));
                 $y = pow((1+$rateOfIntrest/12),($loan_tenure1 * 12))-1;
-                $emi = (100000*($rateOfIntrest/12))*$x/$y;
+                if($rateOfIntrest > 0){
+                    $emi = (100000*($rateOfIntrest/12))*$x/$y;
 
-                $eligibilityAsPerIncome = ((($totalIncome1 * $foir) - $totalLiabilityes1) / (int)$emi)*100000;
-
-                if($eligibleLoanAsPerProperty < $eligibilityAsPerIncome ){
-                    $finalEligibility = $fmt->format($eligibleLoanAsPerProperty);
-                }else {
-                    $finalEligibility =$fmt->format( $eligibilityAsPerIncome);
+                    $eligibilityAsPerIncome = ((($totalIncome1 * $foir) - $totalLiabilityes1) / (int)$emi)*100000;
+                    
+                    if($eligibleLoanAsPerProperty < $eligibilityAsPerIncome ){
+                        $finalEligibility = $fmt->format($eligibleLoanAsPerProperty);
+                    }else {
+                        $finalEligibility =$fmt->format( $eligibilityAsPerIncome);
+                    }
                 }
             }
 

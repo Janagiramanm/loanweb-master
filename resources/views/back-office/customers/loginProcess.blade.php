@@ -117,7 +117,7 @@
                     swal("success", data, "success");
                     setTimeout(function(){
                         // location.reload();
-                        location.replace('/back-office/customers/sanctioned')
+                        location.replace("<?php echo url('/back-office/customers/sanctioned'); ?>")
                     }, 3000);
                 }
             });
