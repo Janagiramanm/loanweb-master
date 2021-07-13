@@ -485,7 +485,6 @@ class CustomerController extends Controller
                 'telecallername'        => Auth::user()->name,
                 'emp_id'                => isset($input['appointment_agent']) ? $input['appointment_agent'] : null ,
                 'application_status'    => $application_status,
-                'application_deleted'    => isset($input['not-interested']) ? 1 : 0,
                 'reason'    => isset($input['not-interested']) ? $input['reason_not_interest'] : NULL
             ]);
 
