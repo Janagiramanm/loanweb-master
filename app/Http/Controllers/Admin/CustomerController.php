@@ -424,7 +424,7 @@ class CustomerController extends Controller
         $input['application_deleted'] = false;
         $input['telecallername'] = Auth::user()->name;
 
-
+    
         $customers = Customer::create($input);
         // return redirect(route())
         return  Redirect::to('back-office/customers/newleads')->with('message','Customer Upload successfully');
