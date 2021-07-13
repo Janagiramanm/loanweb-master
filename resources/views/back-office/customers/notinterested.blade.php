@@ -168,6 +168,10 @@
         padding: 5px;
         margin: 20px;
 }
+.modal-open .modal {
+   
+    margin-top: 55px;
+}
     
     </style>
 @endsection
