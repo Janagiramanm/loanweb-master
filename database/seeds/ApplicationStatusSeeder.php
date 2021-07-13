@@ -69,8 +69,12 @@ class ApplicationStatusSeeder extends Seeder
         ]);
 
         ApplicationStatus::create([
-            "status" => "miscellaneous",
+            "status" => "MODT",
             "comment" => "In this section all the disbursed data will be shown from the builder data"
+        ]);
+        ApplicationStatus::create([
+            "status" => "Not Interested",
+            "comment" => "In this section not interested customer data will be shown"
         ]);
 
     }
