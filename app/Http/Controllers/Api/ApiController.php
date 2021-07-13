@@ -254,7 +254,7 @@ class ApiController extends Controller
             }
             $appointments = Appointment::find($appointment_id);
                   
-                if($appointment_type == 'primary'){
+                if($appointment_type == 'primary' || $appointment_type == 'modt'){
                    $collected_docs =  explode(',',$appointments->docs_ids);
                 }
                 if($appointment_type == 'secondary' ){
