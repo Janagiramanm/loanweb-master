@@ -1,3 +1,4 @@
+
 @extends('layouts.back-office')
 
 @section('breadcrum')
@@ -46,7 +47,25 @@
                     @foreach($result as $key =>  $res)
                        <tr>
                          <td>{{ $i }}</td>
-                      
+                        @foreach($res as $type => $value)
+                            @if($type == 'drop')
+                                <td>{{ $value->customer->cust_name }}</td>
+                                <td>{{ $value->customer->bank['bank_name'] }}</td>
+                                <td>{{ $value->modt_amount }}</td>
+                                <td>{{ $value->customer->telecallername }}</td>
+                                <td>{{ $value->user->name }}</td>
+                                <td>{{ $value->timeslot->time_slot }} </td>
+                            @endif
+                        @endforeach
+                        @foreach($res as $type => $value)
+                            @if($type == 'pickup')
+                                <td>{{ $value->customer->telecallername ? $value->customer->telecallername : '---'  }}</td>
+                                <td>{{ $value->user->name ? $value->user->name : '---' }}</td>
+                                <td>{{ $value->timeslot->time_slot ? $value->timeslot->time_slot : '---'  }}</td>
+                                <td>{{ $value->customer->loan_amount ? $value->customer->loan_amount : '---'  }}</td>
+                                <td>{{ $value->customer->file_no ? $value->customer->file_no : '---'  }}</td>
+                            @endif
+                        @endforeach   
                         @foreach($res as $type => $value) 
                               @if($type == 'drop')
                               <td>
@@ -93,7 +112,6 @@
     <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
     <script>
         $(document).ready(function(){
-
             $('.save-modt-btn').on('click',function(){
                 var appoint_id = $(this).attr('data-id');
                 var modt_paid = $('#modt_paid_'+appoint_id).val();
@@ -119,7 +137,6 @@
                     });
             })
            
-
          
         });
        

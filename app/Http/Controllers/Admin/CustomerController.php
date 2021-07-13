@@ -275,6 +275,7 @@ class CustomerController extends Controller
 
          $modtAppointments = ModtAppointment::get();
         // $pickupAppointments = ModtAppointment::where('type','=','pickup')->get();
+       
          $result = [];
          foreach($modtAppointments as $modtAppointment){ 
 
