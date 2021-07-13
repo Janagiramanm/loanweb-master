@@ -422,6 +422,7 @@ class CustomerController extends Controller
         $input['applicationno'] = uniqid();
         $input['application_status'] = 1;
         $input['application_deleted'] = false;
+        $input['telecallername'] = Auth::user()->name;
 
 
         $customers = Customer::create($input);
