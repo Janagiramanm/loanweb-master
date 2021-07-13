@@ -1136,7 +1136,8 @@ class CustomerController extends Controller
                     'timeslot_id'       => $input['appointment_time'],
                     'created_excutive'  => Auth::user()->id,
                     'status'            => 1,
-                    'appointmenttype_id'=> $input['type_of_appointment']
+                    'appointmenttype_id'=> $input['type_of_appointment'],
+                    'applicant_type' => 'primary'
                 ]);
             }
 
