@@ -110,6 +110,7 @@
 @section('custom-script')
     <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
     <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(document).ready(function(){
             $('.save-modt-btn').on('click',function(){
@@ -128,7 +129,7 @@
                         contentType: "application/json",
                         dataType: 'json',
                         success: function(data) {
-                          
+                            swal("success", data);
                             setTimeout(function(){
                                  location.reload();
                              
