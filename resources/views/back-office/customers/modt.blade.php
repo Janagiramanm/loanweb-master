@@ -119,6 +119,7 @@
                 var modt_mode = $('#modt_mode_'+appoint_id).val();
                 var modt_receipt = $('#modt_receipt_'+appoint_id).val();
                 
+                if(modt_paid !='' || modt_mode !='' || $modt_receipt!='' ){
                     $.ajax({
                         url : "<?php echo url('/back-office/updateModtValues'); ?>",
                         headers: {
@@ -136,6 +137,7 @@
                             }, 1000);
                         }
                     });
+                }
             })
            
          
