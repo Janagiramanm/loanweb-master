@@ -557,6 +557,11 @@ class CustomerController extends Controller
                
                     $secondCustomers =  implode(',',$secCustomers);
                     $app_type = 0;
+                    $applicant_type = 'primary';
+                    if(!empty($secondCustomers)){
+                        $applicant_type = 'both';
+                    }
+
                     $appointment = Appointment::create([
                         'agent_id'          => $input['appointment_agent'],
                         'customer_id'       => $id,
@@ -566,7 +571,7 @@ class CustomerController extends Controller
                         'created_excutive'  => Auth::user()->id,
                         'status'            => 1,
                         'appointmenttype_id'=> $input['type_of_appointment'],
-                        'applicant_type'=> 'both'
+                        'applicant_type'=> $applicant_type
                     ]);
                 
                }
