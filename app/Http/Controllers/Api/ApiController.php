@@ -132,8 +132,9 @@ class ApiController extends Controller
         }
         if($type_id  == 4){
             $cust_docs = Customer::where('id', '=', $id)->get();
-            if(isset($cust_docs[0]) && $cust_docs[0]['docs_ids'] !=''){
-                $extra_docs = ExtaDocs::where('customer_id', '=', $id)->whereNotIn('id', $cust_docs[0]['docs_ids'])->get();
+            if(isset($cust_docs[0]) && $cust_docs[0]['extradocs'] !=''){
+                $existingdocs = explode(",", $cust_docs[0]['extradocs']);
+                $extra_docs = ExtaDocs::where('customer_id', '=', $id)->whereNotIn('id', $existingdocs)->get();
             }else{
                 $extra_docs = ExtaDocs::where('customer_id', '=', $id)->get();
             }
