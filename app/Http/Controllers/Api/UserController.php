@@ -155,8 +155,13 @@ class UserController extends Controller
                 ->where('status','=',1)
                 ->count();
 
-                $modt = Appointment::where('agent_id','=',$userid)
-                ->whereIn('appointmenttype_id',['8','9'])
+                $modt_drop = Appointment::where('agent_id','=',$userid)
+                ->where('appointmenttype_id',['8'])
+                ->where('status','=',1)
+                ->count();
+
+                $modt_pickup = Appointment::where('agent_id','=',$userid)
+                ->where('appointmenttype_id',['9'])
                 ->where('status','=',1)
                 ->count();
             
@@ -168,7 +173,8 @@ class UserController extends Controller
                     'disbursment_docs_collection'=> $disbursment_docs_collection,
                     'pending_disbursment_docs' => $pending_disbursment_docs,
                     'submit_demand' => $submit_demand,
-                    'modt' => $modt
+                    'modt_drop' => $modt_drop,
+                    'modt_pickup' => $modt_pickup
                 ],200);
     }
 
