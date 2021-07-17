@@ -147,6 +147,7 @@
                                 <th>Address</th>
                                 <th>Appointment Type</th>
                                 <th>Telecaller</th>
+                                <th>Comments</th>
                                 <th>Date</th>
                                 <th>Time</th>
 							</tr>
@@ -159,6 +160,7 @@
                                     <td>{{ $appointment->cust_address }}</td>
                                     <td>{{ $appointment->appointment_name }}</td>
                                     <td>{{ $appointment->telecallername }}</td>
+                                    <td>{{ $appointment->comments }}</td>
                                     <td>{{ $appointment->appointment_date }}</td>
                                     <td>{{ $appointment->time_slot }}</td>
                                 </tr>
