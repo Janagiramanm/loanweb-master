@@ -52,7 +52,7 @@ class AdminController extends Controller
         }
         $data['disbursed']   = $disbursed->count();
 
-        $all = Customer::where('application_deleted', '=', 0);
+        $all = Customer::where('application_deleted', '=', 0)->whereNotIn('application_status',['12','13']);
         if($username != 'Admin User'){
             $all->where('telecallername','=',$username);
         }
