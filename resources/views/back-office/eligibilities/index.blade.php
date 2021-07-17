@@ -211,9 +211,9 @@
 			
 			setTimeout(function(){
 				
-				// var empType = $(".select2 select2-container select2-container--default select2-container--focus option:selected").val();
-				// alert(empType);
-				// formChange();
+				var empType = $(".select2 select2-container select2-container--default select2-container--focus option:selected").val();
+				alert(empType);
+				formChange();
 			},1000);
 				
 			

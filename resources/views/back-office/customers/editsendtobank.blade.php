@@ -374,7 +374,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="sentToBank" name="sentToBank" value="{{ old('sentToBank') ?? 1 }}">
                                     <label class="form-check-label" for="sentToBank">
-                                        Successfully send to Bank
+                                        File Processed Successfully
                                     </label>
                                 </div>
                             </div>

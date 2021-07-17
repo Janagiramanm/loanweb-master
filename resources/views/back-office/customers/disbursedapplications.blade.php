@@ -25,6 +25,8 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
+                    <th>Project Name</th>
+                    <th>Flat No</th>
                     <th>E-Mail</th>
                     <th>Phone</th>
                     <th class="text-center">View</th>
@@ -35,6 +37,15 @@
                     <tr>
                         <td>{{ $customer->cust_id }}</td>
                         <td>{{ $customer->cust_name }}</td>
+                        <td>
+                             @php
+                                    $project = App\Model\Builder::where('id','=',$customer->project_name)->first();
+                                    if(isset($project->project_name)){
+                                        echo $project->project_name;    
+                                    }
+                             @endphp
+                        </td>
+                        <td>{{ $customer->buying_door_no }}</td>
                         <td>{{ $customer->cust_email }}</td>
                         <td>{{ $customer->cust_phone }}</td>
                         <td class="text-center">

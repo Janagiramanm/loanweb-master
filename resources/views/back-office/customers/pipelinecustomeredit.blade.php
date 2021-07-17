@@ -13,7 +13,7 @@
 <div class="container mt-5">
     <div class="card card-table table-responsive shadow-0">
      @if($appointments)
-        <table class="table">
+        <table class="table datatable-pagination">
             <thead>
                 <tr>
                    <th colspan="6"> <h1>Appointments</h1> </th>
@@ -669,7 +669,8 @@
 @endsection
 
 @section('custom-script')
-
+<script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
+<script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
 
 <script>
     $("#interested").click(function(){

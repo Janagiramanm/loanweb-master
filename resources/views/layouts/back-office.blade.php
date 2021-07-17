@@ -343,8 +343,8 @@
 	<!-- Theme JS files -->
 	<script src="{{ asset('admin/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 	<script src="{{ asset('admin/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js')}}"></script>
-    <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
-
+    <!-- <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script> -->
+	<script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
 
 
 

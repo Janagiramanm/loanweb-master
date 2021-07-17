@@ -1184,6 +1184,9 @@ a.remove_button, .remove_button_edit {
     text-align: center;
     margin-top: -19px;
 }
+.modal-open .modal {
+    margin-top: 1% !important;
+}
 </style>
 
 @endsection

@@ -32,6 +32,7 @@
                                 <th>Customer Type</th>
                                 <th>Appointment Type</th>
                                 <th>Telecaller</th>
+                                <th>Comments</th>
                                 <th>Appointment Date</th>
                                 <th>Start</th>
                                 <th>End</th>
@@ -48,6 +49,7 @@
                                     <td>{{ $appointment->status }}</td>
                                     <td>{{ $appointment->appointment_name }}</td>
                                     <td>{{ $appointment->telecallername }}</td>
+                                    <td>{{ $appointment->comments }}</td>
                                     <td>
                                     @php
                                       if($appointment->appointment_date !=''){
@@ -123,8 +125,8 @@
 
 
 @section('custom-script')
-<script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
-<script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
+<!-- <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
+<script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script> -->
 
   <style>
    #mymap{

@@ -30,12 +30,15 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
+                   
                     <th>E-Mail</th>
                     <th>Phone</th>
                     <th>Project Name</th>
+                    <th>Flat No</th>
                     <th>Telecaller</th>
                     <th>Date Created</th>
                     <th>Source</th>
+                   
                     <th class="text-center">Actions</th>
                 </tr>
                 </thead>
@@ -47,20 +50,22 @@
                     <tr>
                         <td>{{ $index++ }}</td>
                         <td>{{ $customer->cust_name }}</td>
+                      
                         <td>{{ $customer->cust_email }}</td>
                         <td>{{ $customer->cust_phone }}</td>
                         <td>
                              @php
-                             $project = App\Model\Builder::where('id','=',$customer->project_name)->first();
-                             if(isset($project->project_name)){
-                                echo $project->project_name;    
-                             }
-                           
+                                    $project = App\Model\Builder::where('id','=',$customer->project_name)->first();
+                                    if(isset($project->project_name)){
+                                        echo $project->project_name;    
+                                    }
                              @endphp
-                             </td>
+                        </td>
+                        <td> {{ $customer->buying_door_no }} </td>
                         <td>{{ $customer->telecallername }}</td>
                         <td>@php echo date('d-m-Y',strtotime($customer->created_at)); @endphp</td>
                         <td>Dashboard</td>
+                        
                         <td class="text-center">
                             <div class="list-icons">
                                 <div class="dropdown">
@@ -132,8 +137,8 @@
 
 
 @section('custom-script')
-<script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
-    <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
+    <!-- <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script> -->
+    <!-- <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script> -->
     <script>
     $(document).ready(function() {
         $("#submit_exce_form_btn").on("click",function() {

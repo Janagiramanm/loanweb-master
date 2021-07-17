@@ -57,7 +57,8 @@ class CustomerController extends Controller
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 1], ['customers.application_deleted', '=', 0]])
                     
-                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost','customers.project_name','customers.telecallername','customers.created_at') 
+                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost',
+                    'customers.project_name','customers.telecallername','customers.created_at','customers.buying_door_no') 
                     ->orderBy('cust_id', 'DESC');
         if($username != 'Admin User'){
             $query->where('customers.telecallername','=',$username);
@@ -74,7 +75,8 @@ class CustomerController extends Controller
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 2], ['customers.application_deleted', '=', 0] ])
-                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 
+                    'customers.cust_phone', 'customers.property_cost', 'customers.buying_door_no','customers.project_name')
                     ->orderByDesc('customers.id')
                     ->get();
         return view('back-office.customers.customers', compact('customers'));
@@ -86,7 +88,8 @@ class CustomerController extends Controller
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 3], ['customers.application_deleted', '=', 0] ])
-                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email',
+                             'customers.cust_phone', 'customers.property_cost', 'customers.buying_door_no','customers.project_name')
                     ->orderByDesc('customers.id')
                     ->get();
         return view('back-office.customers.sendtobank', compact('customers'));
@@ -98,7 +101,8 @@ class CustomerController extends Controller
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 4], ['customers.application_deleted', '=', 0] ])
-                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 
+                             'customers.cust_phone', 'customers.property_cost', 'customers.buying_door_no','customers.project_name')
                     ->orderByDesc('customers.id')
                     ->get();
         return view('back-office.customers.loginProcess', compact('customers'));
@@ -130,7 +134,8 @@ class CustomerController extends Controller
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 5], ['customers.application_deleted', '=', 0] ])
-                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email',
+                     'customers.cust_phone', 'customers.property_cost', 'customers.buying_door_no','customers.project_name')
                     ->orderByDesc('customers.id')
                     ->get();
         return view('back-office.customers.sanctioned', compact('customers'));
@@ -142,7 +147,8 @@ class CustomerController extends Controller
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 6], ['customers.application_deleted', '=', 0] ])
-                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 
+                             'customers.cust_phone', 'customers.property_cost',  'customers.buying_door_no','customers.project_name')
                     ->orderByDesc('customers.id')
                     ->get();
         return view('back-office.customers.readytodisburse', compact('customers'));
@@ -154,7 +160,8 @@ class CustomerController extends Controller
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 7], ['customers.application_deleted', '=', 0] ])
-                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone',
+                             'customers.property_cost',  'customers.buying_door_no','customers.project_name')
                     ->orderByDesc('customers.id')
                     ->get();
         return view('back-office.customers.disbursebank', compact('customers'));
@@ -166,7 +173,8 @@ class CustomerController extends Controller
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 8], ['customers.application_deleted', '=', 0] ])
-                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 
+                    'customers.property_cost', 'customers.buying_door_no','customers.project_name')
                     ->orderByDesc('customers.id')
                     ->get();
         return view('back-office.customers.chequefixing', compact('customers'));
@@ -178,7 +186,8 @@ class CustomerController extends Controller
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where([['customers.application_status', '=', 9], ['customers.application_deleted', '=', 0] ])
-                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone',
+                     'customers.property_cost',  'customers.buying_door_no','customers.project_name')
                     ->orderByDesc('customers.id')
                     ->get();
         return view('back-office.customers.disbursedapplications', compact('customers'));
@@ -190,7 +199,8 @@ class CustomerController extends Controller
          $customers = DB::table('customers')
                      ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                      ->where([['customers.application_status', '=', 10], ['customers.application_deleted', '=', 0] ])
-                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost',
+                     'customers.buying_door_no','customers.project_name')
                      ->orderByDesc('customers.id')
                      ->get();
          return view('back-office.customers.partdisbursements', compact('customers'));
@@ -202,7 +212,8 @@ class CustomerController extends Controller
          $customers = DB::table('customers')
                      ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                      ->where([['customers.application_status', '=', 11], ['customers.application_deleted', '=', 0] ])
-                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 
+                              'customers.property_cost',  'customers.buying_door_no','customers.project_name')
                      ->orderByDesc('customers.id')
                      ->get();
          return view('back-office.customers.partchequefixing', compact('customers'));
@@ -213,7 +224,8 @@ class CustomerController extends Controller
          $customers = DB::table('customers')
                      ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                      ->where([['customers.application_status', '=', 12], ['customers.application_deleted', '=', 0] ])
-                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost',
+                     'customers.buying_door_no','customers.project_name')
                      ->orderByDesc('customers.id')
                      ->get();
          return view('back-office.customers.selffundcustomers', compact('customers'));
@@ -227,7 +239,7 @@ class CustomerController extends Controller
         $user = Auth::user();
         $telecallerName = '';
         $username =  $user->name;
-        $query = Customer::where('application_deleted','=',0);
+        $query = Customer::where('application_deleted','=',0)->whereNotIn('application_status',['12','13']);
         if($username != 'Admin User'){
             $query->where('telecallername','=',$username);
         }
@@ -246,7 +258,8 @@ class CustomerController extends Controller
         $customers = DB::table('customers')
                     ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                     ->where('customers.application_deleted', '=', 1)
-                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                    ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost',
+                    'customers.buying_door_no','customers.project_name')
                     ->orderByDesc('customers.id')
                     ->get();
         return view('back-office.customers.droppedcustomers', compact('customers'));
@@ -258,7 +271,8 @@ class CustomerController extends Controller
          $customers = DB::table('customers')
                      ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                      ->where('customers.application_status', '=', 13)
-                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost')
+                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost',
+                     'customers.buying_door_no','customers.project_name')
                      ->orderByDesc('customers.id')
                      ->get();
          return view('back-office.customers.notinterested', compact('customers'));

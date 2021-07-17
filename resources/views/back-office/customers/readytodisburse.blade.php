@@ -23,16 +23,30 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
+                    <th>Project Name</th>
+                    <th>Flat No</th>
                     <th>E-Mail</th>
                     <th>Phone</th>
                     <th class="text-center">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
+                @php
+                   $index = 1;
+                @endphp
                 @foreach ($customers as $customer)
                     <tr>
-                        <td>{{ $customer->cust_id }}</td>
+                        <td>{{ $index++ }}</td>
                         <td>{{ $customer->cust_name }}</td>
+                        <td>
+                             @php
+                                    $project = App\Model\Builder::where('id','=',$customer->project_name)->first();
+                                    if(isset($project->project_name)){
+                                        echo $project->project_name;    
+                                    }
+                             @endphp
+                        </td>
+                        <td>{{ $customer->buying_door_no }}</td>
                         <td>{{ $customer->cust_email }}</td>
                         <td>{{ $customer->cust_phone }}</td>
                         <td class="text-center">
@@ -91,8 +105,8 @@
 @endsection
 
 @section('custom-script')
-    <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
-    <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script>
+    <!-- <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
+    <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script> -->
     <script>
     $(document).ready(function() {
        
