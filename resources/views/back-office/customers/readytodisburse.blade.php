@@ -105,8 +105,7 @@
 @endsection
 
 @section('custom-script')
-    <!-- <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script>
-    <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script> -->
+  
     <script>
     $(document).ready(function() {
        

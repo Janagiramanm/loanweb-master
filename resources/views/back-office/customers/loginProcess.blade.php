@@ -111,8 +111,7 @@
 
 
 @section('custom-script')
-    <!-- <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_advanced.js') }}"></script> -->
-    <!-- <script src="{{ asset('admin/global_assets/js/demo_pages/datatables_basic.js') }}"></script> -->
+  
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
        $(document).ready(function(){
