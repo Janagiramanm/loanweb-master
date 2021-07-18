@@ -58,7 +58,7 @@ class CustomerController extends Controller
                     ->where([['customers.application_status', '=', 1], ['customers.application_deleted', '=', 0]])
                     
                     ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost',
-                    'customers.project_name','customers.telecallername','customers.created_at','customers.buying_door_no') 
+                    'customers.project_name','customers.telecallername','customers.created_at','customers.buying_door_no','customers.reason') 
                     ->orderBy('cust_id', 'DESC');
         if($username != 'Admin User'){
             $query->where('customers.telecallername','=',$username);
@@ -272,7 +272,7 @@ class CustomerController extends Controller
                      ->join('application_status', 'application_status.id', '=', 'customers.application_status')
                      ->where('customers.application_status', '=', 13)
                      ->select('customers.id as cust_id', 'customers.cust_name', 'customers.cust_email', 'customers.cust_phone', 'customers.property_cost',
-                     'customers.buying_door_no','customers.project_name')
+                     'customers.buying_door_no','customers.project_name','customers.reason')
                      ->orderByDesc('customers.id')
                      ->get();
          return view('back-office.customers.notinterested', compact('customers'));
@@ -501,7 +501,7 @@ class CustomerController extends Controller
                 'telecallername'        => Auth::user()->name,
                 'emp_id'                => isset($input['appointment_agent']) ? $input['appointment_agent'] : null ,
                 'application_status'    => $application_status,
-                'reason'    => isset($input['not-interested']) ? $input['reason_not_interest'] : NULL
+                'reason'    => isset($input['not-interested']) ? $input['reason_not_interest'] : $input['reason']
             ]);
 
             

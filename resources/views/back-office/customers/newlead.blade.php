@@ -35,6 +35,7 @@
                     <th>Phone</th>
                     <th>Project Name</th>
                     <th>Flat No</th>
+                    <th>Reason</th>
                     <th>Telecaller</th>
                     <th>Date Created</th>
                     <th>Source</th>
@@ -62,6 +63,7 @@
                              @endphp
                         </td>
                         <td> {{ $customer->buying_door_no }} </td>
+                        <td> {{ $customer->reason }} </td>
                         <td>{{ $customer->telecallername }}</td>
                         <td>@php echo date('d-m-Y',strtotime($customer->created_at)); @endphp</td>
                         <td>Dashboard</td>

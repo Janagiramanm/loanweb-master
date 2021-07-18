@@ -96,6 +96,13 @@
                                     </select>
                                 </div>
                         </div>
+
+                        <div class="form-row">
+                                <div class="form-group col-md-6">
+                                <label for="cust_address">Reason</label>
+                                <textarea class="form-control" id="reason" placeholder="" name="reason" required cols="30" rows="3">{{ old('reason')  }}</textarea>
+                            </div>
+                        </div>
                       
                         <button type="submit" class="btn btn-primary">Create Customer</button>
                     </form>

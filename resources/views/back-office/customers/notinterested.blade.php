@@ -25,6 +25,7 @@
                     <th>Flat No</th>
                     <th>E-Mail</th>
                     <th>Phone</th>
+                    <th>Reason</th>
                     <th class="text-center">Actions</th>
                 </tr>
                 </thead>
@@ -48,6 +49,7 @@
                         <td>{{ $customer->buying_door_no }}</td>
                         <td>{{ $customer->cust_email }}</td>
                         <td>{{ $customer->cust_phone }}</td>
+                        <td>{{ $customer->reason }}</td>
                         <td class="text-center">
                            
                             <button type="button" class="btn btn-primary edit-cust-status" data-toggle="modal" id="{{ $customer->cust_id }}" data-target="#custStatusChangeModal">
