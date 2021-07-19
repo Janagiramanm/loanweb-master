@@ -204,7 +204,7 @@
                                         <li class="nav-item"><a href="{{ url('back-office/customers/sanctioned') }}" class="nav-link <?php if(\Request::is('back-office/customers/sanctioned')){ echo 'active'; } ?> ">Sanctioned Customers</a></li>
 									</ul>
                                 </li>
-                                <li class="nav-item nav-item-submenu  <?php if(\Request::is('back-office/public/index.php/back-office/customers/readytodisburse') || \Request::is('back-office/public/index.php/back-office/customers/disbursebank') || \Request::is('back-office/customers/disbursedapplications') || \Request::is('back-office/customers/chequefixing')) { echo 'nav-item-expanded nav-item-open'; }?>">
+                                <li class="nav-item nav-item-submenu  <?php if(\Request::is('back-office/customers/readytodisburse') || \Request::is('back-office/customers/disbursebank') || \Request::is('back-office/customers/disbursedapplications') || \Request::is('back-office/customers/chequefixing')) { echo 'nav-item-expanded nav-item-open'; }?>">
 									<a href="#" class="nav-link  <?php if(\Request::is('back-office/customers/readytodisburse') || \Request::is('back-office/customers/disbursebank') || \Request::is('back-office/customers/disbursedapplications') || \Request::is('back-office/customers/chequefixing')) { echo 'active'; }?>">Disbursement Process</a>
 									<ul class="nav nav-group-sub">
 										<li class="nav-item"><a href="{{ url('back-office/customers/readytodisburse') }}" class="nav-link <?php if(\Request::is('back-office/customers/readytodisburse')){ echo 'active'; } ?>">Ready for Disbursement</a></li>
