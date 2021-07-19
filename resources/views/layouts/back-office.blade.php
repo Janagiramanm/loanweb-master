@@ -171,20 +171,20 @@
                         </li>
 						@if (auth()->user()->isAdmin())
                         <li class="nav-item">
-                            <a href="{{ url('back-office/roles') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/roles')){ echo 'active'; } ?>"> <i class="icon-user-lock"></i> <span>Admin Roles</span></a>
+                            <a href="{{ url('back-office/roles') }}" class="nav-link <?php if(\Request::is('back-office/roles')){ echo 'active'; } ?>"> <i class="icon-user-lock"></i> <span>Admin Roles</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('back-office/users') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/users')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Employees</span></a>
+                            <a href="{{ url('back-office/users') }}" class="nav-link <?php if(\Request::is('back-office/users')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Employees</span></a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ url('back-office/banks') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/banks')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Banks</span></a>
+                            <a href="{{ url('back-office/banks') }}" class="nav-link <?php if(\Request::is('back-office/banks')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Banks</span></a>
                         </li>
 						<li class="nav-item">
-                            <a href="{{ url('back-office/bank/branches') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/bank/branches')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Branches</span></a>
+                            <a href="{{ url('back-office/bank/branches') }}" class="nav-link <?php if(\Request::is('back-office/bank/branches')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Branches</span></a>
                         </li>
 						<li class="nav-item">
-                            <a href="{{ url('back-office/builders') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/builders')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Builders</span></a>
+                            <a href="{{ url('back-office/builders') }}" class="nav-link <?php if(\Request::is('back-office/builders')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Builders</span></a>
                         </li>
 						
 						<li class="nav-item">
@@ -194,51 +194,51 @@
                         <li class="nav-item nav-item-submenu <?php if(strpos($_SERVER['REQUEST_URI'], 'back-office/customers')) { echo 'nav-item-expanded nav-item-open'; }?>">
                             <a href="#" class="nav-link"><i class="icon-pencil3"></i> <span>Customers</span></a>
                             <ul class="nav nav-group-sub" data-submenu-title="Form components">
-                                <li class="nav-item"><a href="{{ url('back-office/customers/newleads') }}" class="nav-link  <?php if(\Request::is('back-office/public/index.php/back-office/customers/newleads')){ echo 'active'; } ?>">New Leads</a></li>
-                                <li class="nav-item"><a href="{{ url('back-office/customers/customers') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/customers')){ echo 'active'; } ?> ">Pipe Line Customers</a></li>
-                                <li class="nav-item nav-item-submenu   <?php if(\Request::is('back-office/customers/loginProcess') || \Request::is('back-office/public/index.php/back-office/customers/sanctioned') || \Request::is('back-office/public/index.php/back-office/customers/sendtobank')) { echo 'nav-item-expanded nav-item-open'; }?>">
-									<a href="#" class="nav-link  <?php if(\Request::is('back-office/customers/loginProcess') || \Request::is('back-office/public/index.php/back-office/customers/sanctioned') || \Request::is('back-office/public/index.php/back-office/customers/sendtobank')){ echo 'active'; } ?>">Login Process </a>
+                                <li class="nav-item"><a href="{{ url('back-office/customers/newleads') }}" class="nav-link  <?php if(\Request::is('back-office/customers/newleads')){ echo 'active'; } ?>">New Leads</a></li>
+                                <li class="nav-item"><a href="{{ url('back-office/customers/customers') }}" class="nav-link <?php if(\Request::is('back-office/customers/customers')){ echo 'active'; } ?> ">Pipe Line Customers</a></li>
+                                <li class="nav-item nav-item-submenu   <?php if(\Request::is('back-office/customers/loginProcess') || \Request::is('back-office/customers/sanctioned') || \Request::is('back-office/customers/sendtobank')) { echo 'nav-item-expanded nav-item-open'; }?>">
+									<a href="#" class="nav-link  <?php if(\Request::is('back-office/customers/loginProcess') || \Request::is('back-office/customers/sanctioned') || \Request::is('back-office/customers/sendtobank')){ echo 'active'; } ?>">Login Process </a>
 									<ul class="nav nav-group-sub">
-                                        <li class="nav-item"><a href="{{ url('back-office/customers/sendtobank') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/sendtobank')){ echo 'active'; } ?>">Sent for Login</a></li>
-										<li class="nav-item"><a href="{{ url('back-office/customers/loginProcess') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/loginProcess')){ echo 'active'; } ?>">Logged in Data</a></li>
-                                        <li class="nav-item"><a href="{{ url('back-office/customers/sanctioned') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/sanctioned')){ echo 'active'; } ?> ">Sanctioned Customers</a></li>
+                                        <li class="nav-item"><a href="{{ url('back-office/customers/sendtobank') }}" class="nav-link <?php if(\Request::is('back-office/customers/sendtobank')){ echo 'active'; } ?>">Sent for Login</a></li>
+										<li class="nav-item"><a href="{{ url('back-office/customers/loginProcess') }}" class="nav-link <?php if(\Request::is('back-office/customers/loginProcess')){ echo 'active'; } ?>">Logged in Data</a></li>
+                                        <li class="nav-item"><a href="{{ url('back-office/customers/sanctioned') }}" class="nav-link <?php if(\Request::is('back-office/customers/sanctioned')){ echo 'active'; } ?> ">Sanctioned Customers</a></li>
 									</ul>
                                 </li>
                                 <li class="nav-item nav-item-submenu  <?php if(\Request::is('back-office/public/index.php/back-office/customers/readytodisburse') || \Request::is('back-office/public/index.php/back-office/customers/disbursebank') || \Request::is('back-office/customers/disbursedapplications') || \Request::is('back-office/customers/chequefixing')) { echo 'nav-item-expanded nav-item-open'; }?>">
-									<a href="#" class="nav-link  <?php if(\Request::is('back-office/public/index.php/back-office/customers/readytodisburse') || \Request::is('back-office/public/index.php/back-office/customers/disbursebank') || \Request::is('back-office/customers/disbursedapplications') || \Request::is('back-office/customers/chequefixing')) { echo 'active'; }?>">Disbursement Process</a>
+									<a href="#" class="nav-link  <?php if(\Request::is('back-office/customers/readytodisburse') || \Request::is('back-office/customers/disbursebank') || \Request::is('back-office/customers/disbursedapplications') || \Request::is('back-office/customers/chequefixing')) { echo 'active'; }?>">Disbursement Process</a>
 									<ul class="nav nav-group-sub">
-										<li class="nav-item"><a href="{{ url('back-office/customers/readytodisburse') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/readytodisburse')){ echo 'active'; } ?>">Ready for Disbursement</a></li>
-                                        <li class="nav-item"><a href="{{ url('back-office/customers/disbursebank') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/disbursebank')){ echo 'active'; } ?>">Bank Process</a></li>
-                                        <li class="nav-item"><a href="{{ url('back-office/customers/chequefixing') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/chequefixing')){ echo 'active'; } ?>">Cheque Fixing</a></li>
-                                        <li class="nav-item"><a href="{{ url('back-office/customers/disbursedapplications') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/disbursedapplications')){ echo 'active'; } ?>">Disbursed Applications</a></li>
+										<li class="nav-item"><a href="{{ url('back-office/customers/readytodisburse') }}" class="nav-link <?php if(\Request::is('back-office/customers/readytodisburse')){ echo 'active'; } ?>">Ready for Disbursement</a></li>
+                                        <li class="nav-item"><a href="{{ url('back-office/customers/disbursebank') }}" class="nav-link <?php if(\Request::is('back-office/customers/disbursebank')){ echo 'active'; } ?>">Bank Process</a></li>
+                                        <li class="nav-item"><a href="{{ url('back-office/customers/chequefixing') }}" class="nav-link <?php if(\Request::is('back-office/customers/chequefixing')){ echo 'active'; } ?>">Cheque Fixing</a></li>
+                                        <li class="nav-item"><a href="{{ url('back-office/customers/disbursedapplications') }}" class="nav-link <?php if(\Request::is('back-office/customers/disbursedapplications')){ echo 'active'; } ?>">Disbursed Applications</a></li>
 									</ul>
                                 </li>
 
-                                <li class="nav-item nav-item-submenu  <?php if(\Request::is('back-office/public/index.php/back-office/customers/partdisbursements') || \Request::is('back-office/public/index.php/back-office/customers/partchequefixing') || \Request::is('back-office/public/index.php/back-office/customers/disbursedapplications') || \Request::is('back-office/public/index.php/back-office/customers/chequefixing')) { echo 'nav-item-expanded nav-item-open'; }?>">
-									<a href="#" class="nav-link  <?php if(\Request::is('back-office/public/index.php/back-office/customers/partdisbursements') || \Request::is('back-office/public/index.php/back-office/customers/partchequefixing') || \Request::is('back-office/public/index.php/back-office/customers/disbursedapplications') || \Request::is('back-office/public/index.php/back-office/customers/chequefixing')) { echo 'active'; }?>">Part Disbursements</a>
+                                <li class="nav-item nav-item-submenu  <?php if(\Request::is('back-office/customers/partdisbursements') || \Request::is('back-office/customers/partchequefixing') || \Request::is('back-office/customers/disbursedapplications') || \Request::is('back-office/customers/chequefixing')) { echo 'nav-item-expanded nav-item-open'; }?>">
+									<a href="#" class="nav-link  <?php if(\Request::is('back-office/customers/partdisbursements') || \Request::is('back-office/customers/partchequefixing') || \Request::is('back-office/customers/disbursedapplications') || \Request::is('back-office/customers/chequefixing')) { echo 'active'; }?>">Part Disbursements</a>
 									<ul class="nav nav-group-sub">
-										<li class="nav-item"><a href="{{ url('back-office/customers/partdisbursements') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/partdisbursements')){ echo 'active'; } ?>">Part Disbursements</a></li>
-                                        <li class="nav-item"><a href="{{ url('back-office/customers/partchequefixing') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/partchequefixing')){ echo 'active'; } ?>">Part Cheque Fixing</a></li>
+										<li class="nav-item"><a href="{{ url('back-office/customers/partdisbursements') }}" class="nav-link <?php if(\Request::is('back-office/customers/partdisbursements')){ echo 'active'; } ?>">Part Disbursements</a></li>
+                                        <li class="nav-item"><a href="{{ url('back-office/customers/partchequefixing') }}" class="nav-link <?php if(\Request::is('back-office/customers/partchequefixing')){ echo 'active'; } ?>">Part Cheque Fixing</a></li>
                                     </ul>
                                 </li>
 
-								<li class="nav-item nav-item-submenu  <?php if(\Request::is('back-office/public/index.php/back-office/customers/modt*')) { echo 'nav-item-expanded nav-item-open'; }?>">
-									<a href="#" class="nav-link  <?php if(\Request::is('back-office/public/index.php/back-office/customers/partdisbursements') || \Request::is('back-office/public/index.php/back-office/customers/partchequefixing') || \Request::is('back-office/customers/disbursedapplications') || \Request::is('back-office/customers/chequefixing')) { echo 'active'; }?>">MODT</a>
+								<li class="nav-item nav-item-submenu  <?php if(\Request::is('back-office/customers/modt*')) { echo 'nav-item-expanded nav-item-open'; }?>">
+									<a href="#" class="nav-link  <?php if(\Request::is('back-office/customers/partdisbursements') || \Request::is('back-office/customers/partchequefixing') || \Request::is('back-office/customers/disbursedapplications') || \Request::is('back-office/customers/chequefixing')) { echo 'active'; }?>">MODT</a>
 									<ul class="nav nav-group-sub">
-										 <li class="nav-item"><a href="{{ url('back-office/customers/modt/schedule') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/modt/schedule')){ echo 'active'; } ?>">Schedule</a></li>
-										 <li class="nav-item"><a href="{{ url('back-office/customers/modt') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/modt')){ echo 'active'; } ?>">Details</a></li>
+										 <li class="nav-item"><a href="{{ url('back-office/customers/modt/schedule') }}" class="nav-link <?php if(\Request::is('back-office/customers/modt/schedule')){ echo 'active'; } ?>">Schedule</a></li>
+										 <li class="nav-item"><a href="{{ url('back-office/customers/modt') }}" class="nav-link <?php if(\Request::is('back-office/customers/modt')){ echo 'active'; } ?>">Details</a></li>
                                     </ul>
                                 </li>
                                 
-                                <li class="nav-item"><a href="{{ url('back-office/customers/allcustomers') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/allcustomers')){ echo 'active'; } ?>">All Customers</a></li>
-                                <li class="nav-item"><a href="{{ url('back-office/customers/droppedcustomers') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/droppedcustomers')){ echo 'active'; } ?>">Dropped Customers</a></li>
-                                <li class="nav-item"><a href="{{ url('back-office/customers/self-funding') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/self-funding')){ echo 'active'; } ?>">Self Funding Customers</a></li>
-                                <li class="nav-item"><a href="{{ url('back-office/customers/not-interested') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/customers/not-interested')){ echo 'active'; } ?>">Not Interested Customers</a></li>
+                                <li class="nav-item"><a href="{{ url('back-office/customers/allcustomers') }}" class="nav-link <?php if(\Request::is('back-office/customers/allcustomers')){ echo 'active'; } ?>">All Customers</a></li>
+                                <li class="nav-item"><a href="{{ url('back-office/customers/droppedcustomers') }}" class="nav-link <?php if(\Request::is('back-office/customers/droppedcustomers')){ echo 'active'; } ?>">Dropped Customers</a></li>
+                                <li class="nav-item"><a href="{{ url('back-office/customers/self-funding') }}" class="nav-link <?php if(\Request::is('back-office/customers/self-funding')){ echo 'active'; } ?>">Self Funding Customers</a></li>
+                                <li class="nav-item"><a href="{{ url('back-office/customers/not-interested') }}" class="nav-link <?php if(\Request::is('back-office/customers/not-interested')){ echo 'active'; } ?>">Not Interested Customers</a></li>
 
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('back-office/appointments') }}" class="nav-link <?php if(\Request::is('back-office/public/index.php/back-office/appointments')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Appointments</span></a>
+                            <a href="{{ url('back-office/appointments') }}" class="nav-link <?php if(\Request::is('back-office/appointments')){ echo 'active'; } ?>"><i class="icon-user-plus"></i> <span>Appointments</span></a>
                         </li>
 
 					</ul>
