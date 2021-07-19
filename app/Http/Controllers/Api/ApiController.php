@@ -15,6 +15,7 @@ use App\Model\Appointment;
 use App\Model\ModtAppointment;
 use App\Model\Occupation;
 use App\Model\SecondaryApplicant;
+use App\Model\Timeslot;
 use App\User;
 class ApiController extends Controller
 {
@@ -467,6 +468,7 @@ class ApiController extends Controller
             // print_r($appointments);//exit;
             foreach($appointments as $appointment){
                // $result[$i]['secondary']=[];
+                $timeSlot = Timeslot::find($appointment->timeslot_id);
                 if($appointment->applicant_type!='secondary'){
                     $customer = Customer::where('id','=',$appointment->customer_id)->first();
                     $occupation = Occupation::where('id','=', $customer->occupation_id)->first();
@@ -476,6 +478,7 @@ class ApiController extends Controller
                     $result[$i]['occupation_id'] = $occupation->id;
                     $result[$i]['occupation_name'] = $occupation->occupation_name;
                     $result[$i]['appointment_date'] = $appointment->appointment_date;
+                    $result[$i]['appointment_time'] = $timeSlot->time_slot;
                     $result[$i]['applicant_type'] = $appointment->applicant_type;
                     $result[$i]['appointment_id'] = $appointment->id;
                     $result[$i]['start_flag'] = "true";
@@ -494,6 +497,7 @@ class ApiController extends Controller
                     $result[$i]['occupation_id'] = $occupation->id;
                     $result[$i]['occupation_name'] = $occupation->occupation_name;
                     $result[$i]['appointment_date'] = $appointment->appointment_date;
+                    $result[$i]['appointment_time'] = $timeSlot->time_slot;
                     $result[$i]['applicant_type'] = $appointment->applicant_type;
                     $result[$i]['appointment_id'] = $appointment->id;
                     $result[$i]['start_flag'] = "true";
@@ -525,6 +529,7 @@ class ApiController extends Controller
                                     $result[$i]['secondary'][$ss]['occupation_id'] = $second->occupation_id;
                                     $result[$i]['secondary'][$ss]['occupation_name'] = $sec_occupation->occupation_name;
                                     $result[$i]['secondary'][$ss]['appointment_date'] = $appointment->appointment_date;
+                                    $result[$i]['secondary'][$ss]['applicant_time'] = $timeSlot->time_slot;
                                     $result[$i]['secondary'][$ss]['applicant_type'] = $appointment->applicant_type;
                                     $result[$i]['secondary'][$ss]['appointment_id'] = $appointment->id;
                                     $result[$i]['secondary'][$ss]['start_flag'] = "true";
