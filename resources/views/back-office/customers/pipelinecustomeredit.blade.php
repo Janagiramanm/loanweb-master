@@ -777,7 +777,10 @@
                 success: function(resp) {
                     if(resp.status == 1){
                         swal("success", resp);
-                        location.reload();
+                        setTimeout(function(){
+                            location.reload();
+                        },1000)
+                      
                     }
                 }
             })
