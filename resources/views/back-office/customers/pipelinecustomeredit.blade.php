@@ -779,7 +779,7 @@
                         swal("success", resp);
                         setTimeout(function(){
                             location.reload();
-                        },1000)
+                        },3000)
                       
                     }
                 }
