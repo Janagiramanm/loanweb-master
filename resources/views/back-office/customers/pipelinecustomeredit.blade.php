@@ -776,7 +776,7 @@
                 dataType: 'json',
                 success: function(resp) {
                     if(resp.status == 1){
-                        swal("success", data, "success");
+                        swal("success", resp, "success");
                         location.reload();
                     }
                 }
