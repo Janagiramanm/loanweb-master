@@ -670,7 +670,7 @@
 
 @section('custom-script')
 
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
     $("#interested").click(function(){
         if ($('#interested').is(":checked")) {
@@ -776,6 +776,7 @@
                 dataType: 'json',
                 success: function(resp) {
                     if(resp.status == 1){
+                        swal("success", data, "success");
                         location.reload();
                     }
                 }
