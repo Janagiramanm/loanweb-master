@@ -1480,7 +1480,7 @@ class CustomerController extends Controller
                 'installment_num'       => isset($disbursement) ? (int)$disbursement : 0
            ]);
 
-            if(isset($input['interested'])  && isset($input['appointment_date'])){
+            if(isset($input['appointment_date'])){
                 $appointment = Appointment::create([
                     'agent_id'          => $input['appointment_agent'],
                     'customer_id'       => $id,
