@@ -515,14 +515,7 @@ class ApiController extends Controller
                             if($secondary){
                                 foreach($secondary as $ss => $second){
                                     $sec_occupation = Occupation::where('id','=', $second->occupation_id)->first();
-                                    // $result['secondary'][$ss]['customer_id'] = $second->id;
-                                    // $result['secondary'][$ss]['name'] = $second->name;
-                                    // $result['secondary'][$ss]['mobile'] = $second->phone;
-                                    // $result['secondary'][$ss]['occupation_id'] = $second->occupation_id;
-                                    // $result['secondary'][$ss]['occupation_name'] = $sec_occupation->occupation_name;
-                                    // $result['secondary'][$ss]['appointment_date'] = $appointment->appointment_date;
-                                    // $result['secondary'][$ss]['applicant_type'] = $appointment->applicant_type;
-                                    // $result['secondary'][$ss]['appointment_id'] = $appointment->id;
+                                  
                                     $result[$i]['secondary'][$ss]['customer_id'] = $second->id;
                                     $result[$i]['secondary'][$ss]['name'] = $second->name;
                                     $result[$i]['secondary'][$ss]['mobile'] = $second->phone;
