@@ -342,7 +342,7 @@ class UserController extends Controller
          if($customer->save()){
             return response()->json([
                 'status'=>1,
-                'error' => 'Customer Save Successfully'
+                'message' => 'Customer Save Successfully'
             ],200);
          }
          
