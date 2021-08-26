@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\VoipCustomer;
 use App\Customer;
 use App\Model\ModtAppointment;
 use App\Model\Appointment;
@@ -303,5 +304,48 @@ class UserController extends Controller
         return response()->json($request->user());
     }
 
+    public function voipCustomers(Request $request){
+            
+        $customer_name = $request->customer_name;
+        $mobile = $request->mobile_number;
+        $agentid =  $request->agentid;
+        $agentName =  $request->agent_name;
+        $disposition = $request->disposition;
+        $call_datetime = $request->call_datetime;
+
+        if($agentName !=''){
+            $user = User::with('roles')->where('name', '=', $agentName)
+            ->first();
+
+            if (!$user) {
+                return response()->json([
+                    'status'=>0,
+                    'error' => 'Invalid Agent'
+                ],401);
+            }
+        }
+       
+         $voipCustomer = new VoipCustomer();
+         $voipCustomer->customer_name = $customer_name;
+         $voipCustomer->customer_mobile = $mobile;
+         $voipCustomer->agent_id = $agentid;
+         $voipCustomer->agent_name = $agentid;
+         $voipCustomer->disposition = $disposition;
+         $voipCustomer->call_datetime = $call_datetime;
+         $voipCustomer->save();
+
+         $customer = new Customer();
+         $customer->cust_name = $customer_name;
+         $customer->cust_phone = $mobile;
+         $customer->application_status = 1;
+         $customer->applicationno = uniqid();
+         if($customer->save()){
+            return response()->json([
+                'status'=>1,
+                'error' => 'Customer Save Successfully'
+            ],200);
+         }
+         
+    }
 
 }

@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login', 'Api\UserController@login');
+Route::post('voip-customers', 'Api\UserController@voipCustomers');
+
 
 Route::group([ 'middleware' => 'auth:api'], function() {
     Route::get('logout', 'Api\UserController@logout');
