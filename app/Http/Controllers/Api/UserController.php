@@ -329,7 +329,7 @@ class UserController extends Controller
          $voipCustomer->customer_name = $customer_name;
          $voipCustomer->customer_mobile = $mobile;
          $voipCustomer->agent_id = $agentid;
-         $voipCustomer->agent_name = $agentid;
+         $voipCustomer->agent_name = $agentName;
          $voipCustomer->disposition = $disposition;
          $voipCustomer->call_datetime = $call_datetime;
          $voipCustomer->save();
